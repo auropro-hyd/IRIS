@@ -1,0 +1,686 @@
+<mxfile host="65bd71144e">
+    <diagram name="01 · Context" id="diag-context">
+        <mxGraphModel dx="1101" dy="587" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="c-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-title" value="Iris — Insurance Reference Intelligence Stack&#10;Context view" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-iris" value="IRIS Platform&#10;&#10;Multi-tenant SaaS · YAML-driven Products&#10;HITL by default · STP by configuration&#10;Hash-chained audit · IRDAI / DPDP ready" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=18;fontStyle=1;arcSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="430" width="450" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-act-u" value="Underwriter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="190" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-act-a" value="Adjuster" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="270" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-act-au" value="Auditor / Compliance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="350" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-act-ta" value="Tenant Admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="430" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-ch-email" value="Email (IMAP / MS Graph)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="560" width="220" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-ch-webhook" value="Webhook intake (HMAC)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="630" width="220" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-ch-upload" value="Workbench UI (React)&#10;custom chat — not CopilotKit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="700" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-idp" value="Azure AD / Entra ID&#10;(OIDC adapter)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="190" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-llm" value="Azure OpenAI&#10;region-pinned · PII-redacted&#10;via Model Gateway" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="290" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-blob" value="Object storage&#10;(S3 / Azure Blob)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="400" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-ocr" value="OCR providers&#10;(Datalab · Tesseract)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="500" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-sor-gw" value="Guidewire ClaimCenter&#10;(SoR adapter)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="600" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-sor-rest" value="Generic REST SoR&#10;(PAS / Finance / CRM)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="680" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-out-third" value="3rd-party outbound&#10;(egress allowlist + rate limit)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1380" y="760" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=11;" parent="1" source="c-act-u" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=11;" parent="1" source="c-act-a" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=11;" parent="1" source="c-act-au" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=11;" parent="1" source="c-act-ta" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="FNOL email + attachments" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-ch-email" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="signed events" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-ch-webhook" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="user actions" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-ch-upload" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="OIDC tokens" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-idp" target="c-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="completion / embedding" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-llm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" value="put / get" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-blob" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="extract" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-ocr" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="outbox sync" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-sor-gw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-sor-rest" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="c-iris" target="c-out-third" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-note-1" value="2-week onboarding metric driven by&#10;YAML Product bundles (commercial-auto-claims/in,&#10;property-fire-claims/in, etc.)" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="710" width="450" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-note-2" value="Every external boundary is a Protocol.&#10;Adapters are swappable per tenant / per LOB." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="790" width="450" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-note-3" value="Every action audited via hash-chained&#10;workflow_events; every read filtered by RLS." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="850" width="450" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="02 · Components" id="diag-components">
+        <mxGraphModel dx="1376" dy="734" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="cp-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-title" value="Component architecture — apps · packages · adapters · infra" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-lane-apps" value="apps/" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="130" width="1534" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-app-api" value="iris-api&#10;FastAPI thin orchestrator&#10;require_roles RBAC · tenancy middleware" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="170" width="290" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-app-worker" value="iris-worker&#10;arq job runners + bus subscribers&#10;OutboxSubscriber · BundleInvalidator · KGIngestor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="170" width="370" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-app-wb" value="iris-workbench&#10;React + Vite · custom chat (NOT CopilotKit)&#10;AG-UI contract for the agent stream" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="170" width="370" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-app-cli" value="iris-cli&#10;tools/iris-cli — admin + ops" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1300" y="170" width="240" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-lane-pkgs" value="packages/iris-*" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="320" width="1534" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-pkg-engine" value="iris-engine&#10;contracts (Protocols) · types · errors · workflow CEL engine&#10;LLM Gateway · outbound gateway · knowledge ingestor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="360" width="430" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-pkg-agents" value="iris-agents&#10;extraction · validation&#10;summarization · classification" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="360" width="240" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-pkg-data" value="iris-data&#10;alembic schema · SQLAlchemy models&#10;RLS policies · tenant_id leading PK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="360" width="290" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-pkg-cfg" value="iris-config&#10;YAML Product bundles&#10;policy / forms / rules / prompts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1170" y="360" width="200" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-pkg-obs" value="iris-observability&#10;OTEL · logs · metrics&#10;PII-aware redaction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1400" y="360" width="170" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-lane-adp" value="packages/iris-adapters/*  —  every external boundary is a Protocol" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="550" width="1534" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-bus" value="bus-redis-streams&#10;(+ in-memory)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="600" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-cache" value="cache-redis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="600" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-llm" value="llm-azure-openai&#10;(+ openai · anthropic)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="600" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-ocr" value="ocr-datalab · ocr-tesseract" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="600" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-blob" value="blob-s3 · blob-azure" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1020" y="600" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-email" value="email-imap · email-msgraph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="600" width="240" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-sor-gw" value="sor-guidewire-cc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="690" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-sor-rest" value="sor-rest-generic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="690" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-id" value="identity-oidc&#10;(Azure AD)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="690" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-wh" value="webhook-http-hmac" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="690" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-fraud" value="fraud-rules-pycaret" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1020" y="690" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-out" value="outbound-3rd-party&#10;(egress allowlist · rate limit · secrets)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1240" y="690" width="240" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-kv" value="knowledge-pgvector&#10;VectorStore + PageStore" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="780" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-kg" value="knowledge-age&#10;Apache AGE GraphStore" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="780" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-adp-in-mem" value="(InMemory adapters used in tests + dev defaults)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=11;fontStyle=0;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="780" width="640" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-lane-infra" value="Infrastructure" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="930" width="1534" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-infra-pg" value="Postgres (custom image)&#10;pgvector 0.8 + Apache AGE 1.5&#10;RLS + tenant_id leading PK" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="970" width="320" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-infra-redis" value="Redis 7&#10;Bus streams + cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="970" width="220" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-infra-blob" value="Blob storage&#10;S3 / Azure / MinIO (dev)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="970" width="260" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="cp-infra-obs" value="Observability stack&#10;OTLP collector · Jaeger · Loki · Prometheus · Grafana" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="970" width="440" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-1" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-app-api" target="cp-pkg-engine" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-2" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-app-worker" target="cp-pkg-engine" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-3" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-app-worker" target="cp-pkg-agents" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-4" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-pkg-engine" target="cp-adp-bus" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-5" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-pkg-engine" target="cp-adp-llm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-6" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-pkg-data" target="cp-infra-pg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-7" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-adp-kv" target="cp-infra-pg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-8" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-adp-kg" target="cp-infra-pg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-9" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-adp-bus" target="cp-infra-redis" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ec-10" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="cp-adp-cache" target="cp-infra-redis" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="03 · Pipeline" id="diag-pipeline">
+        <mxGraphModel dx="1101" dy="587" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="pl-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-title" value="Document → Decision pipeline (bus-driven · every step is a subscriber)" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-1" value="1 · Intake&#10;email · webhook · upload" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-2" value="2 · OCR&#10;markdown pages + bboxes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-3" value="3 · Extract&#10;LLM via Gateway&#10;fields · entities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="480" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-4" value="4 · Enrich&#10;Knowledge ingest&#10;vector + page + graph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-5" value="5 · Classify + risk&#10;rules · classifier · fraud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-6" value="6 · Workflow&#10;CEL rules · HITL or STP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1110" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-7" value="7 · Outbound&#10;outbox → SoR · webhook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1320" y="220" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e12" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-1" target="pl-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e23" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-2" target="pl-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e34" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-3" target="pl-4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e45" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-4" target="pl-5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e56" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-5" target="pl-6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-e67" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="pl-6" target="pl-7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-bus" value="Event bus  ·  case.document_received   →   case.ocr_completed   →   case.fields_extracted   →   case.knowledge_ingested   →   case.classified   →   case.transitioned   →   case.sor_sync_required" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="380" width="1440" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-bus-e" style="endArrow=none;html=1;strokeColor=#0F766E;strokeWidth=2;dashed=1;" parent="1" source="pl-1" target="pl-bus" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-bus-e7" style="endArrow=none;html=1;strokeColor=#0F766E;strokeWidth=2;dashed=1;" parent="1" source="pl-7" target="pl-bus" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-audit" value="Audit chain — hash-chained workflow_events at every transition (prev_hash → curr_hash)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="500" width="1440" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-hitl" value="HITL queue — every step CAN pause for human review; STP path opt-in via Product config (CEL rule)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="580" width="1440" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-obs" value="Observability — OTEL span per stage, structured logs with correlation_id, metrics on each event_kind" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="660" width="1440" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-title" value="Datastores touched per stage" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="760" width="1440" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-blob" value="Blob&#10;raw doc + OCR pages" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="810" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-pg" value="Postgres&#10;cases · workflow_events · outbox" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="810" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-vec" value="pgvector&#10;chunk embeddings" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="810" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-age" value="Apache AGE&#10;knowledge graph (iris_kg)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="810" width="240" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-ds-redis" value="Redis Streams&#10;bus · cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1220" y="810" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl-note" value="Default state: HITL — adjuster must approve before SoR push.&#10;STP is opt-in per Product (CEL rule: confidence ≥ X AND policy.auto_approve = true).&#10;Spec 005 amendment 005.1 — engine emits case.sor_sync_required only on terminal-good states." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="950" width="1440" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="04 · Tenancy · RBAC · Audit" id="diag-trust">
+        <mxGraphModel dx="1101" dy="587" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="tr-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-title" value="Multi-tenancy · RBAC · Audit — the trust posture" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-left" value="Tenant isolation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="130" width="760" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-tenctx" value="TenantContext on every call&#10;tenant_id · region · correlation_id · actor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="170" width="380" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-rls" value="Postgres RLS policies on every table&#10;tenant_id leading PK + RLS uses SESSION GUC app.tenant_id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="250" width="680" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-cfg" value="Per-tenant YAML config (Product bundles)&#10;policy / forms / CEL rules / prompts / adapter selection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="330" width="680" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ta" value="Tenant A&#10;region: ap-south-1&#10;product: commercial-auto-claims/in" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="420" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-tb" value="Tenant B&#10;region: us-east-1&#10;product: property-fire-claims/us" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="335" y="420" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-tc" value="Tenant C&#10;region: eu-west-1&#10;product: commercial-marine/eu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="570" y="420" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-pg" value="Single shared Postgres — strict RLS · row-level tenant scoping · per-region replicas optional" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="540" width="680" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-right" value="RBAC + Audit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="130" width="744" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-admin" value="tenant_admin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1130" y="170" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-eng" value="engineer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1130" y="260" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-uw" value="underwriter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="360" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-adj" value="adjuster" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1130" y="360" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-aud" value="auditor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1340" y="360" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-r-ops" value="ops" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1130" y="450" width="170" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-h1" value="implies all" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="tr-r-admin" target="tr-r-eng" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-h2" value="implies ops + auditor" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;fontColor=#111827;fontSize=10;" parent="1" source="tr-r-eng" target="tr-r-ops" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-h3" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="tr-r-eng" target="tr-r-aud" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-req" value="require_roles(Role.X, ...) — FastAPI dependency, 403 with {code, required, held} on denial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="920" y="530" width="590" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-audit-title" value="Audit chain (workflow_events)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="690" width="1534" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ev1" value="event N&#10;prev_hash = …&#10;hash = …" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="730" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ev2" value="event N+1&#10;prev_hash = hash(N)&#10;hash = …" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="730" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ev3" value="event N+2&#10;prev_hash = hash(N+1)&#10;hash = …" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="730" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ev4" value="event N+3&#10;prev_hash = hash(N+2)&#10;hash = …" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="730" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-ev5" value="… tamper-evident chain&#10;verifiable end-to-end" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1020" y="730" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-e-c1" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="tr-ev1" target="tr-ev2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-e-c2" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="tr-ev2" target="tr-ev3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-e-c3" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="tr-ev3" target="tr-ev4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-e-c4" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=2;" parent="1" source="tr-ev4" target="tr-ev5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp" value="Compliance" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="850" width="1534" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-1" value="IRDAI (India)&#10;region pin · data residency · 7-yr retention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="900" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-2" value="DPDP / GDPR&#10;PII redaction in LLM in/out · subject access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="900" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-3" value="SOC 2 / ISO 27001&#10;structured logs · OTEL · egress allowlist" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="900" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-4" value="Tenant data deletion&#10;cascade on cases · pages · vectors · graph" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1060" y="900" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-5" value="LLM Gateway&#10;region pin · daily token cap · cost ledger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="1000" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-6" value="Outbound Gateway&#10;egress allowlist + rate limit + secrets vault" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="1000" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-7" value="HITL by default&#10;explainable decisions · evidence-of-record" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="740" y="1000" width="290" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tr-comp-8" value="Webhook signing&#10;HMAC + timestamp + nonce replay-guard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1060" y="1000" width="290" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="05 · Deployment" id="diag-deploy">
+        <mxGraphModel dx="1101" dy="587" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="dp-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-title" value="Deployment — dev (docker compose) and prod (K8s)" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev" value="Dev — docker compose -f compose.dev.yaml" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="130" width="760" height="940" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-api" value="iris-api  ·  host :8088 → 8000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="180" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-worker" value="iris-worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="250" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-pg" value="iris-postgres (pgvector 0.8 + Apache AGE 1.5)  ·  host :5440 → 5432" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="320" width="680" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-redis" value="redis 7-alpine  ·  host :6390 → 6379" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="420" width="680" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-minio" value="minio  ·  host :9000 / :9001  (blob surrogate)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="500" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-mailhog" value="mailhog  ·  smtp :1025 · UI :8025" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="570" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-jaeger" value="jaeger  ·  OTLP :4327 · UI :16686" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="640" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-prom" value="prometheus  ·  :9090" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="710" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-loki" value="loki  ·  :3100" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="710" width="330" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-graf" value="grafana  ·  host :3011 → 3000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F766E;strokeColor=#0F766E;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="780" width="680" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-cache" value="BuildKit cache mounts → re-builds skip apt + uv wheel downloads&#10;Postgres image bundles pgvector + AGE compiled from source" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="860" width="680" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-dev-ports" value="Port remap — avoided collisions with already-running containers:&#10;Postgres 5440 (vs 5432) · Redis 6390 · API 8088 · Jaeger OTLP 4327 · Grafana 3011" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="940" width="680" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod" value="Prod — Kubernetes (cluster · 2 namespaces)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="130" width="744" height="940" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-ns-app" value="ns: iris-app" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#374151;strokeWidth=2;dashed=1;fontColor=#374151;fontSize=12;fontStyle=1;verticalAlign=top;align=left;startSize=22;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="180" width="660" height="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-api" value="Deployment: iris-api  ·  HPA  ·  PDB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="220" width="620" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-worker" value="Deployment: iris-worker  ·  HPA on Redis queue depth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="290" width="620" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-wb" value="iris-workbench (CDN static · API proxied via ingress)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="360" width="620" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-ingress" value="Ingress · OIDC at edge (Azure AD) · mTLS to api · WAF · rate limit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="420" width="620" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-ns-data" value="ns: iris-data (managed services preferred)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#374151;strokeWidth=2;dashed=1;fontColor=#374151;fontSize=12;fontStyle=1;verticalAlign=top;align=left;startSize=22;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="490" width="660" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-pg" value="Postgres (managed)  ·  pgvector + AGE  ·  PITR  ·  TDE" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="530" width="620" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-redis" value="Redis (managed)  ·  AOF persistence" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="630" width="620" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-blob" value="Storage Account / S3  ·  immutable buckets for audit + raw docs" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#581C87;strokeColor=#581C87;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="710" width="620" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-secrets" value="Secrets — KMS / Key Vault · Outbound vault hooks the secrets ref://-style API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="780" width="620" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-ext" value="External (called via Outbound + LLM gateways)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#374151;strokeWidth=2;dashed=1;fontColor=#374151;fontSize=12;fontStyle=1;verticalAlign=top;align=left;startSize=22;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="840" width="660" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-aad" value="Azure AD / Entra ID  ·  OIDC + JWKS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="880" width="620" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-llm" value="Azure OpenAI  ·  private endpoint  ·  region-pinned" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="930" width="620" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-sor" value="Guidewire ClaimCenter · REST SoR  ·  mTLS · per-tenant credentials" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="980" width="620" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dp-prod-apm" value="APM (DataDog / Honeycomb / managed Grafana) — OTLP collector" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="910" y="1020" width="620" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="06 · PoCs → Iris (roadmap)" id="diag-roadmap">
+        <mxGraphModel dx="1101" dy="587" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="rm-banner" value="PROPOSED ARCHITECTURE — PLAN OF RECORD (not yet shipped)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DC2626;strokeColor=#DC2626;fontColor=#FFFFFF;fontSize=14;fontStyle=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="1574" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-title" value="From PoCs to Iris — what carries forward, what is net new, and the phasing" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="70" width="1574" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1" value="PoC 1 · claims-intake-automation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="130" width="460" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1-1" value="Replit / Wagtail (Django)&#10;single-tenant demo&#10;monolithic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="170" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1-2" value="Rule-based claim workflow&#10;manual extraction + reviewer screen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="270" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1-3" value="Hard-wired Gemini / OpenAI calls&#10;no gateway · no PII redaction · no caps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="370" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1-carry" value="Carries forward → workflow rule patterns,&#10;reviewer-screen UX shape, FNOL field set" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="470" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc1-drop" value="Replaced — Wagtail · single-tenant · monolith ·&#10;direct LLM calls · no audit · no RLS" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="570" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2" value="PoC 2 · Submission-Workbench-v2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=2;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="130" width="460" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2-1" value="Replit · React + LangChain + CopilotKit&#10;agentic submission workbench&#10;single-tenant demo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="170" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2-2" value="Chat-driven document review&#10;LangChain agents · no contract per agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="270" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2-3" value="Inline tool calls + free-form prompts&#10;no audit · no SoR target · no role gating" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9D174D;strokeColor=#9D174D;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="370" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2-carry" value="Carries forward → chat-first UX,&#10;document-anchored evidence panel, agent decomposition" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="470" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-poc2-drop" value="Replaced — CopilotKit (custom chat instead) ·&#10;LangChain (typed Protocols instead) · no multi-tenancy" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="570" width="380" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris" value="Iris  —  Insurance Reference Intelligence Stack" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#111827;strokeWidth=3;fontColor=#111827;fontSize=14;fontStyle=1;verticalAlign=top;align=left;startSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="1060" y="130" width="534" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-1" value="Multi-tenant SaaS — Postgres RLS · tenant_id leading PK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="170" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-2" value="YAML Product bundles — 2-week onboarding metric" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="220" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-3" value="RBAC (Role enum · hierarchy) on every router · OIDC adapter ready" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="270" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-4" value="Hash-chained audit · IRDAI / DPDP / SOC 2 lanes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="320" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-5" value="Protocols at every boundary — adapters swappable per tenant/LOB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="370" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-6" value="LLM Gateway — region pin · PII redact · daily token cap · cost ledger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="420" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-7" value="Knowledge Store — pgvector + Apache AGE (one Postgres)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="470" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-8" value="Event bus + outbox + workflow engine (CEL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="520" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-iris-9" value="Spec-driven (.specify/) — every change starts as spec + plan + tests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E3A8A;strokeColor=#1E3A8A;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1100" y="570" width="450" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-arrow-1" value="patterns + lessons" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;fontColor=#111827;fontSize=12;" parent="1" source="rm-poc1" target="rm-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-arrow-2" value="UX shape + agent decomposition" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;fontColor=#111827;fontSize=12;" parent="1" source="rm-poc2" target="rm-iris" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-title" value="Phasing — each phase ends with a demo + spec sign-off" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#111827;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="710" width="1534" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-1" value="Phase 1 — Foundation&#10;engine · bus · cache · knowledge · RBAC · workflow · audit&#10;Spec-driven dev workflow live" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="760" width="370" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-2" value="Phase 2 — Real adapters&#10;OIDC (Azure AD) · LLM (Azure OpenAI)&#10;pgvector + AGE live · blob (S3 / Azure)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="760" width="370" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-3" value="Phase 3 — Pilot tenant&#10;1 jurisdiction (IN) · 1 LOB (commercial-auto-claims)&#10;Guidewire ClaimCenter adapter live · golden set sign-off" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="840" y="760" width="370" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-4" value="Phase 4 — Multi-LOB + jurisdictions&#10;property-fire · marine · health · jurisdictions: US / EU&#10;Multi-region option · STP per-Product config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7C2D12;strokeColor=#7C2D12;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1230" y="760" width="370" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-e1" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="rm-ph-1" target="rm-ph-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-e2" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="rm-ph-2" target="rm-ph-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-ph-e3" style="endArrow=classic;html=1;strokeColor=#374151;strokeWidth=3;" parent="1" source="rm-ph-3" target="rm-ph-4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rm-bot-note" value="Framing for the conversation: this deck describes what we PLAN to build.&#10;Where things already exist (engine, bus, cache, knowledge store, RBAC, dev compose), it is at proof-of-mechanism scale — not production-onboarded with a real tenant, real IdP, or real SoR. Phase 2 closes those gaps; Phase 3 onboards the first tenant." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#78350F;fontColor=#78350F;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="930" width="1534" height="100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
