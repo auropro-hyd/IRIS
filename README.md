@@ -2,7 +2,7 @@
 
 **Insurance Reference Intelligence Stack** — an architecture proposal for a multi-tenant, audit-first insurance claims and underwriting platform.
 
-This repository contains the design proposal and the supporting diagrams for stakeholder review. It is not an implementation repository.
+This repository contains the design proposal and the supporting diagrams. It is not an implementation repository.
 
 ## What is in here
 
@@ -47,6 +47,6 @@ The diagram is organised as six tabs at the bottom of the canvas:
 
 The contents of this repository describe a **proposal**, not a deployed system. Phases described in the rollout section indicate intended deliverables, not completion state.
 
-## Internal use
+## Copyright
 
-All rights reserved. Internal use within Auropro only.
+Copyright (c) 2026 Auropro. All rights reserved. No license is granted for use, modification, or redistribution.
