@@ -1,0 +1,15 @@
+# Default code owner for every path in this repo.
+# Branch protection on main requires one approving review; CODEOWNERS makes
+# the right reviewer auto-requested on every PR.
+
+* @anmolg1997
+
+# Architecture documents
+/docs/architecture/ @anmolg1997
+
+# First-wave task breakdown
+/tasks/ @anmolg1997
+
+# Repo configuration and CI
+/.github/ @anmolg1997
+/scripts/ @anmolg1997

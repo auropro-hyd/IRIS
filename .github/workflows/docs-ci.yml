@@ -1,0 +1,58 @@
+name: docs-ci
+
+# T010 implementation. Two jobs guard the docs and the task tree.
+#   - markdownlint: style check on every *.md under docs/, tasks/, plus
+#     the root-level README and CONTRIBUTING.
+#   - tasks-structure: scripts/check-tasks.py asserts the conventions
+#     (required files, T0xx identifiers, spec frontmatter, no dashes).
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'tasks/**'
+      - 'scripts/check-tasks.py'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - '.markdownlint.json'
+      - '.github/workflows/docs-ci.yml'
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  markdownlint:
+    name: markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli@0.41.0
+
+      - name: Lint markdown
+        run: |
+          markdownlint \
+            'README.md' \
+            'CONTRIBUTING.md' \
+            'docs/**/*.md' \
+            'tasks/**/*.md'
+
+  tasks-structure:
+    name: tasks/ structural check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run check-tasks.py
+        run: python3 scripts/check-tasks.py
