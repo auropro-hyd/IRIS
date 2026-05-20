@@ -68,6 +68,7 @@ iris/
 4. **`import-linter`** for the cross-layer rules described in spec User Story 3.
 5. **A `compose.dev.yaml` with only Postgres + Redis for now**. The OCR-server and LLM-server containers land in workstreams 003 and 004 respectively.
 6. **A `pytest` configuration with markers**: `contract`, `integration`, `e2e`. Default test run excludes `e2e`.
+7. **Two CI workflows, on two different repos**. The implementation repo gets `ci.yml` (lint + type-check + test + coverage). The proposal repo (`auropro-hyd/IRIS`, which holds the architecture documents and this task tree) gets `docs-ci.yml` (markdown lint + structural check on the tasks tree). The two workflows are independent; they share no jobs and no runners.
 
 ## Out of scope
 

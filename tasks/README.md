@@ -75,7 +75,7 @@ The scope here is intentionally narrow: configurable OCR ingestion, configurable
 
 | Workstream | Tasks | Rough effort |
 |---|---|---|
-| 001 Project scaffold | 7 | 1 week, 1 engineer |
+| 001 Project scaffold | 10 | 1 to 1.5 weeks, 1 engineer |
 | 002 Configuration framework | 8 | 1 to 1.5 weeks, 1 engineer |
 | 003 OCR adapter set | 11 | 2 to 3 weeks, 1 engineer |
 | 004 LLM adapter set | 11 | 2 to 3 weeks, 1 engineer |

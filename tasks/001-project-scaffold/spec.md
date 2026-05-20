@@ -14,7 +14,8 @@ The IRIS proposal describes a four-layer architecture: apps, packages, adapters,
 1. A single mono-repo, named `iris`, that hosts every workspace member.
 2. A dev loop that brings the stack up on a laptop in one command.
 3. A test harness that runs the unit and contract suites with a single command and produces coverage reports.
-4. A continuous integration lane that runs the same commands on push.
+4. A continuous integration lane on the implementation repo that runs the same commands on push.
+5. A docs CI lane on the proposal repo (`auropro-hyd/IRIS`) that validates the architecture and task documents on every PR.
 
 ## Non-goals
 
@@ -48,6 +49,15 @@ The packages are arranged so the apps can import the packages, the packages can 
 **Acceptance Scenario**:
 - `import-linter` rule is configured.
 - A test PR that adds a reverse import is rejected by the linter.
+
+### User Story 4: The proposal repo guards its documents in CI (Priority: P2)
+
+A PR against the `auropro-hyd/IRIS` repo triggers a docs CI workflow that lints every markdown file under `docs/` and `tasks/`, and checks the structural conventions of the tasks tree (each workstream folder has `spec.md`, `plan.md`, and `tasks.md`; each `tasks.md` has at least one `T0xx` task identifier). A malformed task list or a missing file fails the workflow.
+
+**Acceptance Scenario**:
+- CI configuration exists at `.github/workflows/docs-ci.yml` in the proposal repo.
+- A test PR removing one of the three required files from a workstream folder fails the workflow.
+- A test PR introducing a markdown style violation (per a checked-in `.markdownlint.json`) fails the workflow.
 
 ## Out of scope
 
