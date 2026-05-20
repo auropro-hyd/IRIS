@@ -1,0 +1,62 @@
+name: Task
+description: Track work for a specific task from the first-wave breakdown.
+title: "[T0xx] <short description>"
+labels: ["task"]
+body:
+  - type: input
+    id: task_id
+    attributes:
+      label: Task ID
+      description: The identifier from `tasks/<workstream>/tasks.md`. Use `N/A` if this issue does not map to a planned task.
+      placeholder: "T031"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workstream
+    attributes:
+      label: Workstream
+      options:
+        - 001-project-scaffold
+        - 002-configuration-framework
+        - 003-ocr-adapter-set
+        - 004-llm-adapter-set
+        - 005-classification-extraction-agents
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to happen. Copy or paraphrase the task body from `tasks.md`.
+      placeholder: "Implement iris_engine/ocr/selector.py that reads ProductConfig.adapters.ocr ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Copy from the task's entry in `tasks.md`. The PR for this issue must satisfy every item here.
+      placeholder: |
+        - Unit tests cover primary success, primary `OCRUnavailable` followed by fallback success, ...
+        - Integration test in tests/integration/ covers ...
+    validations:
+      required: true
+
+  - type: input
+    id: size
+    attributes:
+      label: Size
+      description: "S = quarter to half a day; M = one day; L = two to three days. At AI-assisted junior pace."
+      placeholder: "M"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything that does not fit above. Trade-offs. Dependencies. Open questions.

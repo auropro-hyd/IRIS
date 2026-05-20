@@ -308,7 +308,7 @@ Every workflow transition writes one row to `workflow_events`. Each row carries:
 | `correlation_id`, `actor` | Causality. |
 | `event_kind`, `payload` (JSONB) | What happened. |
 | `prev_hash` | The hash of the previous event for this `case_id`. |
-| `hash` | `SHA-256(prev_hash || canonical_json(payload) || event_id)`. |
+| `hash` | `SHA-256(prev_hash + canonical_json(payload) + event_id)`. |
 
 The result is a tamper-evident chain per case. A regulator can replay every decision from FNOL to SoR push and verify the chain has not been broken. The PoCs have nothing comparable; their audit is `logging` output, which is not evidence.
 
