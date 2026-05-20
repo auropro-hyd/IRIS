@@ -1,0 +1,27 @@
+version: 2
+
+updates:
+  # Keep the GitHub Actions referenced by docs-ci.yml current. Catches
+  # security updates on actions/checkout, actions/setup-node, etc.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels:
+      - dependencies
+      - github-actions
+    reviewers:
+      - anmolg1997
+
+# No npm or pip block here: this repo declares no JS/Python manifests.
+# `markdownlint-cli` is invoked via `npx` with a pinned version in the
+# docs-ci workflow; Dependabot does not parse inline version strings.
+# The implementation repo (scaffolded under workstream 001) will gain a
+# fuller dependabot.yml covering python, npm, docker, and github-actions.
