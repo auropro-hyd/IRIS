@@ -54,6 +54,20 @@
       - A test PR with a malformed task line (missing the `T0xx` identifier) fails the structural check.
       - The workflow runs on `pull_request` and on `push` to `main`.
 
+### Dependency and security hygiene on the implementation repo
+
+- [ ] **T011** `[P] [size: M] [owner: AuroPro]` Wire dependency-update automation and a baseline security posture on the implementation repo from day one. Four pieces.
+      1. **`.github/dependabot.yml`** covering four ecosystems: `pip` (or `uv` once Dependabot supports it, otherwise the generated `requirements.txt`), `npm` (workbench), `docker` (Dockerfiles under `docker/`), and `github-actions`. Weekly schedule, label `dependencies`, auto-request the architect via `CODEOWNERS`. Group minor + patch updates per ecosystem to keep PR volume low.
+      2. **CodeQL** workflow at `.github/workflows/codeql.yml` scanning Python and JavaScript / TypeScript. Default queries plus `security-extended`. Runs on PR and on a weekly schedule.
+      3. **`SECURITY.md`** at the implementation-repo root, modeled on the proposal-repo file. Lists what to report, the private-vulnerability-report URL, and the architect as the maintainer contact.
+      4. **Branch protection on `main`** mirroring the proposal repo: PR required, one approving review, linear history, no force push, no deletion. Required status checks: `lint`, `typecheck`, `test`, `test-cov`, `codeql`.
+      **Acceptance**:
+      - `dependabot.yml` parses cleanly per `https://github.com/<owner>/<repo>/network/updates`.
+      - The CodeQL workflow completes a baseline scan with zero high-severity findings on the empty scaffold.
+      - `SECURITY.md` is reachable on the GitHub Security tab.
+      - A direct push to `main` on the implementation repo is rejected by GitHub.
+      - A PR that fails any required status check cannot be merged without admin bypass.
+
 ## Definition of Done for this workstream
 
 1. A fresh clone of the implementation repo reaches `/healthz` `200` in under fifteen minutes following `README.md`.
@@ -64,4 +78,4 @@
 
 ## Estimated effort
 
-10 tasks, 1 engineer, 4 to 6 days at AI-assisted junior pace.
+11 tasks, 1 engineer, 5 to 7 days at AI-assisted junior pace.
