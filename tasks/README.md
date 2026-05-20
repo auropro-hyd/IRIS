@@ -1,10 +1,11 @@
 # IRIS · Tasks · First Wave
 
-This folder is the work breakdown for the first wave of IRIS development, based on Akhilesh's feedback:
+**Architect**: Anmol Jaiswal
+**Owner**: AuroPro
 
-> "We can start on building the core services like OCR ingestion, classification / extraction capabilities but they have to be configurable with a configuration file like in PoC. Also OCR and LLM providers should be swappable. OCR: ADI, Datalab, PaddleOCR (open-source from Hugging Face, locally hosted). LLM: Azure, Anthropic, OpenAI, locally / private hosted."
+This folder is the work breakdown for the first wave of IRIS development. The scope is the core services that everything else depends on: configurable OCR ingestion, classification and extraction capabilities, with swappable OCR providers (ADI, Datalab, PaddleOCR via Hugging Face, locally hosted) and swappable LLM providers (Azure OpenAI, Anthropic, OpenAI, locally or privately hosted).
 
-The event-driven architecture details will follow in a later round of guidance from Akhilesh. The work in this folder is sized to land in parallel with that conversation.
+Event-driven architecture details are tracked for a later wave. The work in this folder is sized to land in parallel with that conversation.
 
 ## What is in this folder
 
@@ -24,7 +25,7 @@ Inside every workstream folder:
 
 - `spec.md` describes what to build, the user-visible behaviour, and the acceptance scenarios.
 - `plan.md` describes the proposed file layout and the implementation approach.
-- `tasks.md` is the concrete task list. Each task has an identifier, a parallelisation marker, an effort estimate, an owner placeholder, and an acceptance criterion.
+- `tasks.md` is the concrete task list. Each task has an identifier, a parallelisation marker, an effort estimate, an owner, and an acceptance criterion.
 - For workstreams that introduce a new Protocol, a `contracts/` sub-folder holds the contract definition.
 
 ## Task identifier convention
@@ -32,7 +33,7 @@ Inside every workstream folder:
 `T0xx` for tasks. Bullet items inside a task are sub-tasks. A typical task line reads:
 
 ```
-- [ ] T030 [P] [US1] [size: M] [owner: TBD] Add iris_engine/contracts/ocr_engine.py
+- [ ] T030 [P] [US1] [size: M] [owner: AuroPro] Add iris_engine/contracts/ocr_engine.py
       Acceptance: Protocol type-checks under mypy strict; in-memory fixture passes the
       contract suite from T037.
 ```
@@ -42,7 +43,7 @@ Markers:
 - `[P]` parallelisable with other `[P]` tasks in the same section.
 - `[US1]` to `[US7]` user-story reference inside the workstream's `spec.md`.
 - `[size: S | M | L]` rough effort. `S` is half a day, `M` is one to two days, `L` is three to five days.
-- `[owner: ...]` filled in by the team lead during planning.
+- `[owner: AuroPro]` for every task in this wave. Individual assignees are recorded in the project tracker rather than in this file.
 
 ## Dependencies between workstreams
 
@@ -62,7 +63,7 @@ Workstreams 003 and 004 can be picked up in parallel once 002 lands the configur
 
 The following are tracked for later waves and should not be picked up under this work breakdown:
 
-1. Event bus and worker subscribers. Akhilesh will share more guidance on the event-driven shape before this lands.
+1. Event bus and worker subscribers. Architectural direction on the event-driven shape is pending; this lands once that direction is locked in.
 2. Workflow state machine. Pending event-bus guidance.
 3. Multi-tenancy and RBAC enforcement on the API. This wave keeps the dev-mode header trust path; the OIDC integration is a later wave.
 4. Knowledge store (vector, page, graph). Later wave.

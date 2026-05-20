@@ -2,7 +2,8 @@
 
 **Workstream**: `003-ocr-adapter-set`
 **Status**: Draft
-**Input**: Akhilesh's request: "OCR: ADI, Datalab and PaddleOCR (open source alternative from Hugging Face) and locally hosted."
+**Architect**: Anmol Jaiswal
+**Input**: Direction that OCR providers must be swappable. Required adapters: ADI (Azure Document Intelligence), Datalab, PaddleOCR (open-source via Hugging Face), and a locally hosted option.
 
 ## Background
 

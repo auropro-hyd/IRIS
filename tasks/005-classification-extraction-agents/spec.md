@@ -2,7 +2,8 @@
 
 **Workstream**: `005-classification-extraction-agents`
 **Status**: Draft
-**Input**: Akhilesh's request to build "core services like OCR ingestion, classification / extraction capabilities."
+**Architect**: Anmol Jaiswal
+**Input**: Direction to build the core services for OCR ingestion plus classification and extraction capabilities, sitting on top of the swappable OCR and LLM adapters.
 
 ## Background
 

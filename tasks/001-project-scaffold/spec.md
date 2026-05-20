@@ -2,7 +2,8 @@
 
 **Workstream**: `001-project-scaffold`
 **Status**: Draft
-**Input**: Akhilesh's request to "scaffold the project and breakdown the tasks so that the tasks will be done by the team."
+**Architect**: Anmol Jaiswal
+**Input**: Direction to scaffold the project and break the work down so the team can execute against discrete tasks.
 
 ## Background
 

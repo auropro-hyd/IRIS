@@ -2,7 +2,8 @@
 
 **Workstream**: `004-llm-adapter-set`
 **Status**: Draft
-**Input**: Akhilesh's request: "LLM: Azure, Anthropic, OpenAI and locally / privately hosted LLM models."
+**Architect**: Anmol Jaiswal
+**Input**: Direction that LLM providers must be swappable. Required adapters: Azure OpenAI, Anthropic, OpenAI direct, and a locally / privately hosted option.
 
 ## Background
 

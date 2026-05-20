@@ -2,7 +2,8 @@
 
 **Workstream**: `002-configuration-framework`
 **Status**: Draft
-**Input**: Akhilesh's request that the core services "have to be configurable with a configuration file like in PoC."
+**Architect**: Anmol Jaiswal
+**Input**: Direction that the core services must be configurable through a configuration file, following the pattern established in the PoCs.
 
 ## Background
 
