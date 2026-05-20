@@ -54,4 +54,4 @@
 
 ## Estimated effort
 
-10 tasks. With one engineer per adapter (T033 to T036) plus one engineer on the engine-side pieces (T030 to T032, T037 to T039), the workstream lands in 2 to 3 weeks elapsed.
+10 tasks. With one engineer per adapter (T033 to T036) plus one engineer on the engine-side pieces (T030 to T032, T037 to T039), the workstream lands in 1.5 to 2 weeks elapsed at AI-assisted junior pace.

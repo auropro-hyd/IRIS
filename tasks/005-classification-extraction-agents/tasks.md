@@ -54,4 +54,4 @@
 
 ## Estimated effort
 
-10 tasks. One engineer on classifier (T053 to T054), one on extractor (T055 to T056), one on the supporting infrastructure (T050 to T052, T057 to T059). Workstream lands in 1.5 to 2 weeks elapsed once workstreams 003 and 004 have produced their stub adapters.
+10 tasks. One engineer on classifier (T053 to T054), one on extractor (T055 to T056), one on the supporting infrastructure (T050 to T052, T057 to T059). Workstream lands in 1 to 1.5 weeks elapsed at AI-assisted junior pace, once workstreams 003 and 004 have produced their stub adapters.

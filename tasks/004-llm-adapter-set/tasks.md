@@ -57,4 +57,4 @@
 
 ## Estimated effort
 
-11 tasks. One engineer per adapter on the four adapter packages plus one on the engine-side pieces lands the workstream in 2 to 3 weeks elapsed.
+11 tasks. One engineer per adapter on the four adapter packages plus one on the engine-side pieces lands the workstream in 1.5 to 2 weeks elapsed at AI-assisted junior pace.

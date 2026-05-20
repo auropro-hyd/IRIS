@@ -64,4 +64,4 @@
 
 ## Estimated effort
 
-10 tasks, 1 engineer, 1 to 1.5 weeks.
+10 tasks, 1 engineer, 4 to 6 days at AI-assisted junior pace.
