@@ -48,7 +48,3 @@
 2. `iris config validate config/products/` is wired into CI and gates PRs.
 3. Three negative fixtures (`missing-taxonomy`, `unknown-ocr-adapter`, `duplicate-doc-type`) all produce well-formatted error messages.
 4. JSON Schema export for `ProductSchema` is published to `docs/schemas/product.schema.json`.
-
-## Estimated effort
-
-10 tasks, 1 engineer, 4 to 5 days at AI-assisted junior pace. Tasks T020 to T024 can run in parallel.

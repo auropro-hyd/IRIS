@@ -10,6 +10,7 @@ This repository contains the design proposal, the supporting diagrams, and the f
 |---|---|
 | [`docs/architecture/architecture.md`](docs/architecture/architecture.md) | The narrative architecture proposal. Reads top-to-bottom in about fifteen minutes. |
 | [`docs/architecture/iris-architecture.drawio`](docs/architecture/iris-architecture.drawio) | Six-tab editable diagram set covering context, components, request flow, the trust model, deployment topology, and the proposed rollout. |
+| [`docs/engineering/best-practices.md`](docs/engineering/best-practices.md) | Engineering conventions: coding standards, pre-commit hygiene, testing, observability, error handling, security, AI-assisted development, and dependency management. The canonical reference for *how* the code is written. |
 | [`tasks/`](tasks/) | First-wave work breakdown. Five workstreams, each with a spec, a plan, and a concrete task list. Start at [`tasks/README.md`](tasks/README.md). |
 
 ## Where to start

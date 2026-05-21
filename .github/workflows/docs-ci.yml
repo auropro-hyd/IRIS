@@ -16,6 +16,7 @@ on:
       - 'CONTRIBUTING.md'
       - 'SECURITY.md'
       - '.markdownlint.json'
+      - '.pre-commit-config.yaml'
       - '.github/workflows/docs-ci.yml'
   push:
     branches: [main]

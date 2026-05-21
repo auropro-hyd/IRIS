@@ -51,7 +51,3 @@
 3. `IRIS_OCR_LIVE_<NAME>=1 make test` exercises the named adapter against its real endpoint with one fixture.
 4. A document submitted under a Product with `adapters.ocr: paddleocr` is processed by the PaddleOCR adapter (verified by adapter telemetry).
 5. A `503` from an ADI primary with a configured fallback routes successfully to the fallback (verified by integration test).
-
-## Estimated effort
-
-10 tasks. With one engineer per adapter (T033 to T036) plus one engineer on the engine-side pieces (T030 to T032, T037 to T039), the workstream lands in 1.5 to 2 weeks elapsed at AI-assisted junior pace.
