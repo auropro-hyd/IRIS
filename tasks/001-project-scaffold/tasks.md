@@ -68,6 +68,22 @@
       - A direct push to `main` on the implementation repo is rejected by GitHub.
       - A PR that fails any required status check cannot be merged without admin bypass.
 
+### Pre-commit hygiene on the implementation repo
+
+- [ ] **T012** `[P] [size: S] [owner: AuroPro]` Add `.pre-commit-config.yaml` on the implementation repo so every contributor's commits are gated locally before they reach the PR. Hooks at minimum:
+      1. `ruff` (lint) and `ruff-format` against staged Python files.
+      2. `mypy --strict` against staged Python files in `iris-engine` and the adapter packages.
+      3. `pyupgrade` to keep syntax current with the project's Python version.
+      4. `trailing-whitespace`, `end-of-file-fixer`, `check-merge-conflict`, `check-yaml`, `check-toml` from `pre-commit/pre-commit-hooks`.
+      5. `detect-secrets` with a checked-in baseline.
+      6. `gitleaks` as a second-pass secret scanner.
+      The `Makefile` from T004 grows a `make pre-commit-install` target that wires the hooks into `.git/hooks/`. The CI workflow from T008 also runs `pre-commit run --all-files` as one of its steps so the same gates apply on PRs even if a contributor skips the local hook.
+      **Acceptance**:
+      - Running `pre-commit run --all-files` on a fresh clone after `make pre-commit-install` returns zero.
+      - A test PR introducing trailing whitespace fails the local hook and the CI gate.
+      - A test PR introducing an obvious secret (`OPENAI_API_KEY=sk-...`) is rejected by `detect-secrets` or `gitleaks`.
+      - The best-practices document at `docs/engineering/best-practices.md` in the proposal repo lists this hook set as the canonical local gate; any change here must be mirrored there.
+
 ## Definition of Done for this workstream
 
 1. A fresh clone of the implementation repo reaches `/healthz` `200` in under fifteen minutes following `README.md`.
@@ -75,7 +91,3 @@
 3. The implementation-repo CI workflow is green on `main`.
 4. The proposal-repo docs CI workflow is green on `main` and gates every PR.
 5. Import-linter rejects a reverse-import test PR.
-
-## Estimated effort
-
-11 tasks, 1 engineer, 5 to 7 days at AI-assisted junior pace.

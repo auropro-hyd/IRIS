@@ -1,0 +1,46 @@
+# Pre-commit hooks for the IRIS proposal repo (auropro-hyd/IRIS).
+#
+# This repo holds markdown documents and a small Python script. The hook set
+# below mirrors what runs in the docs-ci workflow on every PR, so a
+# contributor who installs the hooks locally gets the same gates before
+# their commits go anywhere.
+#
+# Install with:
+#
+#     pip install pre-commit
+#     pre-commit install
+#
+# Run against all files (for example, after editing the config):
+#
+#     pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.drawio$
+      - id: end-of-file-fixer
+        exclude: \.drawio$
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ["--maxkb=2000"]
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0
+    hooks:
+      - id: markdownlint
+        files: \.md$
+        args: ["--config", ".markdownlint.json"]
+
+  - repo: local
+    hooks:
+      - id: tasks-structural-check
+        name: tasks structural check
+        description: Asserts every workstream folder has spec/plan/tasks and every tasks.md has at least one T0xx line.
+        entry: python3 scripts/check-tasks.py
+        language: system
+        files: ^tasks/
+        pass_filenames: false

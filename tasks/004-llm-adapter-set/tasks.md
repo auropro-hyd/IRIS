@@ -54,7 +54,3 @@
 3. `IRIS_LLM_LIVE_<NAME>=1 make test` exercises the named adapter against its real endpoint.
 4. A Product with `adapters.llm: anthropic` routes agent calls through the Anthropic adapter (verified by adapter telemetry).
 5. Structured output (Pydantic schema) round-trips through every adapter.
-
-## Estimated effort
-
-11 tasks. One engineer per adapter on the four adapter packages plus one on the engine-side pieces lands the workstream in 1.5 to 2 weeks elapsed at AI-assisted junior pace.
