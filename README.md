@@ -45,7 +45,7 @@ The five workstreams in [`tasks/`](tasks/), in dependency order:
 | 004 | LLM adapter set (Azure OpenAI, Anthropic, OpenAI, locally / privately hosted) | [`tasks/004-llm-adapter-set/`](tasks/004-llm-adapter-set/) |
 | 005 | Classification and extraction agents | [`tasks/005-classification-extraction-agents/`](tasks/005-classification-extraction-agents/) |
 
-Total wave estimate: three to four weeks elapsed with two to three engineers running 003 and 004 in parallel, calibrated for AI-assisted development at a junior engineer pace.
+The wave parallelises across 003 and 004 once 002 is in. Workstream 005 depends on both. Sequencing details are in [`tasks/README.md`](tasks/README.md).
 
 ## Contributing
 
