@@ -50,7 +50,7 @@ body:
     id: size
     attributes:
       label: Size
-      description: "S = quarter to half a day; M = one day; L = two to three days. At AI-assisted junior pace."
+      description: "Relative complexity. S = straightforward and self-contained; M = light design or multiple steps; L = design choices or significant integration."
       placeholder: "M"
     validations:
       required: true
