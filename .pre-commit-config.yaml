@@ -1,9 +1,11 @@
-# Pre-commit hooks for the IRIS proposal repo (auropro-hyd/IRIS).
+# Pre-commit hooks for IRIS (auropro-hyd/IRIS).
 #
-# This repo holds markdown documents and a small Python script. The hook set
-# below mirrors what runs in the docs-ci workflow on every PR, so a
+# Today the repo holds markdown documents, the task tree, and a small Python
+# script. The hook set below mirrors what runs in docs-ci on every PR, so a
 # contributor who installs the hooks locally gets the same gates before
-# their commits go anywhere.
+# their commits go anywhere. T012 extends this file with the Python lint /
+# type-check / secret-scan hooks once the codebase under apps/ and packages/
+# lands.
 #
 # Install with:
 #

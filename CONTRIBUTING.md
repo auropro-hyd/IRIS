@@ -1,6 +1,6 @@
 # Contributing to IRIS
 
-This repository holds the architecture proposal, diagrams, and first-wave task breakdown for the **Insurance Reference Intelligence Stack** (IRIS). The implementation lives in a separate repo scaffolded under workstream 001.
+This repository is the home of **IRIS**, the Insurance Reference Intelligence Stack: the architecture proposal, the supporting diagrams, the first-wave task breakdown, and the production code that grows out of executing those tasks.
 
 ## Before you start
 

@@ -1,8 +1,8 @@
 # IRIS
 
-**Insurance Reference Intelligence Stack**. An architecture proposal for a multi-tenant, audit-first insurance claims and underwriting platform.
+**Insurance Reference Intelligence Stack**. A multi-tenant, audit-first insurance claims and underwriting platform.
 
-This repository contains the design proposal, the supporting diagrams, and the first-wave task breakdown for the team. It is not an implementation repository; the implementation will land in a separate repo scaffolded under workstream 001.
+This repository is the home of IRIS: the architecture proposal, the supporting diagrams, the first-wave task breakdown, and (as the team executes the tasks) the production codebase. Design lives in `docs/` and `tasks/`; code lands at the repository root under `apps/`, `packages/`, `tools/`, and `tests/` as it is built.
 
 ## What is in here
 
@@ -59,7 +59,7 @@ The expected flow per task:
 4. At least one approving review is required. Squash-merge is the default.
 5. Delete the feature branch after merge.
 
-The same protection rules apply on the implementation repo once it is scaffolded under workstream 001.
+The same rules apply to every change, whether to docs, tasks, or the codebase as it lands.
 
 ## Status
 

@@ -57,7 +57,7 @@ For each task:
 4. At least one approving review is required before merge. Squash-merge is the default; the PR title becomes the squashed commit message.
 5. Delete the feature branch after merge.
 
-The same workflow applies on the implementation repo once it is scaffolded under workstream 001.
+The same workflow applies to every change, whether to docs, tasks, or the codebase that grows out of executing the workstreams.
 
 ## Dependencies between workstreams
 

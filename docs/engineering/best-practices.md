@@ -2,7 +2,7 @@
 
 This document is the canonical reference for how engineering work happens on IRIS. It covers coding standards, pre-commit hygiene, testing, observability, error handling, security, documentation, AI-assisted development, and dependency management.
 
-It applies to the implementation repository scaffolded under workstream 001 and, where relevant, to this proposal repository as well. When a rule below conflicts with anything written in `CONTRIBUTING.md`, the document with the more specific scope wins (this file for "how to write the code", `CONTRIBUTING.md` for "how to land the change").
+It applies to every line of code, every test, every workflow, and every prose document in this repository. When a rule below conflicts with anything written in `CONTRIBUTING.md`, the document with the more specific scope wins (this file for "how to write the code", `CONTRIBUTING.md` for "how to land the change").
 
 Audience: every engineer touching IRIS, whether human or AI-assisted.
 
@@ -50,7 +50,7 @@ Audience: every engineer touching IRIS, whether human or AI-assisted.
 
 Every developer installs the project's pre-commit hooks immediately after `git clone`. The `Makefile` provides `make pre-commit-install`. The hooks are not optional; they are the project's local quality gate.
 
-The hook set on the implementation repo (also documented in task T012):
+The full hook set (also documented in task T012):
 
 ```yaml
 # .pre-commit-config.yaml
@@ -110,9 +110,9 @@ repos:
 
 CI runs `pre-commit run --all-files` as a step. A contributor who skipped local hooks will be caught at PR time. This is the same set of gates that should have run on their machine; CI is the backstop, not the primary gate.
 
-### On the proposal repo
+### Before the codebase lands
 
-This repo (`auropro-hyd/IRIS`) has its own lighter `.pre-commit-config.yaml` because it has no Python source: `markdownlint`, trailing-whitespace, end-of-file-fixer, plus `scripts/check-tasks.py` as a local hook.
+A lighter `.pre-commit-config.yaml` lives at the root today, covering only what is currently in the tree: `markdownlint`, trailing-whitespace, end-of-file-fixer, plus `scripts/check-tasks.py` as a local hook. T012 extends it with the full Python and secrets-scanning set as the codebase grows.
 
 ## 3. Testing
 
