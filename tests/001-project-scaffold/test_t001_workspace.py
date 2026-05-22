@@ -6,11 +6,19 @@ uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 
 import tomli
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _venv_python_executable(repo_root: Path) -> Path:
+    """Return the venv interpreter path (Unix bin/python, Windows Scripts/python.exe)."""
+    if sys.platform == "win32":
+        return repo_root / ".venv" / "Scripts" / "python.exe"
+    return repo_root / ".venv" / "bin" / "python"
 
 # uv workspace members (apps/workbench is pnpm, not listed here)
 EXPECTED_WORKSPACE_MEMBERS: frozenset[str] = frozenset(
@@ -195,8 +203,8 @@ def test_uv_sync_all_packages_creates_venv() -> None:
     )
     assert result.returncode == 0, result.stderr or result.stdout
 
-    venv_python = REPO_ROOT / ".venv" / "bin" / "python"
-    assert venv_python.is_file(), ".venv was not created by uv sync"
+    venv_python = _venv_python_executable(REPO_ROOT)
+    assert venv_python.is_file(), f".venv was not created by uv sync (expected {venv_python})"
     version = subprocess.run(
         [str(venv_python), "--version"],
         capture_output=True,
