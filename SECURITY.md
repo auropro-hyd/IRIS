@@ -1,15 +1,14 @@
 # Security policy
 
-This repository holds the IRIS architecture proposal and the first-wave task breakdown. It contains no application code, no production data, and no credentials.
-
-The supporting risks are still real and small. If you find any of the following, please report rather than disclose publicly.
+This repository is the home of IRIS: the architecture proposal, the task breakdown, and the production codebase as it is built. We take security seriously across all three.
 
 ## What to report
 
 - A secret, credential, or personal identifier accidentally committed to this repository.
-- A vulnerability in any GitHub Action referenced from `.github/workflows/` that affects this repo or the implementation repo (`iris`).
-- A supply-chain risk in the `markdownlint-cli` invocation or any dependency added in future PRs.
+- A vulnerability in any GitHub Action referenced from `.github/workflows/` or in any third-party dependency used by the codebase.
+- A supply-chain risk in any tool referenced from CI, pre-commit hooks, or the production stack.
 - A flaw in the task structural check (`scripts/check-tasks.py`) that could let unsafe content land on `main`.
+- A code-level vulnerability anywhere under `apps/`, `packages/`, or `tools/`.
 
 ## How to report
 
@@ -35,7 +34,6 @@ Please include:
 
 - Architectural disagreements with the proposal. Open a regular issue or PR instead.
 - Security findings against external systems referenced in the proposal (Azure OpenAI, Azure AD, Guidewire, etc.). Report those to the relevant vendor.
-- Code-level vulnerabilities in IRIS itself. Those should be reported against the implementation repository once it exists.
 
 ## Maintainers
 

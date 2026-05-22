@@ -20,8 +20,8 @@ updates:
     reviewers:
       - anmolg1997
 
-# No npm or pip block here: this repo declares no JS/Python manifests.
+# Only the github-actions block is active today because the repo has no
+# Python or JS manifests yet. T011 extends this file with `pip` (or `uv`),
+# `npm`, and `docker` blocks once apps/, packages/, and docker/ land.
 # `markdownlint-cli` is invoked via `npx` with a pinned version in the
 # docs-ci workflow; Dependabot does not parse inline version strings.
-# The implementation repo (scaffolded under workstream 001) will gain a
-# fuller dependabot.yml covering python, npm, docker, and github-actions.
