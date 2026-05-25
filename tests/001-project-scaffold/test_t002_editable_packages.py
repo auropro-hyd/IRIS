@@ -1,6 +1,11 @@
 """
 T002 acceptance: workspace members install editable and import as namespaces.
-uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
+
+Default (imports only):
+  uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
+
+Including uv pip list check (slow):
+  uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v -m slow
 """
 
 from __future__ import annotations
@@ -8,6 +13,8 @@ from __future__ import annotations
 import importlib
 import subprocess
 from pathlib import Path
+
+import pytest
 
 from test_t001_workspace import EXPECTED_WORKSPACE_MEMBERS, MEMBER_SRC_PACKAGES, REPO_ROOT
 
@@ -43,6 +50,7 @@ def _uv_pip_list() -> str:
     return result.stdout
 
 
+@pytest.mark.slow
 def test_uv_pip_list_shows_all_members_editable() -> None:
     assert set(MEMBER_DISTRIBUTION_NAMES) == EXPECTED_WORKSPACE_MEMBERS
     listing = _uv_pip_list()
