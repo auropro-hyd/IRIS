@@ -44,82 +44,82 @@ wheels = [
 [[package]]
 name = "iris-agents"
 version = "0.0.0"
-source = { virtual = "packages/iris-agents" }
+source = { editable = "packages/iris-agents" }
 
 [[package]]
 name = "iris-api"
 version = "0.0.0"
-source = { virtual = "apps/api" }
+source = { editable = "apps/api" }
 
 [[package]]
 name = "iris-cli"
 version = "0.0.0"
-source = { virtual = "tools/iris-cli" }
+source = { editable = "tools/iris-cli" }
 
 [[package]]
 name = "iris-config"
 version = "0.0.0"
-source = { virtual = "packages/iris-config" }
+source = { editable = "packages/iris-config" }
 
 [[package]]
 name = "iris-data"
 version = "0.0.0"
-source = { virtual = "packages/iris-data" }
+source = { editable = "packages/iris-data" }
 
 [[package]]
 name = "iris-engine"
 version = "0.0.0"
-source = { virtual = "packages/iris-engine" }
+source = { editable = "packages/iris-engine" }
 
 [[package]]
 name = "iris-llm-anthropic"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/llm-anthropic" }
+source = { editable = "packages/iris-adapters/llm-anthropic" }
 
 [[package]]
 name = "iris-llm-azure-openai"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/llm-azure-openai" }
+source = { editable = "packages/iris-adapters/llm-azure-openai" }
 
 [[package]]
 name = "iris-llm-local"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/llm-local" }
+source = { editable = "packages/iris-adapters/llm-local" }
 
 [[package]]
 name = "iris-llm-openai"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/llm-openai" }
+source = { editable = "packages/iris-adapters/llm-openai" }
 
 [[package]]
 name = "iris-observability"
 version = "0.0.0"
-source = { virtual = "packages/iris-observability" }
+source = { editable = "packages/iris-observability" }
 
 [[package]]
 name = "iris-ocr-adi"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/ocr-adi" }
+source = { editable = "packages/iris-adapters/ocr-adi" }
 
 [[package]]
 name = "iris-ocr-datalab"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/ocr-datalab" }
+source = { editable = "packages/iris-adapters/ocr-datalab" }
 
 [[package]]
 name = "iris-ocr-local"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/ocr-local" }
+source = { editable = "packages/iris-adapters/ocr-local" }
 
 [[package]]
 name = "iris-ocr-paddleocr"
 version = "0.0.0"
-source = { virtual = "packages/iris-adapters/ocr-paddleocr" }
+source = { editable = "packages/iris-adapters/ocr-paddleocr" }
 
 [[package]]
 name = "iris-worker"
 version = "0.0.0"
-source = { virtual = "apps/worker" }
+source = { editable = "apps/worker" }
 
 [[package]]
 name = "iris-workspace"

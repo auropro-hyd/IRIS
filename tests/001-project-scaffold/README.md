@@ -22,8 +22,11 @@ uv run pytest tests/001-project-scaffold/ -v -m slow
 # T001 only (layout + workspace config; still excludes slow uv sync)
 uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
 
-# T002 only (editable installs; run after uv sync)
+# T002 only, fast (imports; run after uv sync)
 uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
+
+# T002 slow (uv pip list subprocess)
+uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v -m slow
 ```
 
 **Prerequisite for T002 tests:** install workspace members once:
@@ -32,13 +35,13 @@ uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
 uv sync --all-packages
 ```
 
-Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so **`uv sync` is not run** during a normal `pytest` invocation. T001’s `test_uv_sync_all_packages_creates_venv` is the slow check that runs it explicitly (`-m slow`). After T004, `make test` should keep that behaviour.
+Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so default pytest skips subprocess-heavy checks. Run with `-m slow` for `uv sync` (T001) and `uv pip list` (T002). After T004, `make test` should keep that behaviour.
 
 ## Pytest markers used here
 
 | Marker | Meaning |
 |---|---|
-| `slow` | Subprocess or cold-cache work (for example `uv sync --all-packages`). Excluded from default runs. |
+| `slow` | Subprocess or cold-cache work (`uv sync --all-packages`, `uv pip list`). Excluded from default runs. |
 
 Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used under `tests/contract/`, `tests/integration/`, and `tests/e2e/`.
 
@@ -47,7 +50,7 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | Task | Test module | Status | What it verifies |
 |---|---|---|---|
 | **T001** | `test_t001_workspace.py` | Done | Root uv workspace members; each member `pyproject.toml`; plan directory layout; workbench not a uv member; `@pytest.mark.slow` uv sync creates `.venv` |
-| **T002** | `test_t002_editable_packages.py` | Planned | Each namespace imports; `uv pip list` shows editable installs (lands in PR #11) |
+| **T002** | `test_t002_editable_packages.py` | Done | `test_each_namespace_imports` (fast); `@pytest.mark.slow` `test_uv_pip_list_shows_all_members_editable` |
 | **T003** | (TBD) | Planned | `import-linter` config; `lint-imports` clean on scaffold |
 | **T004** | (TBD) | Planned | `Makefile` targets exist and succeed |
 | **T005** | (TBD) | Planned | pytest markers, coverage gate on `iris-engine` |
@@ -78,8 +81,10 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 
 | | T001 | T002 |
 |---|---|---|
-| Focus | Workspace exists; directory layout; stubs may use `package = false` | Members are real packages (hatchling + `src/`) |
-| Typical run | Default pytest (fast); `-m slow` for uv sync | After `uv sync --all-packages` |
+| Focus | Workspace exists; directory layout | Hatchling editable packages |
+| Slow tests | `test_uv_sync_all_packages_creates_venv` (`uv sync`) | `test_uv_pip_list_shows_all_members_editable` (`uv pip list`) |
+| Fast tests | Layout and workspace config (9 tests) | `test_each_namespace_imports` |
+| Typical run | Default pytest; `-m slow` for subprocess checks | After `uv sync --all-packages` |
 | Why not `tests/contract` or `tests/integration`? | Scaffold milestones for workstream 001 only; see [`tests/README.md`](../README.md) |
 
 When workstream 001 is complete, new feature work should add tests under `tests/{contract,integration,e2e}/`, not new files here unless a later task explicitly extends the scaffold.
