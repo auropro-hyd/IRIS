@@ -23,7 +23,52 @@ members = [
 
 [dependency-groups]
 dev = [
+    "import-linter>=2.5",
     "pytest>=8.3",
+]
+
+[tool.importlinter]
+root_packages = [
+    "iris_agents",
+    "iris_api",
+    "iris_cli",
+    "iris_config",
+    "iris_data",
+    "iris_engine",
+    "iris_llm_anthropic",
+    "iris_llm_azure_openai",
+    "iris_llm_local",
+    "iris_llm_openai",
+    "iris_observability",
+    "iris_ocr_adi",
+    "iris_ocr_datalab",
+    "iris_ocr_local",
+    "iris_ocr_paddleocr",
+    "iris_worker",
+]
+
+[[tool.importlinter.contracts]]
+name = "IRIS apps, packages, adapters, engine"
+type = "layers"
+layers = [
+    "iris_api | iris_worker | iris_cli",
+    "iris_agents | iris_data | iris_config | iris_observability",
+    "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | iris_llm_azure_openai | iris_llm_openai | iris_llm_anthropic | iris_llm_local",
+    "iris_engine",
+]
+
+[[tool.importlinter.contracts]]
+name = "Adapters do not depend on each other"
+type = "independence"
+modules = [
+    "iris_ocr_adi",
+    "iris_ocr_datalab",
+    "iris_ocr_paddleocr",
+    "iris_ocr_local",
+    "iris_llm_azure_openai",
+    "iris_llm_openai",
+    "iris_llm_anthropic",
+    "iris_llm_local",
 ]
 
 [tool.pytest.ini_options]
