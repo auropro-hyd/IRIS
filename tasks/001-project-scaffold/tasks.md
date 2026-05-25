@@ -11,7 +11,7 @@
 - [x] **T001** `[US1] [size: S] [owner: AuroPro]` Initialise `iris/` mono-repo with `uv init`, configure `[tool.uv.workspace]` to list every member.
       **Acceptance**: `uv sync --all-packages` succeeds against an empty workspace and produces a populated `.venv`.
 
-- [ ] **T002** `[P] [US1] [size: S] [owner: AuroPro]` Create empty `pyproject.toml` per workspace member under `apps/`, `packages/iris-*`, `packages/iris-adapters/*`, `tools/iris-cli`.
+- [x] **T002** `[P] [US1] [size: S] [owner: AuroPro]` Create empty `pyproject.toml` per workspace member under `apps/`, `packages/iris-*`, `packages/iris-adapters/*`, `tools/iris-cli`.
       **Acceptance**: Each package imports as a namespace; `uv pip list` shows all of them installed in editable mode.
 
 - [ ] **T003** `[P] [US3] [size: S] [owner: AuroPro]` Add `import-linter` configuration enforcing apps → packages → adapters → infrastructure boundary.
