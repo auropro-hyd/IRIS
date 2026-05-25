@@ -23,6 +23,27 @@ EXPECTED_ROOT_PACKAGES = frozenset(MEMBER_SRC_PACKAGES.values())
 LAYER_CONTRACT_NAME = "IRIS apps, packages, adapters, engine"
 INDEPENDENCE_CONTRACT_NAME = "Adapters do not depend on each other"
 
+# Must match [[tool.importlinter.contracts]] layers in root pyproject.toml exactly.
+EXPECTED_LAYERS: tuple[str, ...] = (
+    "iris_api | iris_worker | iris_cli",
+    "iris_agents | iris_data | iris_config | iris_observability",
+    (
+        "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | "
+        "iris_llm_azure_openai | iris_llm_openai | iris_llm_anthropic | iris_llm_local"
+    ),
+    "iris_engine",
+)
+
+EXPECTED_ADAPTER_MODULES = frozenset(
+    name
+    for name in EXPECTED_ROOT_PACKAGES
+    if name.startswith("iris_ocr_") or name.startswith("iris_llm_")
+)
+
+
+def _layer_modules(layer: str) -> frozenset[str]:
+    return frozenset(part.strip() for part in layer.split("|"))
+
 
 def _load_importlinter_config() -> dict[str, Any]:
     data = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
@@ -45,16 +66,21 @@ def test_layer_and_independence_contracts_configured() -> None:
 
     layers = next(c for c in contracts if c["name"] == LAYER_CONTRACT_NAME)
     assert layers["type"] == "layers"
-    assert "iris_engine" in layers["layers"][-1]
-    assert "iris_api" in layers["layers"][0]
+    configured_layers = layers["layers"]
+    assert configured_layers == list(EXPECTED_LAYERS)
+    assert _layer_modules(configured_layers[0]) == frozenset(
+        {"iris_api", "iris_worker", "iris_cli"}
+    )
+    assert _layer_modules(configured_layers[1]) == frozenset(
+        {"iris_agents", "iris_data", "iris_config", "iris_observability"}
+    )
+    assert _layer_modules(configured_layers[2]) == EXPECTED_ADAPTER_MODULES
+    assert configured_layers[3] == "iris_engine"
+    assert _layer_modules(configured_layers[3]) == frozenset({"iris_engine"})
 
     independence = next(c for c in contracts if c["name"] == INDEPENDENCE_CONTRACT_NAME)
     assert independence["type"] == "independence"
-    assert frozenset(independence["modules"]) == frozenset(
-        name
-        for name in EXPECTED_ROOT_PACKAGES
-        if name.startswith("iris_ocr_") or name.startswith("iris_llm_")
-    )
+    assert frozenset(independence["modules"]) == EXPECTED_ADAPTER_MODULES
 
 
 @pytest.mark.slow
