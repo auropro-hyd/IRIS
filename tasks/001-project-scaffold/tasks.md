@@ -14,7 +14,7 @@
 - [x] **T002** `[P] [US1] [size: S] [owner: AuroPro]` Create empty `pyproject.toml` per workspace member under `apps/`, `packages/iris-*`, `packages/iris-adapters/*`, `tools/iris-cli`.
       **Acceptance**: Each package imports as a namespace; `uv pip list` shows all of them installed in editable mode.
 
-- [ ] **T003** `[P] [US3] [size: S] [owner: AuroPro]` Add `import-linter` configuration enforcing apps → packages → adapters → infrastructure boundary.
+- [x] **T003** `[P] [US3] [size: S] [owner: AuroPro]` Add `import-linter` configuration enforcing apps → packages → adapters → infrastructure boundary.
       **Acceptance**: `lint-imports` returns zero on the empty scaffold; a deliberate violation test PR is rejected.
 
 ### Tooling
