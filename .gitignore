@@ -16,3 +16,15 @@
 discussion-*.md
 roleplay-*.md
 notes-*.md
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+htmlcov/
+.coverage
+.ruff_cache/
+.mypy_cache/
+

@@ -1,0 +1,38 @@
+[project]
+name = "iris-workspace"
+version = "0.0.0"
+description = "IRIS mono-repo workspace root"
+readme = "README.md"
+requires-python = ">=3.12"
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = [
+    "apps/api",
+    "apps/worker",
+    "packages/iris-engine",
+    "packages/iris-agents",
+    "packages/iris-data",
+    "packages/iris-config",
+    "packages/iris-observability",
+    "packages/iris-adapters/*",
+    "tools/iris-cli",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: subprocess or network heavy checks (excluded from default test runs)",
+]
+addopts = ["-m", "not slow"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
