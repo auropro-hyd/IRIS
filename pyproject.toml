@@ -24,8 +24,13 @@ members = [
 [dependency-groups]
 dev = [
     "pytest>=8.3",
-    "tomli>=2.2",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: subprocess or network heavy checks (excluded from default test runs)",
+]
+addopts = ["-m", "not slow"]
 
 [tool.pyright]
 pythonVersion = "3.12"

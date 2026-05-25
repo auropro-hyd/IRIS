@@ -19,6 +19,18 @@ Five workstreams. Each workstream has its own folder with the same three-file la
 | 004 | LLM adapter set (Azure OpenAI, Anthropic, OpenAI, locally / privately hosted) | [`004-llm-adapter-set/`](./004-llm-adapter-set/) |
 | 005 | Classification and extraction agents (consuming the swappable adapters) | [`005-classification-extraction-agents/`](./005-classification-extraction-agents/) |
 
+## Workstream acceptance tests
+
+Task acceptance for **workstream 001 (scaffold)** is checked under [`tests/001-project-scaffold/`](../tests/001-project-scaffold/). That folder name mirrors this tree (`001-project-scaffold`). Each task that needs automated acceptance should add or update `test_t0xx_<slug>.py` there and document it in [`tests/001-project-scaffold/README.md`](../tests/001-project-scaffold/README.md).
+
+Later workstreams normally use the standard test layers instead of a `tests/00x-*` folder:
+
+- **Unit** tests live in `packages/<pkg>/tests/`.
+- **Contract** tests live in `tests/contract/`.
+- **Integration** and **e2e** tests live in `tests/integration/` and `tests/e2e/`.
+
+See [`tests/README.md`](../tests/README.md) for the full layout.
+
 ## How each workstream is structured
 
 Inside every workstream folder:

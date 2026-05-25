@@ -1,6 +1,11 @@
 """
 Scaffold layout and T001 uv workspace acceptance (plan 001 proposed file layout).
-uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
+
+Default run (fast, no uv sync):
+  uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
+
+Full T001 acceptance including uv sync (slow):
+  uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v -m slow
 """
 
 from __future__ import annotations
@@ -9,7 +14,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-import tomli
+import pytest
+import tomllib
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -98,7 +104,7 @@ def _load_root_pyproject() -> dict[str, object]:
     pyproject_path = REPO_ROOT / "pyproject.toml"
     assert pyproject_path.is_file(), "root pyproject.toml is missing"
     with pyproject_path.open("rb") as handle:
-        return tomli.load(handle)
+        return tomllib.load(handle)
 
 
 def _resolve_workspace_members(members: list[object]) -> set[str]:
@@ -193,6 +199,7 @@ def test_root_workspace_files_exist() -> None:
     assert (REPO_ROOT / ".python-version").is_file()
 
 
+@pytest.mark.slow
 def test_uv_sync_all_packages_creates_venv() -> None:
     result = subprocess.run(
         ["uv", "sync", "--all-packages"],
