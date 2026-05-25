@@ -19,11 +19,20 @@ uv run pytest tests/001-project-scaffold/ -v
 # Full workstream 001 acceptance including slow checks
 uv run pytest tests/001-project-scaffold/ -v -m slow
 
-# Single task file
+# T001 only (layout + workspace config; still excludes slow uv sync)
 uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
+
+# T002 only (editable installs; run after uv sync)
+uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
 ```
 
-Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so **`uv sync` is not run** during a normal `pytest` invocation. After T004, `make test` should keep that behaviour.
+**Prerequisite for T002 tests:** install workspace members once:
+
+```bash
+uv sync --all-packages
+```
+
+Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so **`uv sync` is not run** during a normal `pytest` invocation. T001’s `test_uv_sync_all_packages_creates_venv` is the slow check that runs it explicitly (`-m slow`). After T004, `make test` should keep that behaviour.
 
 ## Pytest markers used here
 
@@ -38,7 +47,7 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | Task | Test module | Status | What it verifies |
 |---|---|---|---|
 | **T001** | `test_t001_workspace.py` | Done | Root uv workspace members; each member `pyproject.toml`; plan directory layout; workbench not a uv member; `@pytest.mark.slow` uv sync creates `.venv` |
-| **T002** | `test_t002_editable_packages.py` | Planned | Each namespace imports; `uv pip list` shows editable installs |
+| **T002** | `test_t002_editable_packages.py` | Planned | Each namespace imports; `uv pip list` shows editable installs (lands in PR #11) |
 | **T003** | (TBD) | Planned | `import-linter` config; `lint-imports` clean on scaffold |
 | **T004** | (TBD) | Planned | `Makefile` targets exist and succeed |
 | **T005** | (TBD) | Planned | pytest markers, coverage gate on `iris-engine` |
@@ -63,6 +72,14 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 - **File names**: `test_t0xx_<short-slug>.py` matching the task id in `tasks.md`.
 - **Imports**: stdlib first; use `tomllib` (Python 3.12+), not `tomli`.
 - **Repo root**: `REPO_ROOT = Path(__file__).resolve().parents[2]` for paths relative to the mono-repo root.
-- **Shared constants**: reuse helpers from earlier task modules only when it reduces duplication (for example member lists from T001); avoid circular imports.
+- **Shared constants**: reuse helpers from earlier task modules only when it reduces duplication (for example `EXPECTED_WORKSPACE_MEMBERS` and `MEMBER_SRC_PACKAGES` from `test_t001_workspace.py` in T002); avoid circular imports.
+
+### T001 vs T002
+
+| | T001 | T002 |
+|---|---|---|
+| Focus | Workspace exists; directory layout; stubs may use `package = false` | Members are real packages (hatchling + `src/`) |
+| Typical run | Default pytest (fast); `-m slow` for uv sync | After `uv sync --all-packages` |
+| Why not `tests/contract` or `tests/integration`? | Scaffold milestones for workstream 001 only; see [`tests/README.md`](../README.md) |
 
 When workstream 001 is complete, new feature work should add tests under `tests/{contract,integration,e2e}/`, not new files here unless a later task explicitly extends the scaffold.
