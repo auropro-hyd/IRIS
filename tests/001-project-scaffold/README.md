@@ -8,45 +8,49 @@ This folder holds **acceptance tests for workstream 001 tasks**. Names mirror `t
 
 Add or update a `test_t0xx_<short-name>.py` file when a task’s acceptance criteria need automated checks at repo level. Update the task table below in the same PR.
 
-## How to run
+## Before running tests
 
-From the repository root:
-
-```bash
-# Fast default: layout and config checks only (no uv sync subprocess)
-uv run pytest tests/001-project-scaffold/ -v
-
-# Full workstream 001 acceptance including slow checks
-uv run pytest tests/001-project-scaffold/ -v -m slow
-
-# T001 only (layout + workspace config; still excludes slow uv sync)
-uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
-
-# T002 only, fast (imports; run after uv sync)
-uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
-
-# T002 slow (uv pip list subprocess)
-uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v -m slow
-
-# T003 only, fast (import-linter config in pyproject.toml)
-uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v
-
-# T003 slow (lint-imports subprocess; run after uv sync)
-uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v -m slow
-
-# import-linter directly
-uv run lint-imports
-```
-
-**Prerequisite for T002 tests:** install workspace members once:
+From the repository root, install all workspace members **once** before pytest in this folder (except T001-only layout checks):
 
 ```bash
 uv sync --all-packages
 ```
 
-Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so default pytest skips subprocess-heavy checks. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), and `lint-imports` (T003). After T004, `make test` should keep that behaviour.
+This creates `.venv` and editable installs for every uv member. T002 import checks, T002 `uv pip list`, T003 `lint-imports`, and `uv run lint-imports` all need this step. Slow tests do not run `uv sync` for you.
 
-**Prerequisite for T003 slow test:** same as T002 (`uv sync --all-packages`) so all sixteen import roots are on `PYTHONPATH`.
+**T001-only exception:** layout and workspace config tests do not require sync:
+
+```bash
+uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
+```
+
+## How to run
+
+Run `uv sync --all-packages` first (see above), then:
+
+```bash
+# Fast default (T001 layout + T002 imports + T003 config; no slow subprocesses)
+uv run pytest tests/001-project-scaffold/ -v
+
+# Full acceptance including slow checks (uv sync, uv pip list, lint-imports)
+uv run pytest tests/001-project-scaffold/ -v -m slow
+
+# T001 only (layout + workspace config; sync not required)
+uv run pytest tests/001-project-scaffold/test_t001_workspace.py -v
+
+# T002 only
+uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v
+uv run pytest tests/001-project-scaffold/test_t002_editable_packages.py -v -m slow
+
+# T003 only
+uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v
+uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v -m slow
+
+# import-linter directly (after uv sync)
+uv run lint-imports
+```
+
+Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so default pytest skips subprocess-heavy checks. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), and `lint-imports` (T003). After T004, `make install` should run sync and `make test` should keep this behaviour.
 
 ## Pytest markers used here
 
@@ -79,7 +83,7 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 2. Prefer **fast, deterministic** checks in the default run; use `@pytest.mark.slow` for subprocesses, network, or multi-second setup.
 3. Add a row to the **Task coverage** table above.
 4. Mark the task `[x]` in `tasks/001-project-scaffold/tasks.md` when acceptance criteria pass.
-5. Run `uv run pytest tests/001-project-scaffold/ -v` and, if you added or changed `slow` tests, `uv run pytest tests/001-project-scaffold/ -v -m slow`.
+5. Run `uv sync --all-packages`, then `uv run pytest tests/001-project-scaffold/ -v` and, if you added or changed `slow` tests, `uv run pytest tests/001-project-scaffold/ -v -m slow`.
 
 ## Conventions
 
@@ -95,13 +99,13 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | Focus | Workspace exists; directory layout | Hatchling editable packages |
 | Slow tests | `test_uv_sync_all_packages_creates_venv` (`uv sync`) | `test_uv_pip_list_shows_all_members_editable` (`uv pip list`) |
 | Fast tests | Layout and workspace config (9 tests) | `test_each_namespace_imports` |
-| Typical run | Default pytest; `-m slow` for subprocess checks | After `uv sync --all-packages` |
+| Typical run | `uv sync --all-packages` first; default pytest; `-m slow` for subprocess checks | Same sync step required before imports or `uv pip list` |
 | Why not `tests/contract` or `tests/integration`? | Scaffold milestones for workstream 001 only; see [`tests/README.md`](../README.md) |
 
 ### T003 import boundaries
 
 `[tool.importlinter]` in root `pyproject.toml` uses **Python import roots** (underscores), not repo paths (hyphens). Layers (top to bottom): apps/CLI → packages (not engine) → adapters → `iris_engine`. A second contract keeps the eight adapter packages independent.
 
-To verify the linter catches violations (acceptance manual check), add a forbidden import under `packages/iris-engine/src/iris_engine/` (for example `import iris_ocr_adi`) and run `uv run lint-imports`; revert before merge.
+To verify the linter catches violations (acceptance manual check), run `uv sync --all-packages`, add a forbidden import under `packages/iris-engine/src/iris_engine/` (for example `import iris_ocr_adi`), then run `uv run lint-imports`; revert before merge.
 
 When workstream 001 is complete, new feature work should add tests under `tests/{contract,integration,e2e}/`, not new files here unless a later task explicitly extends the scaffold.
