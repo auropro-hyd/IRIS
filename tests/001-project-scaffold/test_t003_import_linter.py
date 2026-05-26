@@ -11,11 +11,10 @@ Including lint-imports subprocess (slow):
 from __future__ import annotations
 
 import subprocess
+import tomllib
 from typing import Any
 
 import pytest
-import tomllib
-
 from test_t001_workspace import MEMBER_SRC_PACKAGES, REPO_ROOT
 
 EXPECTED_ROOT_PACKAGES = frozenset(MEMBER_SRC_PACKAGES.values())

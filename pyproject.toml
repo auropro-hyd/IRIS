@@ -24,7 +24,10 @@ members = [
 [dependency-groups]
 dev = [
     "import-linter>=2.5",
+    "mypy>=1.13",
     "pytest>=8.3",
+    "pytest-cov>=6",
+    "ruff>=0.7",
 ]
 
 [tool.importlinter]
@@ -94,8 +97,64 @@ forbidden_modules = [
 [tool.pytest.ini_options]
 markers = [
     "slow: subprocess or network heavy checks (excluded from default test runs)",
+    "contract: parametrised adapter contract suite (tests/contract/)",
+    "integration: two or more components together, in-memory adapters (tests/integration/)",
+    "e2e: real services, gated on IRIS_E2E_LIVE=1 (tests/e2e/)",
 ]
-addopts = ["-m", "not slow"]
+addopts = ["-m", "not slow and not e2e"]
+
+[tool.coverage.run]
+source = ["iris_engine"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "iris_engine",
+    "iris_engine.*",
+    "iris_ocr_adi",
+    "iris_ocr_adi.*",
+    "iris_ocr_datalab",
+    "iris_ocr_datalab.*",
+    "iris_ocr_paddleocr",
+    "iris_ocr_paddleocr.*",
+    "iris_ocr_local",
+    "iris_ocr_local.*",
+    "iris_llm_azure_openai",
+    "iris_llm_azure_openai.*",
+    "iris_llm_openai",
+    "iris_llm_openai.*",
+    "iris_llm_anthropic",
+    "iris_llm_anthropic.*",
+    "iris_llm_local",
+    "iris_llm_local.*",
+]
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+ignore_errors = true
 
 [tool.pyright]
 pythonVersion = "3.12"

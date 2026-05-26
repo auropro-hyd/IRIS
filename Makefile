@@ -1,32 +1,114 @@
 # IRIS development Makefile.
 #
-# Every target listed in T004 returns zero today. The bodies of `lint`,
-# `typecheck`, `test-cov`, `dev`, `up`, and `down` are intentionally thin
-# until T005 (pytest + coverage), T006 (ruff + mypy), and T007 (compose
-# + API runner) land, at which point the recipes grow to call the real
-# tools. The structure here is the contract those tasks plug into.
+# T004 established the nine targets. T005 wires test-cov. T006 wires
+# lint (ruff + import-linter) and typecheck (mypy). T007 will wire dev/up/down.
+#
+# Targets that call uv work on every OS without adaptation.
+# dev/up/down/clean are OS-specific and live inside the ifeq block below.
 
 UV ?= uv
 RUN ?= $(UV) run
 COMPOSE_FILE := compose.dev.yaml
+ADAPTER_SRCS := $(wildcard packages/iris-adapters/*/src)
+INSTALL_STAMP := .venv/.install-stamp
 
 .DEFAULT_GOAL := help
 .PHONY: help install dev up down lint typecheck test test-cov clean
 
+# ── shared targets (bash + Windows) ─────────────────────────────────────────
+
 help:
 	@echo "IRIS Makefile targets:"
 	@echo "  install     sync all workspace packages into .venv"
-	@echo "  dev         start the dev API (wired by T007)"
-	@echo "  up          bring up dev compose services (wired by T007)"
-	@echo "  down        tear down dev compose services (wired by T007)"
-	@echo "  lint        run import-linter (ruff added by T006)"
-	@echo "  typecheck   run mypy --strict (wired by T006)"
-	@echo "  test        run pytest with default markers"
-	@echo "  test-cov    run pytest with coverage report (wired by T005)"
-	@echo "  clean       remove caches and build artifacts"
+	@echo "  dev         start the API at http://localhost:8088 (needs compose.dev.yaml)"
+	@echo "  up          start Postgres and Redis dev services"
+	@echo "  down        stop Postgres and Redis dev services"
+	@echo "  lint        ruff check + import-linter architecture contracts"
+	@echo "  typecheck   mypy --strict on iris-engine and all adapters"
+	@echo "  test        pytest (contract and integration markers included; e2e excluded)"
+	@echo "  test-cov    pytest with branch coverage; HTML report in htmlcov/"
+	@echo "  clean       remove __pycache__, .pytest_cache, htmlcov, .coverage, etc."
 
 install:
 	$(UV) sync --all-packages
+	@$(UV) run python -c "from pathlib import Path; Path('$(INSTALL_STAMP)').touch()"
+
+# Rebuilt automatically whenever pyproject.toml or uv.lock changes.
+# Dependant targets list this as a prerequisite so the workspace is always
+# populated before they run, even on a fresh clone.
+$(INSTALL_STAMP): pyproject.toml uv.lock
+	@echo ""
+	@echo "==> Prerequisite: workspace packages are not installed or are out of date."
+	@echo "==> Running: uv sync --all-packages"
+	@echo ""
+	$(UV) sync --all-packages
+	@$(UV) run python -c "from pathlib import Path; Path('$@').touch()"
+	@echo ""
+	@echo "==> Installation complete. Proceeding with the requested target."
+	@echo ""
+
+lint: $(INSTALL_STAMP)
+	$(RUN) ruff check .
+	$(RUN) lint-imports
+
+typecheck: $(INSTALL_STAMP)
+	$(RUN) mypy packages/iris-engine/src $(ADAPTER_SRCS)
+
+test: $(INSTALL_STAMP)
+	$(RUN) pytest
+
+test-cov: $(INSTALL_STAMP)
+	$(RUN) pytest --cov=iris_engine --cov-report=html --cov-report=term-missing --cov-fail-under=80
+
+# ── OS-specific targets ──────────────────────────────────────────────────────
+
+ifeq ($(OS),Windows_NT)
+
+dev:
+	@powershell -NoProfile -Command \
+	  "if(Test-Path '$(COMPOSE_FILE)'){ \
+	       Write-Host 'make dev: API runner lands with T007. Use make up for services.' \
+	   }else{ \
+	       Write-Host 'make dev: not yet wired. T007 adds $(COMPOSE_FILE) and the API runner.' \
+	   }"
+
+up:
+	@powershell -NoProfile -Command \
+	  "if(Test-Path '$(COMPOSE_FILE)'){ \
+	       docker compose -f $(COMPOSE_FILE) up -d \
+	   }else{ \
+	       Write-Host 'make up: $(COMPOSE_FILE) lands with T007.' \
+	   }"
+
+down:
+	@powershell -NoProfile -Command \
+	  "if(Test-Path '$(COMPOSE_FILE)'){ \
+	       docker compose -f $(COMPOSE_FILE) down \
+	   }else{ \
+	       Write-Host 'make down: $(COMPOSE_FILE) lands with T007.' \
+	   }"
+
+clean:
+	@powershell -NoProfile -ExecutionPolicy Bypass -Command \
+	  "$$names='__pycache__','.pytest_cache','.ruff_cache','.mypy_cache', \
+	         '.import_linter_cache','htmlcov'; \
+	   $$dirs=Get-ChildItem -Recurse -Directory \
+	     | Where-Object{$$names -contains $$_.Name -or $$_.Name -like '*.egg-info'} \
+	     | Where-Object{-not $$_.FullName.Contains('.venv')} \
+	     | Sort-Object{$$_.FullName.Length} -Descending; \
+	   $$cov=Test-Path '.coverage'; \
+	   $$stamp=Test-Path '$(INSTALL_STAMP)'; \
+	   if($$dirs -or $$cov -or $$stamp){ \
+	       Write-Host 'Following files have been cleared:'; \
+	       foreach($$d in $$dirs){ \
+	           Write-Host('  '+$$d.FullName); \
+	           Remove-Item -Recurse -Force $$d.FullName -ErrorAction SilentlyContinue \
+	       }; \
+	       if($$cov){Write-Host '  .coverage'; Remove-Item -Force '.coverage'}; \
+	       if($$stamp){Write-Host '  $(INSTALL_STAMP)'; Remove-Item -Force '$(INSTALL_STAMP)'} \
+	   }else{Write-Host 'Environment is clean.'}"
+
+else
 
 dev:
 	@if [ -f $(COMPOSE_FILE) ]; then \
@@ -49,26 +131,23 @@ down:
 		echo "make down: $(COMPOSE_FILE) lands with T007."; \
 	fi
 
-lint:
-	$(RUN) lint-imports
-
-typecheck:
-	@echo "make typecheck: wired by T006 (mypy --strict on iris-engine and adapters)."
-
-test:
-	$(RUN) pytest
-
-test-cov:
-	@echo "make test-cov: wired by T005 (coverage threshold 80% on iris-engine)."
-
 clean:
-	find . -type d \( \
-		-name __pycache__ -o \
-		-name .pytest_cache -o \
-		-name .ruff_cache -o \
-		-name .mypy_cache -o \
-		-name .import_linter_cache -o \
-		-name htmlcov -o \
-		-name '*.egg-info' \
-	\) -not -path './.venv/*' -prune -exec rm -rf {} +
-	rm -f .coverage
+	@cleared=0; \
+	for d in $$(find . -type d \( \
+	    -name '__pycache__' -o -name '.pytest_cache' -o -name '.ruff_cache' -o \
+	    -name '.mypy_cache' -o -name '.import_linter_cache' -o -name 'htmlcov' -o \
+	    -name '*.egg-info' \) -not -path './.venv/*' -prune 2>/dev/null); do \
+	  if [ "$$cleared" -eq 0 ]; then echo "Following files have been cleared:"; fi; \
+	  echo "  $$d"; rm -rf "$$d"; cleared=1; \
+	done; \
+	if [ -f .coverage ]; then \
+	  if [ "$$cleared" -eq 0 ]; then echo "Following files have been cleared:"; fi; \
+	  echo "  .coverage"; rm -f .coverage; cleared=1; \
+	fi; \
+	if [ -f $(INSTALL_STAMP) ]; then \
+	  if [ "$$cleared" -eq 0 ]; then echo "Following files have been cleared:"; fi; \
+	  echo "  $(INSTALL_STAMP)"; rm -f $(INSTALL_STAMP); cleared=1; \
+	fi; \
+	if [ "$$cleared" -eq 0 ]; then echo "Environment is clean."; fi
+
+endif

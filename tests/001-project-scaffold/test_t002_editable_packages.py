@@ -15,7 +15,6 @@ import subprocess
 from pathlib import Path
 
 import pytest
-
 from test_t001_workspace import EXPECTED_WORKSPACE_MEMBERS, MEMBER_SRC_PACKAGES, REPO_ROOT
 
 # pyproject [project].name per member (PEP 503 distribution name)

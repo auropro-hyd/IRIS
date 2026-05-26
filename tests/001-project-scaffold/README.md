@@ -68,8 +68,8 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | **T002** | `test_t002_editable_packages.py` | Done | `test_each_namespace_imports` (fast); `@pytest.mark.slow` `test_uv_pip_list_shows_all_members_editable` |
 | **T003** | `test_t003_import_linter.py` | Done | Three import-linter contracts (layers, adapter independence, mid-package forbidden); fast config tests; `@pytest.mark.slow` `lint-imports` |
 | **T004** | `test_t004_makefile.py` | Done | Root `Makefile` declares the nine T004 `.PHONY` targets, each has a recipe, `make -n <target>` parses, and `@pytest.mark.slow` runs `make <target>` for guarded targets to confirm exit zero |
-| **T005** | (TBD) | Planned | pytest markers, coverage gate on `iris-engine` |
-| **T006** | (TBD) | Planned | `ruff` / `mypy` config |
+| **T005** | `test_t005_pytest_config.py` | Done | Four markers declared (`slow`, `contract`, `integration`, `e2e`); addopts excludes `slow` and `e2e` by default; `[tool.coverage.*]` sections configured with `fail_under = 80` on `iris_engine`; `@pytest.mark.slow` runs `make test-cov` and asserts `htmlcov/index.html` is produced |
+| **T006** | `test_t006_ruff_mypy.py` | Done | `[tool.ruff]` (line-length 100, py312, E/F/I/UP/B rules); `[tool.mypy]` (strict overrides for `iris_engine` and all adapters, relaxed for `tests.*`); `@pytest.mark.slow` runs `make lint` and `make typecheck` and asserts exit zero |
 | **T007** | (TBD) | Planned | `compose.dev.yaml`, `/healthz` (may live under `tests/integration/`) |
 | **T008** | (TBD) | Planned | CI workflow (usually validated in CI, not pytest) |
 | **T009** | (TBD) | Planned | README dev loop, `.env.example` |
