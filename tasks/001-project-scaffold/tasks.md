@@ -19,7 +19,7 @@
 
 ### Tooling
 
-- [ ] **T004** `[US1] [size: S] [owner: AuroPro]` Add `Makefile` with targets `install`, `dev`, `up`, `down`, `lint`, `typecheck`, `test`, `test-cov`, `clean`.
+- [x] **T004** `[US1] [size: S] [owner: AuroPro]` Add `Makefile` with targets `install`, `dev`, `up`, `down`, `lint`, `typecheck`, `test`, `test-cov`, `clean`.
       **Acceptance**: Every target returns zero on a fresh clone.
 
 - [ ] **T005** `[P] [US1] [size: M] [owner: AuroPro]` Add `pytest` config: markers `contract`, `integration`, `e2e`; coverage threshold 80 percent on `iris-engine`.
