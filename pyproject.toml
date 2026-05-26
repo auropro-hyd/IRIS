@@ -71,6 +71,26 @@ modules = [
     "iris_llm_local",
 ]
 
+[[tool.importlinter.contracts]]
+name = "Mid-packages do not import concrete adapters"
+type = "forbidden"
+source_modules = [
+    "iris_agents",
+    "iris_data",
+    "iris_config",
+    "iris_observability",
+]
+forbidden_modules = [
+    "iris_ocr_adi",
+    "iris_ocr_datalab",
+    "iris_ocr_paddleocr",
+    "iris_ocr_local",
+    "iris_llm_azure_openai",
+    "iris_llm_openai",
+    "iris_llm_anthropic",
+    "iris_llm_local",
+]
+
 [tool.pytest.ini_options]
 markers = [
     "slow: subprocess or network heavy checks (excluded from default test runs)",
