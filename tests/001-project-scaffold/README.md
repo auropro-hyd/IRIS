@@ -50,7 +50,7 @@ uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v -m slow
 uv run lint-imports
 ```
 
-Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so default pytest skips subprocess-heavy checks. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), `lint-imports` (T003), and the `make <target>` subprocess checks (T004). T004 wires `make install` to `uv sync --all-packages` and `make test` to the default pytest invocation, preserving this `-m slow` behaviour.
+Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow and not e2e"]`, so default pytest skips subprocess-heavy checks and e2e tests. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), `lint-imports` (T003), and the `make <target>` subprocess checks (T004). T004 wires `make install` to `uv sync --all-packages` and `make test` to the default pytest invocation, preserving this `-m slow` behaviour.
 
 ## Pytest markers used here
 

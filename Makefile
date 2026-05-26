@@ -34,7 +34,7 @@ install:
 	@$(UV) run python -c "from pathlib import Path; Path('$(INSTALL_STAMP)').touch()"
 
 # Rebuilt automatically whenever pyproject.toml or uv.lock changes.
-# Dependant targets list this as a prerequisite so the workspace is always
+# Dependent targets list this as a prerequisite so the workspace is always
 # populated before they run, even on a fresh clone.
 $(INSTALL_STAMP): pyproject.toml uv.lock
 	@echo ""

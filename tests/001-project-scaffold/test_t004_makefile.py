@@ -3,8 +3,8 @@
 Fast tests verify the Makefile defines the nine targets listed in
 ``tasks/001-project-scaffold/tasks.md`` and that each has a recipe. Slow
 tests execute every target except ``install`` (covered by T001 via
-``uv sync --all-packages``) and ``test`` (would recurse into pytest) and
-``lint`` (already exercised by T003's slow check) and assert exit zero.
+``uv sync --all-packages``), ``test`` (would recurse into pytest), and
+``lint`` (exercised by T006), and assert exit zero.
 """
 
 from __future__ import annotations
@@ -111,7 +111,7 @@ def test_guarded_target_exits_zero(target: str) -> None:
 
 
 def test_lint_recipe_calls_lint_imports() -> None:
-    """make lint must invoke import-linter (the only linter wired in T004)."""
+    """make lint must invoke import-linter via the lint-imports target."""
     text = MAKEFILE.read_text()
     recipe = "\n".join(_target_recipe_lines(text, "lint"))
     assert "lint-imports" in recipe, f"lint recipe does not call lint-imports:\n{recipe}"
