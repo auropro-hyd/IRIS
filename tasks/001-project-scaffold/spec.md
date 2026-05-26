@@ -44,7 +44,7 @@ A pull request triggers a CI workflow that runs the same `make` targets a develo
 
 ### User Story 3: The mono-repo enforces a clean import boundary (Priority: P2)
 
-The apps import packages and may wire concrete adapters at the composition root. Mid-packages (`iris-agents`, `iris-data`, `iris-config`, `iris-observability`) depend only on `iris-engine` (Protocols and shared types), not on concrete adapter modules. Adapters import only the engine plus their external library. Reverse imports (for example engine or mid-packages importing an adapter) fail at lint time.
+The apps import packages and may wire concrete adapters at the composition root. Mid-packages (`iris-agents`, `iris-data`, `iris-config`, `iris-observability`) depend on `iris-engine` (Protocols and shared types) and must not import concrete adapter modules. Adapters import only the engine plus their external library. Reverse imports (for example engine or mid-packages importing an adapter) fail at lint time.
 
 **Acceptance Scenario**:
 - `import-linter` rule is configured.
