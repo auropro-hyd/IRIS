@@ -45,7 +45,11 @@ def _uv_pip_list() -> str:
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
-        check=True,
+        check=False,
+    )
+    assert result.returncode == 0, (
+        f"uv pip list failed (exit {result.returncode})\n"
+        f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     )
     return result.stdout
 
