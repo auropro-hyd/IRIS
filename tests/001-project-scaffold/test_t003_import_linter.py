@@ -11,17 +11,21 @@ Including lint-imports subprocess (slow):
 from __future__ import annotations
 
 import subprocess
+import tomllib
 from typing import Any
 
 import pytest
-import tomllib
-
 from test_t001_workspace import MEMBER_SRC_PACKAGES, REPO_ROOT
 
 EXPECTED_ROOT_PACKAGES = frozenset(MEMBER_SRC_PACKAGES.values())
 
 LAYER_CONTRACT_NAME = "IRIS apps, packages, adapters, engine"
 INDEPENDENCE_CONTRACT_NAME = "Adapters do not depend on each other"
+FORBIDDEN_CONTRACT_NAME = "Mid-packages do not import concrete adapters"
+
+EXPECTED_MID_PACKAGES = frozenset(
+    {"iris_agents", "iris_data", "iris_config", "iris_observability"}
+)
 
 # Must match [[tool.importlinter.contracts]] layers in root pyproject.toml exactly.
 EXPECTED_LAYERS: tuple[str, ...] = (
@@ -57,12 +61,13 @@ def test_root_packages_match_workspace_import_names() -> None:
     assert len(configured) == 16
 
 
-def test_layer_and_independence_contracts_configured() -> None:
+def test_import_linter_contracts_configured() -> None:
     config = _load_importlinter_config()
     contracts = config["contracts"]
     names = {c["name"] for c in contracts}
     assert LAYER_CONTRACT_NAME in names
     assert INDEPENDENCE_CONTRACT_NAME in names
+    assert FORBIDDEN_CONTRACT_NAME in names
 
     layers = next(c for c in contracts if c["name"] == LAYER_CONTRACT_NAME)
     assert layers["type"] == "layers"
@@ -81,6 +86,11 @@ def test_layer_and_independence_contracts_configured() -> None:
     independence = next(c for c in contracts if c["name"] == INDEPENDENCE_CONTRACT_NAME)
     assert independence["type"] == "independence"
     assert frozenset(independence["modules"]) == EXPECTED_ADAPTER_MODULES
+
+    forbidden = next(c for c in contracts if c["name"] == FORBIDDEN_CONTRACT_NAME)
+    assert forbidden["type"] == "forbidden"
+    assert frozenset(forbidden["source_modules"]) == EXPECTED_MID_PACKAGES
+    assert frozenset(forbidden["forbidden_modules"]) == EXPECTED_ADAPTER_MODULES
 
 
 @pytest.mark.slow

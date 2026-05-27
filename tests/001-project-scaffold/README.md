@@ -50,13 +50,13 @@ uv run pytest tests/001-project-scaffold/test_t003_import_linter.py -v -m slow
 uv run lint-imports
 ```
 
-Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow"]`, so default pytest skips subprocess-heavy checks. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), and `lint-imports` (T003). After T004, `make install` should run sync and `make test` should keep this behaviour.
+Root [`pyproject.toml`](../../pyproject.toml) sets `addopts = ["-m", "not slow and not e2e"]`, so default pytest skips subprocess-heavy checks and e2e tests. Run with `-m slow` for `uv sync` (T001), `uv pip list` (T002), `lint-imports` (T003), and the `make <target>` subprocess checks (T004). T004 wires `make install` to `uv sync --all-packages` and `make test` to the default pytest invocation, preserving this `-m slow` behaviour.
 
 ## Pytest markers used here
 
 | Marker | Meaning |
 |---|---|
-| `slow` | Subprocess or cold-cache work (`uv sync --all-packages`, `uv pip list`, `lint-imports`). Excluded from default runs. |
+| `slow` | Subprocess or cold-cache work (`uv sync --all-packages`, `uv pip list`, `lint-imports`, `make <target>` invocations). Excluded from default runs. |
 
 Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used under `tests/contract/`, `tests/integration/`, and `tests/e2e/`.
 
@@ -66,10 +66,10 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 |---|---|---|---|
 | **T001** | `test_t001_workspace.py` | Done | Root uv workspace members; each member `pyproject.toml`; plan directory layout; workbench not a uv member; `@pytest.mark.slow` uv sync creates `.venv` |
 | **T002** | `test_t002_editable_packages.py` | Done | `test_each_namespace_imports` (fast); `@pytest.mark.slow` `test_uv_pip_list_shows_all_members_editable` |
-| **T003** | `test_t003_import_linter.py` | Done | `root_packages` and contracts in `pyproject.toml` (fast); `@pytest.mark.slow` `lint-imports` exit 0 on scaffold |
-| **T004** | (TBD) | Planned | `Makefile` targets exist and succeed |
-| **T005** | (TBD) | Planned | pytest markers, coverage gate on `iris-engine` |
-| **T006** | (TBD) | Planned | `ruff` / `mypy` config |
+| **T003** | `test_t003_import_linter.py` | Done | Three import-linter contracts (layers, adapter independence, mid-package forbidden); fast config tests; `@pytest.mark.slow` `lint-imports` |
+| **T004** | `test_t004_makefile.py` | Done | Root `Makefile` declares the nine T004 `.PHONY` targets, each has a recipe, `make -n <target>` parses, and `@pytest.mark.slow` runs `make <target>` for guarded targets to confirm exit zero |
+| **T005** | `test_t005_pytest_config.py` | Done | Four markers declared (`slow`, `contract`, `integration`, `e2e`); addopts excludes `slow` and `e2e` by default; `[tool.coverage.*]` sections configured with `fail_under = 80` on `iris_engine`; `@pytest.mark.slow` runs `make test-cov` and asserts `htmlcov/index.html` is produced |
+| **T006** | `test_t006_ruff_mypy.py` | Done | `[tool.ruff]` (line-length 100, py312, E/F/I/UP/B rules); `[tool.mypy]` (strict overrides for `iris_engine` and all adapters, relaxed for `tests.*`); `@pytest.mark.slow` runs `make lint` and `make typecheck` and asserts exit zero |
 | **T007** | (TBD) | Planned | `compose.dev.yaml`, `/healthz` (may live under `tests/integration/`) |
 | **T008** | (TBD) | Planned | CI workflow (usually validated in CI, not pytest) |
 | **T009** | (TBD) | Planned | README dev loop, `.env.example` |
@@ -104,8 +104,23 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 
 ### T003 import boundaries
 
-`[tool.importlinter]` in root `pyproject.toml` uses **Python import roots** (underscores), not repo paths (hyphens). Layers (top to bottom): apps/CLI → packages (not engine) → adapters → `iris_engine`. A second contract keeps the eight adapter packages independent.
+`[tool.importlinter]` in root `pyproject.toml` uses **Python import roots** (underscores), not repo paths (hyphens).
 
-To verify the linter catches violations (acceptance manual check), run `uv sync --all-packages`, add a forbidden import under `packages/iris-engine/src/iris_engine/` (for example `import iris_ocr_adi`), then run `uv run lint-imports`; revert before merge.
+Three contracts:
+
+1. **Layers** (top to bottom): apps/CLI → mid-packages → adapters → `iris_engine`.
+2. **Independence:** the eight adapter packages must not import each other.
+3. **Forbidden:** `iris_agents`, `iris_data`, `iris_config`, `iris_observability` must not import concrete adapters (apps wire adapters at the composition root).
+
+Manual violation checks (revert before merge):
+
+```bash
+uv sync --all-packages
+# engine → adapter (layers contract)
+# import iris_ocr_adi in packages/iris-engine/src/iris_engine/__init__.py
+# mid-package → adapter (forbidden contract)
+# import iris_ocr_adi in packages/iris-agents/src/iris_agents/__init__.py
+uv run lint-imports   # expect exit 1
+```
 
 When workstream 001 is complete, new feature work should add tests under `tests/{contract,integration,e2e}/`, not new files here unless a later task explicitly extends the scaffold.
