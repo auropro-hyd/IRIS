@@ -1,10 +1,11 @@
 # IRIS development Makefile.
 #
 # T004 established the nine targets. T005 wires test-cov. T006 wires
-# lint (ruff + import-linter) and typecheck (mypy). T007 will wire dev/up/down.
+# lint (ruff + import-linter) and typecheck (mypy). T007 wired dev/up/down.
+# distclean and status are convenience extras outside the sprint-0 task scope.
 #
 # Targets that call uv work on every OS without adaptation.
-# dev/up/down/clean are OS-specific and live inside the ifeq block below.
+# dev/up/down/clean/distclean/status are OS-specific and live in the ifeq block.
 
 UV ?= uv
 RUN ?= $(UV) run
@@ -13,7 +14,7 @@ ADAPTER_SRCS := $(wildcard packages/iris-adapters/*/src)
 INSTALL_STAMP := .venv/.install-stamp
 
 .DEFAULT_GOAL := help
-.PHONY: help install dev up down lint typecheck test test-cov clean
+.PHONY: help install dev up down lint typecheck test test-cov clean distclean status
 
 # ── shared targets (bash + Windows) ─────────────────────────────────────────
 
@@ -28,6 +29,8 @@ help:
 	@echo "  test        pytest (contract and integration markers included; e2e excluded)"
 	@echo "  test-cov    pytest with branch coverage; HTML report in htmlcov/"
 	@echo "  clean       remove __pycache__, .pytest_cache, htmlcov, .coverage, etc."
+	@echo "  distclean   clean + remove .venv, Docker volumes, and uv cache"
+	@echo "  status      show git state, venv, Docker service health, and port usage"
 
 install:
 	$(UV) sync --all-packages
@@ -103,6 +106,59 @@ clean:
 	       if($$stamp){Write-Host '  $(INSTALL_STAMP)'; Remove-Item -Force '$(INSTALL_STAMP)'} \
 	   }else{Write-Host 'Environment is clean.'}"
 
+distclean: clean
+	@powershell -NoProfile -Command \
+	  "$$pid = (Get-NetTCPConnection -LocalPort 8088 -State Listen -ErrorAction SilentlyContinue).OwningProcess; \
+	   if($$pid){ Write-Host '==> Stopping API server on :8088 ...'; Stop-Process -Id $$pid -Force -ErrorAction SilentlyContinue }"
+	@powershell -NoProfile -ExecutionPolicy Bypass -Command \
+	  "Write-Host '==> Removing .venv ...'; \
+	   Remove-Item -Recurse -Force '.venv' -ErrorAction SilentlyContinue; \
+	   Write-Host '==> Wiping Docker volumes ...';"
+	@powershell -NoProfile -Command \
+	  "if(Test-Path '$(COMPOSE_FILE)'){ \
+	       docker compose -f $(COMPOSE_FILE) down -v \
+	   }else{ \
+	       Write-Host '  ($(COMPOSE_FILE) not found; skipping)' \
+	   }"
+	$(UV) cache clean
+	@powershell -NoProfile -Command "Write-Host '==> distclean complete.'"
+
+status:
+	@powershell -NoProfile -ExecutionPolicy Bypass -Command \
+	  "$$branch = git branch --show-current 2>$$null; \
+	   $$dirty  = (git status --porcelain 2>$$null | Measure-Object -Line).Lines; \
+	   Write-Host ''; \
+	   Write-Host 'IRIS Dev Environment Status'; \
+	   Write-Host '==========================='; \
+	   Write-Host ''; \
+	   Write-Host 'Git'; \
+	   Write-Host ('  branch    : ' + $$branch); \
+	   if($$dirty -eq 0){ Write-Host '  tree      : clean' } \
+	   else{ Write-Host ('  tree      : ' + $$dirty + ' file(s) modified -- run: git status') }; \
+	   Write-Host ''; \
+	   Write-Host 'Python'; \
+	   if(Test-Path '.venv'){ \
+	       $$count = (uv pip list 2>$$null | Select-Object -Skip 2 | Measure-Object -Line).Lines; \
+	       Write-Host ('  .venv     : present  (' + $$count + ' packages)') \
+	   }else{ Write-Host '  .venv     : absent -- run: make install' }; \
+	   Write-Host ''; \
+	   Write-Host 'Docker Services  ($(COMPOSE_FILE))'; \
+	   if(Test-Path '$(COMPOSE_FILE)'){ \
+	       docker compose -f $(COMPOSE_FILE) ps \
+	   }else{ \
+	       Write-Host '  $(COMPOSE_FILE) not found' \
+	   }; \
+	   Write-Host ''; \
+	   Write-Host 'Dev Ports'; \
+	   $$listeners = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().GetActiveTcpListeners(); \
+	   $$portMap = @{5488='Postgres'; 6399='Redis'; 8088='API'}; \
+	   foreach($$port in @(5488, 6399, 8088)){ \
+	       $$label = $$portMap[$$port]; \
+	       $$state = if($$listeners | Where-Object { $$_.Port -eq $$port }){'in use'}else{'free'}; \
+	       Write-Host ('  :' + $$port + '  (' + $$label + ')'.PadRight(10) + '  ' + $$state) \
+	   }; \
+	   Write-Host ''"
+
 else
 
 dev: $(INSTALL_STAMP)
@@ -140,5 +196,65 @@ clean:
 	  echo "  $(INSTALL_STAMP)"; rm -f $(INSTALL_STAMP); cleared=1; \
 	fi; \
 	if [ "$$cleared" -eq 0 ]; then echo "Environment is clean."; fi
+
+distclean: clean
+	@if ss -tln 2>/dev/null | grep -q ':8088'; then \
+		echo "==> Stopping API server on :8088 ..."; \
+		kill $$(ss -tlnp 2>/dev/null | grep ':8088' | grep -o 'pid=[0-9]*' | head -1 | cut -d= -f2) 2>/dev/null || true; \
+		sleep 1; \
+	fi
+	@echo "==> Removing .venv ..."
+	@rm -rf .venv
+	@echo "==> Wiping Docker volumes ..."
+	@if [ -f $(COMPOSE_FILE) ]; then \
+		docker compose -f $(COMPOSE_FILE) down -v; \
+	else \
+		echo "  ($(COMPOSE_FILE) not found; skipping)"; \
+	fi
+	@echo "==> Clearing uv cache ..."
+	@$(UV) cache clean
+	@echo "==> distclean complete."
+
+status:
+	@echo ""
+	@echo "IRIS Dev Environment Status"
+	@echo "==========================="
+	@echo ""
+	@echo "Git"
+	@printf "  %-10s %s\n" "branch:" "$$(git branch --show-current 2>/dev/null || echo '(unknown)')"
+	@dirty=$$(git status --porcelain 2>/dev/null | wc -l | tr -d ' '); \
+	 if [ "$$dirty" -eq 0 ]; then \
+	   printf "  %-10s %s\n" "tree:" "clean"; \
+	 else \
+	   printf "  %-10s %s\n" "tree:" "$$dirty file(s) modified -- run: git status"; \
+	 fi
+	@echo ""
+	@echo "Python"
+	@if [ -d .venv ]; then \
+		count=$$($(UV) pip list 2>/dev/null | tail -n +3 | wc -l | tr -d ' '); \
+		printf "  %-10s %s\n" ".venv:" "present  ($$count packages)"; \
+	else \
+		printf "  %-10s %s\n" ".venv:" "absent -- run: make install"; \
+	fi
+	@echo ""
+	@echo "Docker Services  ($(COMPOSE_FILE))"
+	@if [ -f $(COMPOSE_FILE) ]; then \
+		docker compose -f $(COMPOSE_FILE) ps 2>/dev/null || echo "  (docker unavailable)"; \
+	else \
+		echo "  ($(COMPOSE_FILE) not found)"; \
+	fi
+	@echo ""
+	@echo "Dev Ports"
+	@for entry in "5488:Postgres" "6399:Redis" "8088:API"; do \
+		port=$$(echo "$$entry" | cut -d: -f1); \
+		label=$$(echo "$$entry" | cut -d: -f2); \
+		if ss -tln 2>/dev/null | grep -q ":$$port"; then \
+			state="in use"; \
+		else \
+			state="free"; \
+		fi; \
+		printf "  :%-6s %-10s %s\n" "$$port" "($$label)" "$$state"; \
+	done
+	@echo ""
 
 endif
