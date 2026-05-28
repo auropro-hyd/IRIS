@@ -125,8 +125,9 @@ distclean: clean
 
 status:
 	@powershell -NoProfile -ExecutionPolicy Bypass -Command \
-	  "$$branch = git branch --show-current 2>$$null; \
+	  "$$branch = git branch --show-current 2>$$null; if(-not $$branch){ $$branch='(unknown)' }; \
 	   $$dirty  = (git status --porcelain 2>$$null | Measure-Object -Line).Lines; \
+
 	   Write-Host ''; \
 	   Write-Host 'IRIS Dev Environment Status'; \
 	   Write-Host '==========================='; \
@@ -144,10 +145,13 @@ status:
 	   Write-Host ''; \
 	   Write-Host 'Docker Services  ($(COMPOSE_FILE))'; \
 	   if(Test-Path '$(COMPOSE_FILE)'){ \
-	       docker compose -f $(COMPOSE_FILE) ps \
+	       if(Get-Command docker -ErrorAction SilentlyContinue){ \
+	           try{ docker compose -f $(COMPOSE_FILE) ps } catch { Write-Host '  (docker unavailable)' } \
+	       }else{ Write-Host '  (docker unavailable)' } \
 	   }else{ \
 	       Write-Host '  $(COMPOSE_FILE) not found' \
 	   }; \
+
 	   Write-Host ''; \
 	   Write-Host 'Dev Ports'; \
 	   $$listeners = [System.Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().GetActiveTcpListeners(); \
@@ -155,8 +159,9 @@ status:
 	   foreach($$port in @(5488, 6399, 8088)){ \
 	       $$label = $$portMap[$$port]; \
 	       $$state = if($$listeners | Where-Object { $$_.Port -eq $$port }){'in use'}else{'free'}; \
-	       Write-Host ('  :' + $$port + '  (' + $$label + ')'.PadRight(10) + '  ' + $$state) \
+	       Write-Host ('  :' + $$port + '  ' + ('(' + $$label + ')').PadRight(10) + '  ' + $$state) \
 	   }; \
+
 	   Write-Host ''"
 
 else
