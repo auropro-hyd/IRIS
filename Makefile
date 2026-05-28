@@ -64,13 +64,8 @@ test-cov: $(INSTALL_STAMP)
 
 ifeq ($(OS),Windows_NT)
 
-dev:
-	@powershell -NoProfile -Command \
-	  "if(Test-Path '$(COMPOSE_FILE)'){ \
-	       Write-Host 'make dev: API runner lands with T007. Use make up for services.' \
-	   }else{ \
-	       Write-Host 'make dev: not yet wired. T007 adds $(COMPOSE_FILE) and the API runner.' \
-	   }"
+dev: $(INSTALL_STAMP)
+	$(RUN) uvicorn iris_api.main:app --host 0.0.0.0 --port 8088 --reload
 
 up:
 	@powershell -NoProfile -Command \
@@ -110,12 +105,8 @@ clean:
 
 else
 
-dev:
-	@if [ -f $(COMPOSE_FILE) ]; then \
-		echo "make dev: API runner lands with T007. Use 'make up' for services."; \
-	else \
-		echo "make dev: not yet wired (T007 adds $(COMPOSE_FILE) and the API runner)."; \
-	fi
+dev: $(INSTALL_STAMP)
+	$(RUN) uvicorn iris_api.main:app --host 0.0.0.0 --port 8088 --reload
 
 up:
 	@if [ -f $(COMPOSE_FILE) ]; then \

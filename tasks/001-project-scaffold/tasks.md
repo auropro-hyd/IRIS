@@ -30,7 +30,7 @@
 
 ### Dev compose
 
-- [ ] **T007** `[US1] [size: M] [owner: AuroPro]` Author `compose.dev.yaml` with Postgres (custom image bundling pgvector and Apache AGE) and Redis. Port-remap to avoid collisions with other local stacks.
+- [x] **T007** `[US1] [size: M] [owner: AuroPro]` Author `compose.dev.yaml` with Postgres (custom image bundling pgvector and Apache AGE) and Redis. Port-remap to avoid collisions with other local stacks.
       **Acceptance**: `make up` starts both services; `make dev` brings the API up at `http://localhost:8088` and the API returns `200` on `/healthz`.
 
 ### CI for the codebase
@@ -84,8 +84,10 @@
 
 ## Definition of Done for this workstream
 
-1. A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`.
-2. `make lint`, `make typecheck`, `make test`, `make test-cov` all return zero on the scaffold.
-3. The `ci.yml` workflow is green on `main` and gates every PR.
-4. The `docs-ci.yml` workflow stays green on `main` and gates every PR (already in place).
-5. Import-linter rejects a reverse-import test PR.
+| # | Criterion | Met |
+|---|---|---|
+| 1 | A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`. | Partial (API and services work; T009 must add the dev-loop section to `README.md`) |
+| 2 | `make lint`, `make typecheck`, `make test`, `make test-cov` all return zero on the scaffold. | Yes (T004-T006) |
+| 3 | The `ci.yml` workflow is green on `main` and gates every PR. | No (T008 pending) |
+| 4 | The `docs-ci.yml` workflow stays green on `main` and gates every PR. | Yes (T010, already in place) |
+| 5 | Import-linter rejects a reverse-import test PR. | Yes (T003) |
