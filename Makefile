@@ -138,7 +138,7 @@ status:
 	   Write-Host ''; \
 	   Write-Host 'Python'; \
 	   if(Test-Path '.venv'){ \
-	       $$count = (uv pip list 2>$$null | Select-Object -Skip 2 | Measure-Object -Line).Lines; \
+	       $$count = ($(UV) pip list 2>$$null | Select-Object -Skip 2 | Measure-Object -Line).Lines; \
 	       Write-Host ('  .venv     : present  (' + $$count + ' packages)') \
 	   }else{ Write-Host '  .venv     : absent -- run: make install' }; \
 	   Write-Host ''; \
