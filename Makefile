@@ -198,9 +198,9 @@ clean:
 	if [ "$$cleared" -eq 0 ]; then echo "Environment is clean."; fi
 
 distclean: clean
-	@if ss -tln 2>/dev/null | grep -q ':8088'; then \
+	@if lsof -i :8088 -sTCP:LISTEN -t >/dev/null 2>&1; then \
 		echo "==> Stopping API server on :8088 ..."; \
-		kill $$(ss -tlnp 2>/dev/null | grep ':8088' | grep -o 'pid=[0-9]*' | head -1 | cut -d= -f2) 2>/dev/null || true; \
+		kill $$(lsof -ti :8088 -sTCP:LISTEN) 2>/dev/null || true; \
 		sleep 1; \
 	fi
 	@echo "==> Removing .venv ..."
@@ -248,7 +248,7 @@ status:
 	@for entry in "5488:Postgres" "6399:Redis" "8088:API"; do \
 		port=$$(echo "$$entry" | cut -d: -f1); \
 		label=$$(echo "$$entry" | cut -d: -f2); \
-		if ss -tln 2>/dev/null | grep -q ":$$port"; then \
+		if lsof -i :$$port -sTCP:LISTEN -t >/dev/null 2>&1; then \
 			state="in use"; \
 		else \
 			state="free"; \
