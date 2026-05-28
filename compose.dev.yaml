@@ -1,0 +1,47 @@
+# IRIS local development services
+#
+# Ports are remapped away from defaults to avoid collisions with other local stacks:
+#   Postgres  host 5488  -> container 5432
+#   Redis     host 6399  -> container 6379
+#
+# Usage:
+#   make up    start backing services (db + redis)
+#   make down  stop and remove containers
+#   make dev   start the API at http://localhost:8088  (run after make up)
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/postgres.Dockerfile
+    environment:
+      POSTGRES_DB: iris
+      POSTGRES_USER: iris
+      POSTGRES_PASSWORD: iris
+    ports:
+      - "5488:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/01-iris-extensions.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iris -d iris"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6399:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
+  redis-data:
