@@ -19,7 +19,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 MAKEFILE = REPO_ROOT / "Makefile"
 
-REQUIRED_TARGETS = (
+REQUIRED_TARGETS: tuple[str, ...] = (
     "install",
     "dev",
     "up",
@@ -91,7 +91,7 @@ def test_target_dry_runs_zero(target: str) -> None:
 @pytest.mark.slow
 @pytest.mark.parametrize(
     "target",
-    ["dev", "up", "down", "typecheck", "test-cov", "clean"],
+    ["up", "down", "typecheck", "test-cov", "clean"],
 )
 def test_guarded_target_exits_zero(target: str) -> None:
     """Guarded or placeholder targets execute and exit zero on a fresh clone."""

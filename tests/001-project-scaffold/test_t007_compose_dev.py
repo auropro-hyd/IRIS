@@ -122,7 +122,6 @@ def test_postgres_init_sql_enables_age() -> None:
 
 def test_healthz_returns_200() -> None:
     from fastapi.testclient import TestClient
-
     from iris_api.main import app
 
     client = TestClient(app)
@@ -134,7 +133,6 @@ def test_healthz_returns_200() -> None:
 
 def test_healthz_body_is_status_ok() -> None:
     from fastapi.testclient import TestClient
-
     from iris_api.main import app
 
     client = TestClient(app)
