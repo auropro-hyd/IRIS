@@ -1,0 +1,74 @@
+name: ci
+
+# T008: four jobs gate every PR and every push to main.
+#   lint      — ruff check + import-linter architecture contracts
+#   typecheck — mypy --strict on iris-engine and all adapters
+#   test      — pytest default suite (excludes slow and e2e markers)
+#   test-cov  — pytest with branch coverage; fails below 80%
+#
+# Once this workflow has run at least once, add all four job names as
+# required status checks on the main branch protection rule:
+#   Settings → Branches → main → Require status checks →
+#     lint | typecheck | test | test-cov
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: ruff + import-linter
+        run: make lint
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: mypy --strict
+        run: make typecheck
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: pytest
+        run: make test
+
+  test-cov:
+    name: test-cov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: pytest --cov (80% threshold)
+        run: make test-cov

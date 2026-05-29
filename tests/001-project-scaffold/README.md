@@ -71,7 +71,7 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | **T005** | `test_t005_pytest_config.py` | Done | Four markers declared (`slow`, `contract`, `integration`, `e2e`); addopts excludes `slow` and `e2e` by default; `[tool.coverage.*]` sections configured with `fail_under = 80` on `iris_engine`; `@pytest.mark.slow` runs `make test-cov` and asserts `htmlcov/index.html` is produced |
 | **T006** | `test_t006_ruff_mypy.py` | Done | `[tool.ruff]` (line-length 100, py312, E/F/I/UP/B rules); `[tool.mypy]` (strict overrides for `iris_engine` and all adapters, relaxed for `tests.*`); `@pytest.mark.slow` runs `make lint` and `make typecheck` and asserts exit zero |
 | **T007** | `test_t007_compose_dev.py` | Done | `compose.dev.yaml` structure (services, port remapping, custom Dockerfile reference, named volumes); `docker/postgres.Dockerfile` extends pgvector and installs AGE; `docker/postgres-init.sql` enables both extensions; `/healthz` returns `200 {"status": "ok"}` via TestClient; `HealthResponse` Pydantic model; `@pytest.mark.slow` `make up` / `make down` |
-| **T008** | (TBD) | Planned | CI workflow (usually validated in CI, not pytest) |
+| **T008** | N/A | Validated in CI | `.github/workflows/ci.yml` runs `make lint`, `make typecheck`, `make test`, `make test-cov` on `pull_request` and `push` to `main`; failure on any target fails the PR; the workflow is its own proof of correctness |
 | **T009** | (TBD) | Planned | README dev loop, `.env.example` |
 | **T010** | N/A | Done elsewhere | `docs-ci.yml` |
 | **T011** | (TBD) | Planned | Dependabot, CodeQL |
