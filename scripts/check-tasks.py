@@ -42,8 +42,7 @@ def workstream_folders() -> list[Path]:
     if not TASKS_ROOT.exists():
         return []
     return sorted(
-        p for p in TASKS_ROOT.iterdir()
-        if p.is_dir() and WORKSTREAM_DIR_PATTERN.match(p.name)
+        p for p in TASKS_ROOT.iterdir() if p.is_dir() and WORKSTREAM_DIR_PATTERN.match(p.name)
     )
 
 

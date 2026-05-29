@@ -40,7 +40,7 @@
 
 ### Docs
 
-- [ ] **T009** `[P] [US1] [size: S] [owner: AuroPro]` Extend the root `README.md` with a dev-loop section (clone, install, run, tests) and author `.env.example` with the variables the scaffold reads (`IRIS_ENV`, `IRIS_DATABASE_URL`, `IRIS_REDIS_URL`, `IRIS_DEV_AUTH`).
+- [x] **T009** `[P] [US1] [size: S] [owner: AuroPro]` Extend the root `README.md` with a dev-loop section (clone, install, run, tests) and author `.env.example` with the variables the scaffold reads (`IRIS_ENV`, `IRIS_DATABASE_URL`, `IRIS_REDIS_URL`, `IRIS_DEV_AUTH`).
       **Acceptance**: A new engineer follows the README and reaches a working `/healthz` in under fifteen minutes.
 
 ### Docs CI
@@ -68,7 +68,7 @@
 
 ### Pre-commit hygiene
 
-- [ ] **T012** `[P] [size: S] [owner: AuroPro]` Extend the existing `.pre-commit-config.yaml` (currently markdownlint + structural check) with the Python and secrets-scanning hooks needed once code lands. Hooks added:
+- [x] **T012** `[P] [size: S] [owner: AuroPro]` Extend the existing `.pre-commit-config.yaml` (currently markdownlint + structural check) with the Python and secrets-scanning hooks needed once code lands. Hooks added:
       1. `ruff` (lint) and `ruff-format` against staged Python files.
       2. `mypy --strict` against staged Python files in `iris-engine` and the adapter packages.
       3. `pyupgrade` to keep syntax current with the project's Python version.
@@ -86,7 +86,7 @@
 
 | # | Criterion | Met |
 |---|---|---|
-| 1 | A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`. | Partial (API and services work; T009 must add the dev-loop section to `README.md`) |
+| 1 | A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`. | Yes (T007 + T009) |
 | 2 | `make lint`, `make typecheck`, `make test`, `make test-cov` all return zero on the scaffold. | Yes (T004-T006) |
 | 3 | The `ci.yml` workflow is green on `main` and gates every PR. | Partial (workflow file landed in T008; required status checks must be added in GitHub Settings once the first run completes) |
 | 4 | The `docs-ci.yml` workflow stays green on `main` and gates every PR. | Yes (T010, already in place) |
