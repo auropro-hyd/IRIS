@@ -51,7 +51,7 @@ $(INSTALL_STAMP): pyproject.toml uv.lock
 	@echo "==> Installation complete. Proceeding with the requested target."
 	@echo ""
 
-pre-commit-install:
+pre-commit-install: $(INSTALL_STAMP)
 	$(RUN) pre-commit install
 
 lint: $(INSTALL_STAMP)
