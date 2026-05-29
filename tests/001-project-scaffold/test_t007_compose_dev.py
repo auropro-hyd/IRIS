@@ -49,26 +49,26 @@ def test_compose_db_port_remapped() -> None:
     cfg = _load_compose()
     ports = cfg["services"]["db"].get("ports", [])
     host_ports = [str(p).split(":")[0].strip('"') for p in ports]
-    assert EXPECTED_DB_HOST_PORT in host_ports, (
-        f"db service should expose host port {EXPECTED_DB_HOST_PORT}; got {ports}"
-    )
+    assert (
+        EXPECTED_DB_HOST_PORT in host_ports
+    ), f"db service should expose host port {EXPECTED_DB_HOST_PORT}; got {ports}"
 
 
 def test_compose_redis_port_remapped() -> None:
     cfg = _load_compose()
     ports = cfg["services"]["redis"].get("ports", [])
     host_ports = [str(p).split(":")[0].strip('"') for p in ports]
-    assert EXPECTED_REDIS_HOST_PORT in host_ports, (
-        f"redis service should expose host port {EXPECTED_REDIS_HOST_PORT}; got {ports}"
-    )
+    assert (
+        EXPECTED_REDIS_HOST_PORT in host_ports
+    ), f"redis service should expose host port {EXPECTED_REDIS_HOST_PORT}; got {ports}"
 
 
 def test_compose_db_references_custom_dockerfile() -> None:
     cfg = _load_compose()
     build = cfg["services"]["db"].get("build", {})
-    assert "postgres.Dockerfile" in build.get("dockerfile", ""), (
-        "db service 'build.dockerfile' should reference docker/postgres.Dockerfile"
-    )
+    assert "postgres.Dockerfile" in build.get(
+        "dockerfile", ""
+    ), "db service 'build.dockerfile' should reference docker/postgres.Dockerfile"
 
 
 def test_compose_named_volumes_declared() -> None:
@@ -87,16 +87,16 @@ def test_postgres_dockerfile_exists() -> None:
 
 def test_postgres_dockerfile_extends_pgvector() -> None:
     content = POSTGRES_DOCKERFILE.read_text()
-    assert "pgvector/pgvector" in content, (
-        "docker/postgres.Dockerfile should base on pgvector/pgvector"
-    )
+    assert (
+        "pgvector/pgvector" in content
+    ), "docker/postgres.Dockerfile should base on pgvector/pgvector"
 
 
 def test_postgres_dockerfile_installs_age() -> None:
     content = POSTGRES_DOCKERFILE.read_text()
-    assert "age" in content.lower(), (
-        "docker/postgres.Dockerfile should install the Apache AGE extension"
-    )
+    assert (
+        "age" in content.lower()
+    ), "docker/postgres.Dockerfile should install the Apache AGE extension"
 
 
 def test_postgres_init_sql_exists() -> None:
@@ -105,16 +105,14 @@ def test_postgres_init_sql_exists() -> None:
 
 def test_postgres_init_sql_enables_vector() -> None:
     content = POSTGRES_INIT_SQL.read_text()
-    assert "vector" in content.lower(), (
-        "docker/postgres-init.sql should enable the vector extension"
-    )
+    assert (
+        "vector" in content.lower()
+    ), "docker/postgres-init.sql should enable the vector extension"
 
 
 def test_postgres_init_sql_enables_age() -> None:
     content = POSTGRES_INIT_SQL.read_text()
-    assert "age" in content.lower(), (
-        "docker/postgres-init.sql should enable the age extension"
-    )
+    assert "age" in content.lower(), "docker/postgres-init.sql should enable the age extension"
 
 
 # ── /healthz endpoint ─────────────────────────────────────────────────────────
@@ -126,9 +124,7 @@ def test_healthz_returns_200() -> None:
 
     client = TestClient(app)
     response = client.get("/healthz")
-    assert response.status_code == 200, (
-        f"/healthz returned {response.status_code}, expected 200"
-    )
+    assert response.status_code == 200, f"/healthz returned {response.status_code}, expected 200"
 
 
 def test_healthz_body_is_status_ok() -> None:
@@ -137,20 +133,16 @@ def test_healthz_body_is_status_ok() -> None:
 
     client = TestClient(app)
     response = client.get("/healthz")
-    assert response.json() == {"status": "ok"}, (
-        f"/healthz body was {response.json()!r}, expected {{'status': 'ok'}}"
-    )
+    assert response.json() == {
+        "status": "ok"
+    }, f"/healthz body was {response.json()!r}, expected {{'status': 'ok'}}"
 
 
 def test_healthz_response_model_is_typed() -> None:
     from iris_api.main import HealthResponse
 
-    assert hasattr(HealthResponse, "model_fields"), (
-        "HealthResponse should be a Pydantic BaseModel"
-    )
-    assert "status" in HealthResponse.model_fields, (
-        "HealthResponse.status field is missing"
-    )
+    assert hasattr(HealthResponse, "model_fields"), "HealthResponse should be a Pydantic BaseModel"
+    assert "status" in HealthResponse.model_fields, "HealthResponse.status field is missing"
 
 
 # ── make up / make down ───────────────────────────────────────────────────────
@@ -171,8 +163,7 @@ def test_make_up_and_down_exit_zero() -> None:
             check=False,
         )
         assert up.returncode == 0, (
-            f"make up exited {up.returncode}\n"
-            f"stdout:\n{up.stdout}\nstderr:\n{up.stderr}"
+            f"make up exited {up.returncode}\n" f"stdout:\n{up.stdout}\nstderr:\n{up.stderr}"
         )
     finally:
         subprocess.run(

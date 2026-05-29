@@ -47,6 +47,46 @@ The five workstreams in [`tasks/`](tasks/), in dependency order:
 
 The wave parallelises across 003 and 004 once 002 is in. Workstream 005 depends on both. Sequencing details are in [`tasks/README.md`](tasks/README.md).
 
+## Local development
+
+**Prerequisites:** [Docker](https://docs.docker.com/get-docker/), [uv](https://docs.astral.sh/uv/getting-started/installation/), `make`, Python 3.12.
+
+```bash
+# 1. Clone and install workspace packages
+git clone https://github.com/auropro-hyd/IRIS.git
+cd IRIS
+make install
+
+# 2. Copy environment variables and adjust if needed
+cp .env.example .env
+
+# 3. Start backing services (Postgres on :5488, Redis on :6399)
+make up
+
+# 4. Start the API with hot-reload (http://localhost:8088)
+make dev
+```
+
+Verify the stack is healthy:
+
+```bash
+curl http://localhost:8088/healthz
+# {"status":"ok"}
+```
+
+Run the test suite:
+
+```bash
+make test       # fast suite (excludes slow and e2e)
+make test-cov   # with coverage report in htmlcov/
+```
+
+Stop services when done:
+
+```bash
+make down
+```
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.

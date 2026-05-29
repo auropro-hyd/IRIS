@@ -1,20 +1,16 @@
 # Pre-commit hooks for IRIS (auropro-hyd/IRIS).
 #
-# Today the repo holds markdown documents, the task tree, and a small Python
-# script. The hook set below mirrors what runs in docs-ci on every PR, so a
-# contributor who installs the hooks locally gets the same gates before
-# their commits go anywhere. T012 extends this file with the Python lint /
-# type-check / secret-scan hooks once the codebase under apps/ and packages/
-# lands.
+# T012 extends this file with Python lint / type-check / secret-scan hooks
+# now that apps/ and packages/ have landed. The markdownlint and
+# tasks-structural-check hooks from before T012 are retained.
 #
-# Install with:
+# Install hooks after cloning:
 #
-#     pip install pre-commit
-#     pre-commit install
+#     make pre-commit-install
 #
-# Run against all files (for example, after editing the config):
+# Run against all files manually:
 #
-#     pre-commit run --all-files
+#     uv run pre-commit run --all-files
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -27,8 +23,41 @@ repos:
       - id: check-merge-conflict
       - id: check-yaml
       - id: check-json
+      - id: check-toml
       - id: check-added-large-files
-        args: ["--maxkb=2000"]
+        args: ["--maxkb=500"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic, types-PyYAML]
+        files: '^(packages/iris-engine|packages/iris-adapters)/.*\.py$'
+        args: [--strict]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.0
+    hooks:
+      - id: pyupgrade
+        args: [--py312-plus]
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.0
+    hooks:
+      - id: gitleaks
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.41.0
