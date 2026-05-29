@@ -23,9 +23,7 @@ LAYER_CONTRACT_NAME = "IRIS apps, packages, adapters, engine"
 INDEPENDENCE_CONTRACT_NAME = "Adapters do not depend on each other"
 FORBIDDEN_CONTRACT_NAME = "Mid-packages do not import concrete adapters"
 
-EXPECTED_MID_PACKAGES = frozenset(
-    {"iris_agents", "iris_data", "iris_config", "iris_observability"}
-)
+EXPECTED_MID_PACKAGES = frozenset({"iris_agents", "iris_data", "iris_config", "iris_observability"})
 
 # Must match [[tool.importlinter.contracts]] layers in root pyproject.toml exactly.
 EXPECTED_LAYERS: tuple[str, ...] = (

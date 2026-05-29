@@ -1,7 +1,7 @@
 # Workstream 001: project scaffold acceptance tests
 
-**Workstream**: `001-project-scaffold`  
-**Tasks**: [`tasks/001-project-scaffold/tasks.md`](../../tasks/001-project-scaffold/tasks.md)  
+**Workstream**: `001-project-scaffold`
+**Tasks**: [`tasks/001-project-scaffold/tasks.md`](../../tasks/001-project-scaffold/tasks.md)
 **Plan**: [`tasks/001-project-scaffold/plan.md`](../../tasks/001-project-scaffold/plan.md)
 
 This folder holds **acceptance tests for workstream 001 tasks**. Names mirror `tasks/001-project-scaffold/`. They are not unit, contract, integration, or e2e tests (see [`tests/README.md`](../README.md) and [`docs/engineering/best-practices.md`](../../docs/engineering/best-practices.md)).
@@ -72,10 +72,10 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | **T006** | `test_t006_ruff_mypy.py` | Done | `[tool.ruff]` (line-length 100, py312, E/F/I/UP/B rules); `[tool.mypy]` (strict overrides for `iris_engine` and all adapters, relaxed for `tests.*`); `@pytest.mark.slow` runs `make lint` and `make typecheck` and asserts exit zero |
 | **T007** | `test_t007_compose_dev.py` | Done | `compose.dev.yaml` structure (services, port remapping, custom Dockerfile reference, named volumes); `docker/postgres.Dockerfile` extends pgvector and installs AGE; `docker/postgres-init.sql` enables both extensions; `/healthz` returns `200 {"status": "ok"}` via TestClient; `HealthResponse` Pydantic model; `@pytest.mark.slow` `make up` / `make down` |
 | **T008** | (TBD) | Planned | CI workflow (usually validated in CI, not pytest) |
-| **T009** | (TBD) | Planned | README dev loop, `.env.example` |
+| **T009** | N/A | Done | README and `.env.example` are prose and config; acceptance is a human following the dev-loop in under fifteen minutes |
 | **T010** | N/A | Done elsewhere | `docs-ci.yml` |
 | **T011** | (TBD) | Planned | Dependabot, CodeQL |
-| **T012** | (TBD) | Planned | pre-commit hooks |
+| **T012** | N/A | Done | pre-commit configuration is self-validating; acceptance is `pre-commit run --all-files` returning zero (not pytest) |
 
 ## Adding a test for a new task
 
@@ -100,7 +100,7 @@ Other markers (`contract`, `integration`, `e2e`) are registered in T005 and used
 | Slow tests | `test_uv_sync_all_packages_creates_venv` (`uv sync`) | `test_uv_pip_list_shows_all_members_editable` (`uv pip list`) |
 | Fast tests | Layout and workspace config (9 tests) | `test_each_namespace_imports` |
 | Typical run | `uv sync --all-packages` first; default pytest; `-m slow` for subprocess checks | Same sync step required before imports or `uv pip list` |
-| Why not `tests/contract` or `tests/integration`? | Scaffold milestones for workstream 001 only; see [`tests/README.md`](../README.md) |
+| Why not `tests/contract` or `tests/integration`? | Scaffold milestones for workstream 001 only; see [`tests/README.md`](../README.md) | (same) |
 
 ### T003 import boundaries
 

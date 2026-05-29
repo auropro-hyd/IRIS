@@ -60,9 +60,9 @@ def test_uv_pip_list_shows_all_members_editable() -> None:
     for member, dist_name in sorted(MEMBER_DISTRIBUTION_NAMES.items()):
         assert dist_name in listing, f"{dist_name} missing from uv pip list"
         member_root = str((REPO_ROOT / member).resolve())
-        assert member_root in listing, (
-            f"{dist_name} is not installed in editable mode (expected path {member_root})"
-        )
+        assert (
+            member_root in listing
+        ), f"{dist_name} is not installed in editable mode (expected path {member_root})"
 
 
 def test_each_namespace_imports() -> None:
@@ -73,6 +73,6 @@ def test_each_namespace_imports() -> None:
         module_file = module.__file__
         assert module_file is not None, f"{package} has no __file__"
         module_path = Path(module_file).resolve().parent
-        assert module_path == expected_src, (
-            f"import {package} resolved to {module_path}, expected {expected_src}"
-        )
+        assert (
+            module_path == expected_src
+        ), f"import {package} resolved to {module_path}, expected {expected_src}"
