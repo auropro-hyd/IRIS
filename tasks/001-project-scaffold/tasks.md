@@ -35,7 +35,7 @@
 
 ### CI for the codebase
 
-- [ ] **T008** `[P] [US2] [size: M] [owner: AuroPro]` Add `.github/workflows/ci.yml` running `make lint`, `make typecheck`, `make test`, `make test-cov` on `pull_request` and `push` to `main`. Runs alongside the existing `docs-ci.yml`. Adds these as required status checks on `main` once the workflow has run at least once.
+- [x] **T008** `[P] [US2] [size: M] [owner: AuroPro]` Add `.github/workflows/ci.yml` running `make lint`, `make typecheck`, `make test`, `make test-cov` on `pull_request` and `push` to `main`. Runs alongside the existing `docs-ci.yml`. Adds these as required status checks on `main` once the workflow has run at least once.
       **Acceptance**: A test PR triggers the workflow; failure on any target fails the PR. The four `ci.yml` jobs appear in the required-status-check list on the `main` branch protection rule.
 
 ### Docs
@@ -88,6 +88,6 @@
 |---|---|---|
 | 1 | A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`. | Partial (API and services work; T009 must add the dev-loop section to `README.md`) |
 | 2 | `make lint`, `make typecheck`, `make test`, `make test-cov` all return zero on the scaffold. | Yes (T004-T006) |
-| 3 | The `ci.yml` workflow is green on `main` and gates every PR. | No (T008 pending) |
+| 3 | The `ci.yml` workflow is green on `main` and gates every PR. | Partial (workflow file landed in T008; required status checks must be added in GitHub Settings once the first run completes) |
 | 4 | The `docs-ci.yml` workflow stays green on `main` and gates every PR. | Yes (T010, already in place) |
 | 5 | Import-linter rejects a reverse-import test PR. | Yes (T003) |
