@@ -8,7 +8,11 @@ This repository is the home of IRIS: the architecture proposal, the task breakdo
 - A vulnerability in any GitHub Action referenced from `.github/workflows/` or in any third-party dependency used by the codebase.
 - A supply-chain risk in any tool referenced from CI, pre-commit hooks, or the production stack.
 - A flaw in the task structural check (`scripts/check-tasks.py`) that could let unsafe content land on `main`.
-- A code-level vulnerability anywhere under `apps/`, `packages/`, or `tools/`.
+- A code-level vulnerability anywhere under `apps/`, `packages/`, or `tools/`. The components now in the tree are: the FastAPI service (`apps/api`), the async worker (`apps/worker`), and the React workbench (`apps/workbench`).
+
+## Automated scanning
+
+CodeQL runs on every pull request and on a weekly schedule via `.github/workflows/codeql.yml`. It scans Python (the engine, adapters, API, and worker) and JavaScript / TypeScript (the workbench) using the default query suite plus `security-extended`. Any high-severity finding blocks merge. If you discover a finding that CodeQL missed, report it through the channel below rather than referencing the scan result in a public issue.
 
 ## How to report
 

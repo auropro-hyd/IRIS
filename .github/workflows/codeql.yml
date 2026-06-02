@@ -1,0 +1,45 @@
+name: codeql
+
+# Security scanning for Python and JavaScript / TypeScript.
+# Runs on every PR to main, every push to main, and on a weekly schedule so
+# the dependency graph stays current even when the tree is quiet.
+#
+# Queries: GitHub's default suite plus security-extended (the + prefix adds
+# to the defaults rather than replacing them).
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Monday 09:00 UTC (11:30 IST). Weekly baseline scan.
+    - cron: "0 9 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  codeql:
+    name: codeql (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, javascript-typescript]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: initialise CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-extended
+
+      - name: analyse
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
