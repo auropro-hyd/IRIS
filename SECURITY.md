@@ -12,7 +12,7 @@ This repository is the home of IRIS: the architecture proposal, the task breakdo
 
 ## Automated scanning
 
-CodeQL runs on every pull request and on a weekly schedule via `.github/workflows/codeql.yml`. It scans Python (the engine, adapters, API, and worker) and JavaScript / TypeScript (the workbench) using the default query suite plus `security-extended`. Any high-severity finding blocks merge. If you discover a finding that CodeQL missed, report it through the channel below rather than referencing the scan result in a public issue.
+CodeQL runs on every pull request and on a weekly schedule via `.github/workflows/codeql.yml`. It scans Python (the engine, adapters, API, and worker) and JavaScript / TypeScript (the workbench) using the default query suite plus `security-extended`. Findings are surfaced as Security tab alerts and should be addressed or triaged before merging. If you discover a finding that CodeQL missed, report it through the channel below rather than referencing the scan result in a public issue.
 
 ## How to report
 

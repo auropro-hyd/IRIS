@@ -13,8 +13,8 @@ on:
   push:
     branches: [main]
   schedule:
-    # Monday 09:00 UTC (11:30 IST). Weekly baseline scan.
-    - cron: "0 9 * * 1"
+    # Monday 09:00 IST (03:30 UTC). Weekly baseline scan.
+    - cron: "30 3 * * 1"
 
 permissions:
   contents: read
