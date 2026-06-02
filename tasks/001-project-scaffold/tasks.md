@@ -88,6 +88,6 @@
 |---|---|---|
 | 1 | A fresh clone reaches `/healthz` `200` in under fifteen minutes following `README.md`. | Yes (T007 + T009) |
 | 2 | `make lint`, `make typecheck`, `make test`, `make test-cov` all return zero on the scaffold. | Yes (T004-T006) |
-| 3 | The `ci.yml` workflow is green on `main` and gates every PR. | Partial (workflow file landed in T008; required status checks must be added in GitHub Settings once the first run completes) |
+| 3 | The `ci.yml` workflow is green on `main` and gates every PR. | Yes (T008, merged in #19; add lint/typecheck/test/test-cov as required status checks in GitHub Settings) |
 | 4 | The `docs-ci.yml` workflow stays green on `main` and gates every PR. | Yes (T010, already in place) |
 | 5 | Import-linter rejects a reverse-import test PR. | Yes (T003) |

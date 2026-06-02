@@ -87,6 +87,8 @@ Stop services when done:
 make down
 ```
 
+Other useful targets: `make distclean` removes `.venv/` and Docker volumes for a full reset; `make status` shows which services are running.
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.
