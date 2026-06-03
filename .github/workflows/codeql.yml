@@ -52,13 +52,13 @@ jobs:
 
       - name: initialise CodeQL
         if: steps.src.outputs.count != '0'
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: +security-extended
 
       - name: analyse
         if: steps.src.outputs.count != '0'
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{ matrix.language }}"
