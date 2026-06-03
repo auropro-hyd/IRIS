@@ -63,7 +63,7 @@ def check_tasks_has_task_lines(folder: Path) -> list[str]:
     if not TASK_LINE_PATTERN.search(content):
         return [
             f"{folder.name}/tasks.md: no task line found "
-            "(expected at least one `- [ ] **T0xx** ...`)."
+            "(expected at least one - [ ] T0xx ...or- [x] T0xx ...)."
         ]
     return []
 
