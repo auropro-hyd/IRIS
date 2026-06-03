@@ -1,4 +1,4 @@
-"""TaxonomySchema: classification taxonomy for a Product bundle.
+"""TaxonomySchema — classification taxonomy for a Product bundle.
 
 Lifted from the PoC ClassificationConfig; tightened with uniqueness and
 referential-integrity validators.
