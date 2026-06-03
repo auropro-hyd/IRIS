@@ -62,6 +62,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-merge-conflict
       - id: check-yaml
+      - id: check-json
       - id: check-toml
       - id: check-added-large-files
         args: ["--maxkb=500"]

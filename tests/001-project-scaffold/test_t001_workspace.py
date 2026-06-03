@@ -26,6 +26,7 @@ def _venv_python_executable(repo_root: Path) -> Path:
         return repo_root / ".venv" / "Scripts" / "python.exe"
     return repo_root / ".venv" / "bin" / "python"
 
+
 # uv workspace members (apps/workbench is pnpm, not listed here)
 EXPECTED_WORKSPACE_MEMBERS: frozenset[str] = frozenset(
     {

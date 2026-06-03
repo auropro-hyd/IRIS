@@ -1,0 +1,14 @@
+# Gitleaks configuration for IRIS.
+# https://github.com/gitleaks/gitleaks#configuration
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Project-level false-positive allowlist"
+paths = [
+    # .secrets.baseline stores SHA-256 hashes of known-safe findings from
+    # detect-secrets. The hashed values look like API keys to gitleaks but
+    # are not secrets.
+    '''^\.secrets\.baseline$''',
+]
