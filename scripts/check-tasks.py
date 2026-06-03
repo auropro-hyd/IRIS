@@ -29,7 +29,7 @@ TASKS_ROOT = REPO_ROOT / "tasks"
 
 REQUIRED_FILES = ("spec.md", "plan.md", "tasks.md")
 SPEC_REQUIRED_KEYS = ("Workstream", "Status", "Architect", "Input")
-TASK_LINE_PATTERN = re.compile(r"^- \[ \] \*\*T0\d{2,}\*\*", re.MULTILINE)
+TASK_LINE_PATTERN = re.compile(r"^- \[[ x]\] \*\*T0\d{2,}\*\*", re.MULTILINE)
 SPEC_KEY_PATTERN = "**{key}**:"
 
 # Workstream folders look like `001-project-scaffold`. The `tasks/README.md`

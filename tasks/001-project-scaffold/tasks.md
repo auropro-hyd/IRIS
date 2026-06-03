@@ -56,7 +56,7 @@
 
 ### Dependency and security hygiene
 
-- [ ] **T011** `[P] [size: M] [owner: AuroPro]` Extend the existing dependency and security setup to cover the codebase as it lands.
+- [x] **T011** `[P] [size: M] [owner: AuroPro]` Extend the existing dependency and security setup to cover the codebase as it lands.
       1. **`.github/dependabot.yml`** (currently covers `github-actions` only) gains three more ecosystems as the codebase appears: `pip` (or `uv` once Dependabot supports it, otherwise the generated `requirements.txt`), `npm` (workbench), and `docker` (Dockerfiles under `docker/`). Weekly schedule, label `dependencies`, auto-request the architect via `CODEOWNERS`. Group minor + patch updates per ecosystem to keep PR volume low.
       2. **CodeQL** workflow at `.github/workflows/codeql.yml` scanning Python and JavaScript / TypeScript. Default queries plus `security-extended`. Runs on PR and on a weekly schedule. Added once the first non-trivial code lands.
       3. **`SECURITY.md`** is already in place; updated to mention any new reporting surface as new components ship.
