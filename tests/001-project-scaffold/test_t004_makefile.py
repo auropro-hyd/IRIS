@@ -65,9 +65,7 @@ def test_makefile_declares_required_phony_targets() -> None:
 @pytest.mark.parametrize("target", REQUIRED_TARGETS)
 def test_target_has_recipe(target: str) -> None:
     text = MAKEFILE.read_text()
-    assert _target_recipe_lines(text, target), (
-        f"target {target!r} has no recipe in Makefile"
-    )
+    assert _target_recipe_lines(text, target), f"target {target!r} has no recipe in Makefile"
 
 
 @pytest.mark.parametrize("target", REQUIRED_TARGETS)
@@ -126,6 +124,4 @@ def test_test_recipe_calls_pytest() -> None:
 def test_install_recipe_calls_uv_sync() -> None:
     text = MAKEFILE.read_text()
     recipe = "\n".join(_target_recipe_lines(text, "install"))
-    assert "sync" in recipe, (
-        f"install recipe does not call uv sync:\n{recipe}"
-    )
+    assert "sync" in recipe, f"install recipe does not call uv sync:\n{recipe}"

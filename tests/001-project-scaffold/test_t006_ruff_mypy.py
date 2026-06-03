@@ -43,16 +43,14 @@ def test_ruff_section_exists() -> None:
 
 def test_ruff_line_length_is_100() -> None:
     cfg = _load_pyproject()
-    assert cfg["tool"]["ruff"].get("line-length") == 100, (
-        "[tool.ruff] line-length should be 100"
-    )
+    assert cfg["tool"]["ruff"].get("line-length") == 100, "[tool.ruff] line-length should be 100"
 
 
 def test_ruff_target_version_is_py312() -> None:
     cfg = _load_pyproject()
-    assert cfg["tool"]["ruff"].get("target-version") == "py312", (
-        "[tool.ruff] target-version should be py312"
-    )
+    assert (
+        cfg["tool"]["ruff"].get("target-version") == "py312"
+    ), "[tool.ruff] target-version should be py312"
 
 
 def test_ruff_lint_selects_core_rules() -> None:
@@ -66,9 +64,9 @@ def test_ruff_lint_selects_core_rules() -> None:
 def test_ruff_importable() -> None:
     import importlib.util
 
-    assert importlib.util.find_spec("ruff") is not None, (
-        "ruff is not installed in the active environment"
-    )
+    assert (
+        importlib.util.find_spec("ruff") is not None
+    ), "ruff is not installed in the active environment"
 
 
 # ── mypy ─────────────────────────────────────────────────────────────────────
@@ -81,9 +79,9 @@ def test_mypy_section_exists() -> None:
 
 def test_mypy_python_version_is_312() -> None:
     cfg = _load_pyproject()
-    assert cfg["tool"]["mypy"].get("python_version") == "3.12", (
-        "[tool.mypy] python_version should be '3.12'"
-    )
+    assert (
+        cfg["tool"]["mypy"].get("python_version") == "3.12"
+    ), "[tool.mypy] python_version should be '3.12'"
 
 
 def test_mypy_strict_overrides_cover_engine_and_adapters() -> None:
@@ -95,9 +93,7 @@ def test_mypy_strict_overrides_cover_engine_and_adapters() -> None:
             for mod in override.get("module", []):
                 strict_modules.add(mod)
     missing = sorted(m for m in STRICT_MODULES if m not in strict_modules)
-    assert not missing, (
-        f"mypy strict overrides missing for: {missing}"
-    )
+    assert not missing, f"mypy strict overrides missing for: {missing}"
 
 
 def test_mypy_tests_override_relaxes_errors() -> None:
@@ -114,9 +110,9 @@ def test_mypy_tests_override_relaxes_errors() -> None:
 def test_mypy_importable() -> None:
     import importlib.util
 
-    assert importlib.util.find_spec("mypy") is not None, (
-        "mypy is not installed in the active environment"
-    )
+    assert (
+        importlib.util.find_spec("mypy") is not None
+    ), "mypy is not installed in the active environment"
 
 
 # ── make targets ─────────────────────────────────────────────────────────────

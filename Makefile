@@ -14,23 +14,24 @@ ADAPTER_SRCS := $(wildcard packages/iris-adapters/*/src)
 INSTALL_STAMP := .venv/.install-stamp
 
 .DEFAULT_GOAL := help
-.PHONY: help install dev up down lint typecheck test test-cov clean distclean status
+.PHONY: help install dev up down lint typecheck test test-cov clean distclean status pre-commit-install
 
 # ── shared targets (bash + Windows) ─────────────────────────────────────────
 
 help:
 	@echo "IRIS Makefile targets:"
-	@echo "  install     sync all workspace packages into .venv"
-	@echo "  dev         start the API at http://localhost:8088 (needs compose.dev.yaml)"
-	@echo "  up          start Postgres and Redis dev services"
-	@echo "  down        stop Postgres and Redis dev services"
-	@echo "  lint        ruff check + import-linter architecture contracts"
-	@echo "  typecheck   mypy --strict on iris-engine and all adapters"
-	@echo "  test        pytest (contract and integration markers included; e2e excluded)"
-	@echo "  test-cov    pytest with branch coverage; HTML report in htmlcov/"
-	@echo "  clean       remove __pycache__, .pytest_cache, htmlcov, .coverage, etc."
-	@echo "  distclean   clean + remove .venv, Docker volumes, and uv cache"
-	@echo "  status      show git state, venv, Docker service health, and port usage"
+	@echo "  install              sync all workspace packages into .venv"
+	@echo "  dev                  start the API at http://localhost:8088 (needs compose.dev.yaml)"
+	@echo "  up                   start Postgres and Redis dev services"
+	@echo "  down                 stop Postgres and Redis dev services"
+	@echo "  lint                 ruff check + import-linter architecture contracts"
+	@echo "  typecheck            mypy --strict on iris-engine and all adapters"
+	@echo "  test                 pytest (contract and integration markers included; e2e excluded)"
+	@echo "  test-cov             pytest with branch coverage; HTML report in htmlcov/"
+	@echo "  clean                remove __pycache__, .pytest_cache, htmlcov, .coverage, etc."
+	@echo "  distclean            clean + remove .venv, Docker volumes, and uv cache"
+	@echo "  status               show git state, venv, Docker service health, and port usage"
+	@echo "  pre-commit-install   install pre-commit hooks into .git/hooks/"
 
 install:
 	$(UV) sync --all-packages
@@ -49,6 +50,9 @@ $(INSTALL_STAMP): pyproject.toml uv.lock
 	@echo ""
 	@echo "==> Installation complete. Proceeding with the requested target."
 	@echo ""
+
+pre-commit-install: $(INSTALL_STAMP)
+	$(RUN) pre-commit install
 
 lint: $(INSTALL_STAMP)
 	$(RUN) ruff check .
