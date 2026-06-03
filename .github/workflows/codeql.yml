@@ -43,8 +43,8 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.language }}" = "javascript-typescript" ]; then
-            count=$(find . \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) \
-              ! -path '*/node_modules/*' ! -path '*/.git/*' | wc -l | tr -d ' ')
+            count=$(find apps/workbench \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) \
+              ! -path '*/node_modules/*' | wc -l | tr -d ' ')
           else
             count=1
           fi
