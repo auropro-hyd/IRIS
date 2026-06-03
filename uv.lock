@@ -463,11 +463,31 @@ requires-dist = [
 name = "iris-cli"
 version = "0.0.0"
 source = { editable = "tools/iris-cli" }
+dependencies = [
+    { name = "click" },
+    { name = "iris-config" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "click", specifier = ">=8" },
+    { name = "iris-config", editable = "packages/iris-config" },
+]
 
 [[package]]
 name = "iris-config"
 version = "0.0.0"
 source = { editable = "packages/iris-config" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2" },
+    { name = "pyyaml", specifier = ">=6" },
+]
 
 [[package]]
 name = "iris-data"

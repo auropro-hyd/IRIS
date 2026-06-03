@@ -6,7 +6,7 @@
 
 ## Sprint 0: Schema
 
-- [ ] **T020** `[US1] [size: M] [owner: AuroPro]` Lift the PoC's `ClassificationConfig` (in `claims-intake-automation/backend/models/classification_config.py` and the identical copy in `Submission-Workbench-v2`) into `iris_config/schema/taxonomy.py`. Tighten validation: document types must be unique; required-documents list must reference declared types.
+- [x] **T020** `[US1] [size: M] [owner: AuroPro]` Lift the PoC's `ClassificationConfig` (in `claims-intake-automation/backend/models/classification_config.py` and the identical copy in `Submission-Workbench-v2`) into `iris_config/schema/taxonomy.py`. Tighten validation: document types must be unique; required-documents list must reference declared types.
       **Acceptance**: Importing the schema raises a clear `pydantic.ValidationError` on each violation.
 
 - [ ] **T021** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/product.py` with `ProductSchema` (region, retention, adapters reference, taxonomy reference, extraction reference, prompts reference).
