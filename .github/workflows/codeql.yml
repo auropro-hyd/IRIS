@@ -1,0 +1,64 @@
+name: codeql
+
+# Security scanning for Python and JavaScript / TypeScript.
+# Runs on every PR to main, every push to main, and on a weekly schedule so
+# the dependency graph stays current even when the tree is quiet.
+#
+# Queries: GitHub's default suite plus security-extended (the + prefix adds
+# to the defaults rather than replacing them).
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Monday 09:00 IST (03:30 UTC). Weekly baseline scan.
+    - cron: "30 3 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  codeql:
+    name: codeql (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, javascript-typescript]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # CodeQL requires at least one source file to build a database.
+      # apps/workbench is a placeholder today with no .ts/.js source yet.
+      # This step counts eligible files so the scan steps can be skipped
+      # gracefully rather than failing. Remove this guard once the workbench
+      # has real source -- the matrix entry stays as-is.
+      - name: check for source files
+        id: src
+        shell: bash
+        run: |
+          if [ "${{ matrix.language }}" = "javascript-typescript" ]; then
+            count=$(find apps/workbench \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' \) \
+              ! -path '*/node_modules/*' | wc -l | tr -d ' ')
+          else
+            count=1
+          fi
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: initialise CodeQL
+        if: steps.src.outputs.count != '0'
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-extended
+
+      - name: analyse
+        if: steps.src.outputs.count != '0'
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

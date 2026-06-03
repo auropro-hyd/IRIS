@@ -29,7 +29,7 @@ TASKS_ROOT = REPO_ROOT / "tasks"
 
 REQUIRED_FILES = ("spec.md", "plan.md", "tasks.md")
 SPEC_REQUIRED_KEYS = ("Workstream", "Status", "Architect", "Input")
-TASK_LINE_PATTERN = re.compile(r"^- \[ \] \*\*T0\d{2,}\*\*", re.MULTILINE)
+TASK_LINE_PATTERN = re.compile(r"^- \[[ x]\] \*\*T0\d{2,}\*\*", re.MULTILINE)
 SPEC_KEY_PATTERN = "**{key}**:"
 
 # Workstream folders look like `001-project-scaffold`. The `tasks/README.md`
@@ -63,7 +63,7 @@ def check_tasks_has_task_lines(folder: Path) -> list[str]:
     if not TASK_LINE_PATTERN.search(content):
         return [
             f"{folder.name}/tasks.md: no task line found "
-            "(expected at least one `- [ ] **T0xx** ...`)."
+            "(expected at least one - [ ] T0xx ...or- [x] T0xx ...)."
         ]
     return []
 

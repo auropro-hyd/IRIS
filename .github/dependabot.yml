@@ -1,8 +1,8 @@
 version: 2
 
 updates:
-  # Keep the GitHub Actions referenced by docs-ci.yml current. Catches
-  # security updates on actions/checkout, actions/setup-node, etc.
+  # Keep the GitHub Actions referenced by docs-ci.yml and ci.yml current.
+  # Catches security updates on actions/checkout, astral-sh/setup-uv, etc.
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -17,11 +17,86 @@ updates:
     labels:
       - dependencies
       - github-actions
-    reviewers:
-      - anmolg1997
+    groups:
+      github-actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
 
-# Only the github-actions block is active today because the repo has no
-# Python or JS manifests yet. T011 extends this file with `pip` (or `uv`),
-# `npm`, and `docker` blocks once apps/, packages/, and docker/ land.
-# `markdownlint-cli` is invoked via `npx` with a pinned version in the
-# docs-ci workflow; Dependabot does not parse inline version strings.
+  # Python workspace root. Dependabot pip reads [dependency-groups].dev in
+  # the root pyproject.toml (ruff, mypy, pytest, httpx, import-linter, etc.).
+  # Individual workspace members (packages/, apps/) carry their own
+  # pyproject.toml files but uv is not yet a native Dependabot ecosystem;
+  # switch this block to `package-ecosystem: uv` once GitHub adds support.
+  # After merging any Dependabot PR here, run `uv sync` to regenerate uv.lock.
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels:
+      - dependencies
+      - python
+    groups:
+      python-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # Workbench frontend (apps/workbench/package.json).
+  - package-ecosystem: npm
+    directory: /apps/workbench
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels:
+      - dependencies
+      - javascript
+    groups:
+      npm-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # Dockerfiles under docker/ (api.Dockerfile, worker.Dockerfile,
+  # postgres.Dockerfile). Dependabot scans FROM image references and
+  # opens PRs when newer digests are published on Docker Hub or GHCR.
+  - package-ecosystem: docker
+    directory: /docker
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Kolkata
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    labels:
+      - dependencies
+      - docker
+    groups:
+      docker-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
