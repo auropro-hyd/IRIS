@@ -7,9 +7,6 @@ dependencies = [
     "iris-config",
 ]
 
-[project.scripts]
-iris = "iris_cli:iris"
-
 [tool.uv.sources]
 iris-config = { workspace = true }
 
