@@ -6,10 +6,13 @@ name: ci
 #   test:      pytest default suite (excludes slow and e2e markers)
 #   test-cov:  pytest with branch coverage; fails below 80%
 #
-# Once this workflow has run at least once, add all four job names as
+# T027: adds a fifth job.
+#   config-validate: iris config validate config/products/ (all bundles must be valid)
+#
+# Once this workflow has run at least once, add all five job names as
 # required status checks on the main branch protection rule:
 #   Settings → Branches → main → Require status checks →
-#     lint | typecheck | test | test-cov
+#     lint | typecheck | test | test-cov | config-validate
 
 on:
   pull_request:
@@ -82,6 +85,9 @@ jobs:
       - uses: astral-sh/setup-uv@v8.1.0
         with:
           python-version: "3.12"
+
+      - name: install workspace packages
+        run: uv sync --all-packages
 
       - name: validate all Product bundles
         run: uv run iris config validate config/products/
