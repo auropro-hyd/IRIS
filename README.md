@@ -104,6 +104,15 @@ A **Product bundle** is the YAML configuration that drives one line of business 
 
 [`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning most field types and validators (text, number, date, checkbox, phone, email, textarea) and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
 
+### Validating a bundle
+
+`iris config validate` loads and validates a bundle against the full schema, including regex compilation, range bounds, required documents, and Jinja2 template variable declarations. Pass a single bundle directory or the products root to validate all bundles at once. Exit code 0 means every bundle is valid; a non-zero exit prints the bundle slug, file, field path, and invalid value.
+
+```bash
+iris config validate config/products/commercial-auto-claims/in/   # single bundle
+iris config validate config/products/                              # all bundles
+```
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.
