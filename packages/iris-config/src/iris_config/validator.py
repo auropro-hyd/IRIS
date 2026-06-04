@@ -1,8 +1,8 @@
 """Format Pydantic ValidationErrors into rich ConfigLoadErrors.
 
-T026: each error line includes bundle slug, file path, field path (loc),
-the invalid value, and Pydantic's message (which for Literal types lists
-the valid options as the suggested fix).
+T026: the formatted message has a single header containing the bundle slug
+and file path, followed by one line per error with the field path (loc),
+Pydantic's message, and the invalid value.
 """
 
 from pathlib import Path

@@ -100,7 +100,7 @@ A **Product bundle** is the YAML configuration that drives one line of business 
 | `extraction.yaml` | Ordered list of FNOL fields with per-field validators (regex, range, allowed values) |
 | `prompts/` | Jinja2 templates for the classify, extract, and summarise agents |
 
-**Starter example — `commercial-auto-claims/in/`**
+**Starter example: `commercial-auto-claims/in/`**
 
 [`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning every field type and validator, and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
 
