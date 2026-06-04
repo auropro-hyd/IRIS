@@ -97,3 +97,11 @@ def test_error_message_names_the_undeclared_reference() -> None:
             document_types=_VALID_DOC_TYPES,
             required_documents=["ghost_doc"],
         )
+
+
+def test_duplicate_required_documents_entries_raise_validation_error() -> None:
+    with pytest.raises(ValidationError, match="duplicate entries"):
+        TaxonomySchema(
+            document_types=_VALID_DOC_TYPES,
+            required_documents=["police_report", "police_report"],
+        )

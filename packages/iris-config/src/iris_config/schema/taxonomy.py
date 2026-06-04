@@ -39,6 +39,18 @@ class TaxonomySchema(BaseModel):
         return self
 
     @model_validator(mode="after")
+    def _required_documents_no_duplicates(self) -> "TaxonomySchema":
+        seen: set[str] = set()
+        duplicates: set[str] = set()
+        for req in self.required_documents:
+            if req in seen:
+                duplicates.add(req)
+            seen.add(req)
+        if duplicates:
+            raise ValueError(f"required_documents contains duplicate entries: {sorted(duplicates)}")
+        return self
+
+    @model_validator(mode="after")
     def _required_documents_reference_declared_types(self) -> "TaxonomySchema":
         declared = {dt.name for dt in self.document_types}
         unknown = [r for r in self.required_documents if r not in declared]
