@@ -1,0 +1,18 @@
+# intentional config-validate CI demo; do not merge
+region: in
+retention_days: 1825
+
+adapters:
+  ocr: paddel-ocr  # typo — invalid adapter, valid options: adi, datalab, paddleocr, local
+  llm: azure-openai
+
+prompts:
+  classify:
+    path: prompts/classify.j2
+    variables: [taxonomy, ocr_text]
+  extract:
+    path: prompts/extract.j2
+    variables: [fields, ocr_text]
+  summarize:
+    path: prompts/summarize.j2
+    variables: [claim_data]

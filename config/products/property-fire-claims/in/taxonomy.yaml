@@ -1,0 +1,7 @@
+document_types:
+  - name: fire_report
+    label: Fire Report
+    description: Official fire department report filed after the incident.
+
+required_documents:
+  - fire_report

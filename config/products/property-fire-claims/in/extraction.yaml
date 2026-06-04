@@ -1,0 +1,6 @@
+fields:
+  - name: date_of_loss
+    label: Date of Loss
+    type: date
+    required: true
+    description: Date when the fire incident occurred.
