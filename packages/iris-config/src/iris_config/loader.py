@@ -47,7 +47,7 @@ def _read_yaml(path: Path, slug: str) -> dict[str, Any]:
             message=f"Bundle '{slug}' — {path}: required file not found",
         )
     try:
-        with path.open() as fh:
+        with path.open(encoding="utf-8") as fh:
             data = yaml.safe_load(fh)
     except yaml.YAMLError as exc:
         raise ConfigLoadError(
@@ -134,7 +134,7 @@ def load_bundle(bundle_dir: Path, slug: str) -> ProductConfig:
                 message=f"Bundle '{slug}' — {j2_path}: template file not found",
             )
         try:
-            content = j2_path.read_text()
+            content = j2_path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as exc:
             raise ConfigLoadError(
                 slug=slug,
