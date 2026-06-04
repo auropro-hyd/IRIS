@@ -113,6 +113,24 @@ iris config validate config/products/commercial-auto-claims/in/   # single bundl
 iris config validate config/products/                              # all bundles
 ```
 
+### Exporting the JSON Schema
+
+`iris config schema` outputs the JSON Schema for a bundle file. Attach the schema to YAML files in your IDE for real-time field validation and autocompletion.
+
+```bash
+iris config schema product    # merged bundle schema (all files combined)
+iris config schema taxonomy   # schema for taxonomy.yaml
+iris config schema extraction # schema for extraction.yaml
+```
+
+Use `--output/-o` to write directly to a file:
+
+```bash
+iris config schema taxonomy -o docs/schemas/taxonomy.schema.json
+```
+
+Pre-generated schemas are published under [`docs/schemas/`](docs/schemas/).
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.
