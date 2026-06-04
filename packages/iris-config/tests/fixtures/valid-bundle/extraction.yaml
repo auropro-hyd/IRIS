@@ -1,0 +1,18 @@
+fields:
+  - name: date_of_loss
+    label: Date of Loss
+    type: date
+    required: true
+    description: Date when the incident occurred.
+  - name: vehicle_plate
+    label: Vehicle Registration Number
+    type: text
+    required: true
+    description: State and RTO code followed by registration number.
+    regex: "^[A-Z]{2}\\d{2}[A-Z]{2}\\d{4}$"
+  - name: estimated_loss
+    label: Estimated Loss Amount
+    type: number
+    required: false
+    description: Preliminary estimate of the repair cost.
+    range: [0.0, 10000000.0]

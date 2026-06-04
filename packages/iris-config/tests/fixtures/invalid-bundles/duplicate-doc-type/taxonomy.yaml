@@ -1,0 +1,11 @@
+# Invalid: police_report appears twice — triggers TaxonomySchema uniqueness validator
+document_types:
+  - name: police_report
+    label: Police Report
+    description: Official police report filed after the accident.
+  - name: police_report
+    label: Police Report (duplicate)
+    description: Duplicate entry to trigger a validation error.
+
+required_documents:
+  - police_report

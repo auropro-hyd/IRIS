@@ -1,0 +1,119 @@
+document_types:
+  - name: police_report
+    label: Police Report (FIR)
+    description: >
+      Official First Information Report filed at the police station after the accident,
+      including officer details, witness names, preliminary liability observations,
+      and vehicle details of all parties involved.
+
+  - name: claim_form
+    label: Claim Form (FNOL)
+    description: >
+      Standard First Notice of Loss form completed by the insured, capturing incident
+      date, time, location, a narrative of events, and initial loss estimates.
+
+  - name: drivers_license
+    label: Driver's Licence
+    description: >
+      Valid Indian driving licence (MCWG, LMV, or HMV category as applicable) of
+      the vehicle operator at the time of the accident, confirming authorisation
+      to drive the class of vehicle involved.
+
+  - name: vehicle_registration
+    label: Vehicle Registration Certificate (RC Book)
+    description: >
+      Government-issued RC Book confirming vehicle ownership, chassis number, engine
+      number, registered owner, hypothecation status, and road-worthiness validity.
+
+  - name: insurance_certificate
+    label: Insurance Certificate / Policy Schedule
+    description: >
+      Active motor insurance policy schedule confirming coverage type (comprehensive
+      or third-party), Insured Declared Value, premium payment status, and policy period.
+
+  - name: fitness_certificate
+    label: Vehicle Fitness Certificate
+    description: >
+      Certificate of fitness issued by the Regional Transport Office, mandatory for
+      commercial vehicles, confirming the vehicle meets safety and emission standards.
+
+  - name: permit
+    label: Vehicle Permit
+    description: >
+      Goods carriage or passenger transport permit authorising the vehicle to operate
+      on the declared route; validates that the vehicle was within its permitted scope
+      at the time of loss.
+
+  - name: repair_estimate
+    label: Repair Estimate / Surveyor Report
+    description: >
+      Damage assessment prepared by a licensed surveyor or an authorised garage,
+      itemising each damaged component, labour charges, and recommended repair method.
+
+  - name: repair_invoice
+    label: Repair Invoice
+    description: >
+      Final GST-compliant invoice from the authorised workshop after repairs are
+      completed, confirming actual cost incurred for settlement purposes.
+
+  - name: damage_photos
+    label: Damage Photographs
+    description: >
+      Photographs of the damaged vehicle taken at the accident scene and at the
+      workshop, covering all impacted panels, undercarriage, and interior damage.
+
+  - name: medical_report
+    label: Medical Report / Hospital Bills
+    description: >
+      Hospital admission summary, treating doctor's certificate, and itemised bills
+      for any bodily injury sustained by the driver, passengers, or third parties.
+
+  - name: witness_statement
+    label: Witness Statement
+    description: >
+      Signed or recorded statements from independent eye-witnesses corroborating
+      the insured's account of how the accident occurred.
+
+  - name: aadhaar_card
+    label: Aadhaar Card
+    description: >
+      Government-issued 12-digit biometric identity document used for KYC
+      verification of the insured or claimant; last four digits may be masked.
+
+  - name: pan_card
+    label: PAN Card
+    description: >
+      Permanent Account Number card required for income tax compliance on claim
+      settlements exceeding ₹50,000, as per Indian income tax regulations.
+
+  - name: vehicle_invoice
+    label: Vehicle Purchase Invoice
+    description: >
+      Original dealer invoice confirming vehicle purchase price and date, used to
+      determine IDV for vehicles less than one year old or recently acquired.
+
+  - name: noc
+    label: No Objection Certificate (NOC)
+    description: >
+      NOC issued by the financier or bank holding hypothecation over the vehicle,
+      required before a settlement cheque can be drawn in the insured's name.
+
+  - name: bank_details
+    label: Bank Details / Cancelled Cheque
+    description: >
+      Cancelled cheque leaf or bank account details (account number, IFSC code,
+      branch) for electronic NEFT/RTGS transfer of the settlement amount.
+
+  - name: towing_receipt
+    label: Towing / Recovery Receipt
+    description: >
+      Receipt for towing or vehicle recovery charges incurred immediately after
+      the accident, eligible for reimbursement within the policy limits.
+
+required_documents:
+  - police_report
+  - claim_form
+  - drivers_license
+  - vehicle_registration
+  - insurance_certificate
+  - repair_estimate
