@@ -35,7 +35,7 @@ def validate(path: Path) -> None:
     """
     try:
         if (path / "product.yaml").exists():
-            slug = path.name
+            slug = "/".join(path.parts[-2:])
             load_bundle(path, slug)
             click.echo(f"OK  {slug}")
         else:
@@ -79,5 +79,5 @@ def schema(model: str, output: Path | None) -> None:
         click.echo(json_schema)
     else:
         output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(json_schema + "\n")
+        output.write_text(json_schema + "\n", encoding="utf-8")
         click.echo(f"Written to {output}")

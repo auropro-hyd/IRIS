@@ -6,7 +6,7 @@ Exercises the boundary between iris_cli (Click command) and iris_config
 
 from pathlib import Path
 
-from click.testing import CliRunner
+from click.testing import CliRunner, Result
 from iris_cli import iris
 
 REPO_ROOT = Path(__file__).parent.parent.parent
@@ -16,8 +16,8 @@ INVALID_BUNDLES = FIXTURES / "invalid-bundles"
 PRODUCTS_ROOT = REPO_ROOT / "config" / "products"
 
 
-def _run(*args: str) -> CliRunner:
-    return CliRunner().invoke(iris, list(args))  # type: ignore[return-value]
+def _run(*args: str) -> Result:
+    return CliRunner().invoke(iris, list(args))
 
 
 # ── exit codes ────────────────────────────────────────────────────────────────
