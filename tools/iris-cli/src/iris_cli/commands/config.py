@@ -1,4 +1,4 @@
-"""iris config — Product bundle configuration commands."""
+"""iris config: Product bundle configuration commands."""
 
 import json
 import sys
