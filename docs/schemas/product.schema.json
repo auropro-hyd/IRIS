@@ -1,0 +1,370 @@
+{
+  "$defs": {
+    "AdaptersSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "ocr": {
+          "enum": [
+            "adi",
+            "datalab",
+            "paddleocr",
+            "local"
+          ],
+          "title": "Ocr",
+          "type": "string"
+        },
+        "llm": {
+          "enum": [
+            "azure-openai",
+            "openai",
+            "anthropic",
+            "local"
+          ],
+          "title": "Llm",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ocr",
+        "llm"
+      ],
+      "title": "AdaptersSchema",
+      "type": "object"
+    },
+    "ArrayItemSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "default": "text",
+          "enum": [
+            "text",
+            "number",
+            "date",
+            "currency"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label"
+      ],
+      "title": "ArrayItemSchema",
+      "type": "object"
+    },
+    "DocumentTypeSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Identifier used in required_documents references",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "description": "Human-readable label shown in the reviewer UI",
+          "title": "Label",
+          "type": "string"
+        },
+        "description": {
+          "description": "Rich description fed to the LLM classifier prompt",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "description"
+      ],
+      "title": "DocumentTypeSchema",
+      "type": "object"
+    },
+    "ExtractionSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "description": "Ordered list of FNOL fields to extract",
+          "items": {
+            "$ref": "#/$defs/FieldSchema"
+          },
+          "minItems": 1,
+          "title": "Fields",
+          "type": "array"
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "title": "ExtractionSchema",
+      "type": "object"
+    },
+    "FieldGroupSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label"
+      ],
+      "title": "FieldGroupSchema",
+      "type": "object"
+    },
+    "FieldSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "text",
+            "number",
+            "date",
+            "checkbox",
+            "phone",
+            "email",
+            "textarea",
+            "array"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "required": {
+          "default": false,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "allowed_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Allowed Values"
+        },
+        "examples": {
+          "anyOf": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Examples"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FieldGroupSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "items": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ArrayItemSchema"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items"
+        },
+        "regex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Regex"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Range"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "description"
+      ],
+      "title": "FieldSchema",
+      "type": "object"
+    },
+    "PromptSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "classify": {
+          "$ref": "#/$defs/PromptTemplateSchema"
+        },
+        "extract": {
+          "$ref": "#/$defs/PromptTemplateSchema"
+        },
+        "summarize": {
+          "$ref": "#/$defs/PromptTemplateSchema"
+        }
+      },
+      "required": [
+        "classify",
+        "extract",
+        "summarize"
+      ],
+      "title": "PromptSchema",
+      "type": "object"
+    },
+    "PromptTemplateSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "description": "Path to the Jinja2 template, relative to the bundle directory",
+          "title": "Path",
+          "type": "string"
+        },
+        "variables": {
+          "description": "Variable names the template expects",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Variables",
+          "type": "array"
+        }
+      },
+      "required": [
+        "path",
+        "variables"
+      ],
+      "title": "PromptTemplateSchema",
+      "type": "object"
+    },
+    "TaxonomySchema": {
+      "additionalProperties": false,
+      "properties": {
+        "document_types": {
+          "description": "Catalogue of document types the classifier can assign",
+          "items": {
+            "$ref": "#/$defs/DocumentTypeSchema"
+          },
+          "title": "Document Types",
+          "type": "array"
+        },
+        "required_documents": {
+          "description": "Names from document_types that are required for this product",
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Documents",
+          "type": "array"
+        }
+      },
+      "required": [
+        "document_types"
+      ],
+      "title": "TaxonomySchema",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "region": {
+      "description": "Jurisdiction region code",
+      "title": "Region",
+      "type": "string"
+    },
+    "retention_days": {
+      "description": "Data retention period in days",
+      "exclusiveMinimum": 0,
+      "title": "Retention Days",
+      "type": "integer"
+    },
+    "adapters": {
+      "$ref": "#/$defs/AdaptersSchema"
+    },
+    "taxonomy": {
+      "$ref": "#/$defs/TaxonomySchema"
+    },
+    "extraction": {
+      "$ref": "#/$defs/ExtractionSchema"
+    },
+    "prompts": {
+      "$ref": "#/$defs/PromptSchema"
+    }
+  },
+  "required": [
+    "region",
+    "retention_days",
+    "adapters",
+    "taxonomy",
+    "extraction",
+    "prompts"
+  ],
+  "title": "ProductSchema",
+  "type": "object"
+}
