@@ -72,3 +72,16 @@ jobs:
 
       - name: pytest --cov (80% threshold)
         run: make test-cov
+
+  config-validate:
+    name: config-validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          python-version: "3.12"
+
+      - name: validate all Product bundles
+        run: uv run iris config validate config/products/

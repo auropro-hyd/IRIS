@@ -1,10 +1,12 @@
 """iris config — Product bundle configuration commands."""
 
+import json
 import sys
 from pathlib import Path
 
 import click
 from iris_config import ConfigLoadError, load_bundle, load_products
+from iris_config.schema.product import ProductSchema
 
 
 @click.group()
@@ -35,3 +37,33 @@ def validate(path: Path) -> None:
     except ConfigLoadError as exc:
         click.echo(str(exc), err=True)
         sys.exit(1)
+
+
+@config.command()
+@click.argument("model", type=click.Choice(["product"]))
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(dir_okay=False, writable=True, path_type=Path),
+    default=None,
+    help="Write JSON Schema to FILE instead of stdout.",
+)
+def schema(model: str, output: Path | None) -> None:
+    """Output the JSON Schema for a Product bundle model.
+
+    MODEL must be 'product'. The schema covers the merged bundle structure
+    (product.yaml + taxonomy.yaml + extraction.yaml + prompts config) and
+    can be attached to YAML files in IDEs for editor-time validation.
+
+    \b
+    Examples:
+      iris config schema product
+      iris config schema product -o docs/schemas/product.schema.json
+    """
+    json_schema = json.dumps(ProductSchema.model_json_schema(), indent=2)
+    if output is None:
+        click.echo(json_schema)
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json_schema + "\n")
+        click.echo(f"Written to {output}")
