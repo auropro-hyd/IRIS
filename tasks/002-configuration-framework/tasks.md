@@ -31,7 +31,7 @@
 
 ## Sprint 0: CLI and example bundle
 
-- [ ] **T027** `[US4] [size: S] [owner: AuroPro]` Implement `iris config validate <path>` CLI command in `tools/iris-cli`. Exit code 0 on success, non-zero on validation failure.
+- [x] **T027** `[US4] [size: S] [owner: AuroPro]` Implement `iris config validate <path>` CLI command in `tools/iris-cli`. Exit code 0 on success, non-zero on validation failure.
       **Acceptance**: Running against `valid-bundle/` returns 0; running against any `invalid-bundles/*` returns 1.
 
 - [x] **T028** `[P] [US1] [size: M] [owner: AuroPro]` Create the `commercial-auto-claims/in/` example bundle covering every section of the schema, sized for realism (15 to 20 document types, 25 to 30 extraction fields).
