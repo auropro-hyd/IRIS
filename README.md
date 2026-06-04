@@ -89,6 +89,21 @@ make down
 
 Other useful targets: `make distclean` removes `.venv/` and Docker volumes for a full reset; `make status` shows which services are running.
 
+## Product bundles
+
+A **Product bundle** is the YAML configuration that drives one line of business in one jurisdiction. Every bundle lives under `config/products/<line-of-business>/<jurisdiction>/` and contains four parts:
+
+| File / Directory | Contents |
+|---|---|
+| `product.yaml` | Adapter selection (`ocr`, `llm`), region, data retention period, and prompt template declarations |
+| `taxonomy.yaml` | Document type catalogue and required-document list |
+| `extraction.yaml` | Ordered list of FNOL fields with per-field validators (regex, range, allowed values) |
+| `prompts/` | Jinja2 templates for the classify, extract, and summarise agents |
+
+**Starter example — `commercial-auto-claims/in/`**
+
+[`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning every field type and validator, and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.
