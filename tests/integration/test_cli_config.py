@@ -4,6 +4,7 @@ Exercises the boundary between iris_cli (Click command) and iris_config
 (loader + validator). Uses Click's CliRunner; no subprocess, no live services.
 """
 
+import shutil
 from pathlib import Path
 
 from click.testing import CliRunner, Result
@@ -13,7 +14,6 @@ REPO_ROOT = Path(__file__).parent.parent.parent
 FIXTURES = REPO_ROOT / "packages/iris-config/tests/fixtures"
 VALID_BUNDLE = FIXTURES / "valid-bundle"
 INVALID_BUNDLES = FIXTURES / "invalid-bundles"
-PRODUCTS_ROOT = REPO_ROOT / "config" / "products"
 
 
 def _run(*args: str) -> Result:
@@ -43,8 +43,11 @@ def test_missing_taxonomy_exits_one() -> None:
     assert result.exit_code == 1
 
 
-def test_products_root_exits_zero() -> None:
-    result = _run("config", "validate", str(PRODUCTS_ROOT))
+def test_products_root_exits_zero(tmp_path: Path) -> None:
+    dest = tmp_path / "commercial-auto-claims" / "in"
+    dest.mkdir(parents=True)
+    shutil.copytree(VALID_BUNDLE, dest, dirs_exist_ok=True)
+    result = _run("config", "validate", str(tmp_path))
     assert result.exit_code == 0
 
 
@@ -62,6 +65,9 @@ def test_invalid_bundle_error_message_contains_invalid_value() -> None:
     assert "paddel-ocr" in result.output
 
 
-def test_products_root_prints_slug() -> None:
-    result = _run("config", "validate", str(PRODUCTS_ROOT))
+def test_products_root_prints_slug(tmp_path: Path) -> None:
+    dest = tmp_path / "commercial-auto-claims" / "in"
+    dest.mkdir(parents=True)
+    shutil.copytree(VALID_BUNDLE, dest, dirs_exist_ok=True)
+    result = _run("config", "validate", str(tmp_path))
     assert "commercial-auto-claims/in" in result.output
