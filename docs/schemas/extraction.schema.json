@@ -1,0 +1,202 @@
+{
+  "$defs": {
+    "ArrayItemSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "default": "text",
+          "enum": [
+            "text",
+            "number",
+            "date",
+            "currency"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label"
+      ],
+      "title": "ArrayItemSchema",
+      "type": "object"
+    },
+    "FieldGroupSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label"
+      ],
+      "title": "FieldGroupSchema",
+      "type": "object"
+    },
+    "FieldSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "text",
+            "number",
+            "date",
+            "checkbox",
+            "phone",
+            "email",
+            "textarea",
+            "array"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "required": {
+          "default": false,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "allowed_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Allowed Values"
+        },
+        "examples": {
+          "anyOf": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Examples"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FieldGroupSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "items": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ArrayItemSchema"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Items"
+        },
+        "regex": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Regex"
+        },
+        "range": {
+          "anyOf": [
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Range"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "type",
+        "description"
+      ],
+      "title": "FieldSchema",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "fields": {
+      "description": "Ordered list of FNOL fields to extract",
+      "items": {
+        "$ref": "#/$defs/FieldSchema"
+      },
+      "minItems": 1,
+      "title": "Fields",
+      "type": "array"
+    }
+  },
+  "required": [
+    "fields"
+  ],
+  "title": "ExtractionSchema",
+  "type": "object"
+}
