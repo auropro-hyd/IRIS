@@ -9,15 +9,15 @@ from pathlib import Path
 
 from pydantic_core import ValidationError
 
-from iris_config.exceptions import ConfigLoadError
+from iris_config.exceptions import ConfigValidationError
 
 
 def format_validation_error(
     error: ValidationError,
     slug: str,
     file: Path,
-) -> ConfigLoadError:
-    """Convert *error* into a :class:`ConfigLoadError` with full context.
+) -> ConfigValidationError:
+    """Convert *error* into a :class:`ConfigValidationError` with full context.
 
     Args:
         error: The Pydantic ValidationError to format.
@@ -25,8 +25,9 @@ def format_validation_error(
         file:  The YAML file whose content triggered the error.
 
     Returns:
-        A :class:`ConfigLoadError` whose ``str()`` contains slug, file path,
-        field path, invalid value, and the Pydantic message (valid options).
+        A :class:`ConfigValidationError` whose ``str()`` contains slug, file
+        path, field path, invalid value, and the Pydantic message (valid
+        options).
     """
     lines = [f"Bundle '{slug}' — {file}:"]
     for err in error.errors():
@@ -34,4 +35,4 @@ def format_validation_error(
         val = err.get("input")
         msg = err["msg"]
         lines.append(f"  [{loc}] {msg}; got: {val!r}")
-    return ConfigLoadError(slug=slug, file=file, message="\n".join(lines))
+    return ConfigValidationError(slug=slug, file=file, message="\n".join(lines))
