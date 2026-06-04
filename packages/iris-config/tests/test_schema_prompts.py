@@ -47,6 +47,28 @@ def test_template_with_only_declared_variables_passes() -> None:
     template.validate_against_template("Fields: {{ fields }}\nDoc: {{ ocr_text }}")
 
 
+def test_dot_access_expression_detects_root_variable() -> None:
+    template = PromptTemplateSchema(path="prompts/classify.j2", variables=["taxonomy", "ocr_text"])
+    template.validate_against_template("Types: {{ taxonomy.document_types }}\n{{ ocr_text }}")
+
+
+def test_dot_access_with_undeclared_root_raises() -> None:
+    template = PromptTemplateSchema(path="prompts/classify.j2", variables=["taxonomy", "ocr_text"])
+    with pytest.raises(ValueError, match="undeclared variables"):
+        template.validate_against_template("{{ missing_obj.some_field }}\n{{ ocr_text }}")
+
+
+def test_filter_expression_detects_variable() -> None:
+    template = PromptTemplateSchema(path="prompts/classify.j2", variables=["taxonomy", "ocr_text"])
+    template.validate_against_template("{{ taxonomy }}\n{{ ocr_text | trim }}")
+
+
+def test_filter_expression_with_undeclared_variable_raises() -> None:
+    template = PromptTemplateSchema(path="prompts/classify.j2", variables=["taxonomy", "ocr_text"])
+    with pytest.raises(ValueError, match="undeclared variables"):
+        template.validate_against_template("{{ taxonomy }}\n{{ missing_var | upper }}")
+
+
 # ── path validator ────────────────────────────────────────────────────────────
 
 

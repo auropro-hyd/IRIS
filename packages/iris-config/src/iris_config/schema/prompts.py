@@ -36,7 +36,7 @@ class PromptTemplateSchema(BaseModel):
 
     def validate_against_template(self, template_content: str) -> None:
         """Raise ValueError if template uses a variable not listed in self.variables."""
-        used = set(re.findall(r"\{\{\s*(\w+)\s*\}\}", template_content))
+        used = set(re.findall(r"\{\{\s*(\w+)", template_content))
         declared = set(self.variables)
         undeclared = used - declared
         if undeclared:

@@ -72,8 +72,8 @@ def test_retention_days_must_be_positive() -> None:
             retention_days=0,
             adapters=_VALID_ADAPTERS,
             taxonomy=_VALID_TAXONOMY,
-            extraction=ExtractionSchema(),
-            prompts=PromptSchema(),
+            extraction=_VALID_EXTRACTION,
+            prompts=_VALID_PROMPTS,
         )
 
 
