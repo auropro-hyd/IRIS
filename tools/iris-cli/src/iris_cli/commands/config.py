@@ -6,7 +6,15 @@ from pathlib import Path
 
 import click
 from iris_config import ConfigLoadError, load_bundle, load_products
+from iris_config.schema.extraction import ExtractionSchema
 from iris_config.schema.product import ProductSchema
+from iris_config.schema.taxonomy import TaxonomySchema
+
+_SCHEMA_MODELS = {
+    "product": ProductSchema,
+    "taxonomy": TaxonomySchema,
+    "extraction": ExtractionSchema,
+}
 
 
 @click.group()
@@ -40,7 +48,7 @@ def validate(path: Path) -> None:
 
 
 @config.command()
-@click.argument("model", type=click.Choice(["product"]))
+@click.argument("model", type=click.Choice(["product", "taxonomy", "extraction"]))
 @click.option(
     "--output",
     "-o",
@@ -51,16 +59,22 @@ def validate(path: Path) -> None:
 def schema(model: str, output: Path | None) -> None:
     """Output the JSON Schema for a Product bundle model.
 
-    MODEL must be 'product'. The schema covers the merged bundle structure
-    (product.yaml + taxonomy.yaml + extraction.yaml + prompts config) and
-    can be attached to YAML files in IDEs for editor-time validation.
+    MODEL is one of: product, taxonomy, extraction.
+
+    \b
+    - product:    merged bundle schema (all four files combined)
+    - taxonomy:   schema for taxonomy.yaml (document_types, required_documents)
+    - extraction: schema for extraction.yaml (fields list with validators)
+
+    Attach the schema to YAML files in IDEs for editor-time validation.
 
     \b
     Examples:
       iris config schema product
-      iris config schema product -o docs/schemas/product.schema.json
+      iris config schema taxonomy -o docs/schemas/taxonomy.schema.json
+      iris config schema extraction -o docs/schemas/extraction.schema.json
     """
-    json_schema = json.dumps(ProductSchema.model_json_schema(), indent=2)
+    json_schema = json.dumps(_SCHEMA_MODELS[model].model_json_schema(), indent=2)
     if output is None:
         click.echo(json_schema)
     else:

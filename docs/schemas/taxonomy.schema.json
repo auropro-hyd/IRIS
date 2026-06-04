@@ -1,0 +1,55 @@
+{
+  "$defs": {
+    "DocumentTypeSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Identifier used in required_documents references",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "description": "Human-readable label shown in the reviewer UI",
+          "title": "Label",
+          "type": "string"
+        },
+        "description": {
+          "description": "Rich description fed to the LLM classifier prompt",
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "description"
+      ],
+      "title": "DocumentTypeSchema",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "document_types": {
+      "description": "Catalogue of document types the classifier can assign",
+      "items": {
+        "$ref": "#/$defs/DocumentTypeSchema"
+      },
+      "title": "Document Types",
+      "type": "array"
+    },
+    "required_documents": {
+      "description": "Names from document_types that are required for this product",
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Documents",
+      "type": "array"
+    }
+  },
+  "required": [
+    "document_types"
+  ],
+  "title": "TaxonomySchema",
+  "type": "object"
+}
