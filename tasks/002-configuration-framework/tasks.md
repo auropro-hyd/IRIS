@@ -23,10 +23,10 @@
 
 ## Sprint 0: Loader
 
-- [ ] **T025** `[US1] [US2] [size: M] [owner: AuroPro]` Implement `iris_config.loader.load_products(root: Path) -> ProductRegistry`. Walks every `<lob>/<jurisdiction>/` directory under `root`. Returns a registry keyed by slug.
+- [x] **T025** `[US1] [US2] [size: M] [owner: AuroPro]` Implement `iris_config.loader.load_products(root: Path) -> ProductRegistry`. Walks every `<lob>/<jurisdiction>/` directory under `root`. Returns a registry keyed by slug.
       **Acceptance**: Loading the fixtures returns the expected number of Products; a malformed bundle raises `ConfigLoadError` naming the bundle and the file.
 
-- [ ] **T026** `[US3] [size: S] [owner: AuroPro]` Implement `iris_config.validator` with rich error formatting: bundle slug, file path, field path, invalid value, suggested fix.
+- [x] **T026** `[US3] [size: S] [owner: AuroPro]` Implement `iris_config.validator` with rich error formatting: bundle slug, file path, field path, invalid value, suggested fix.
       **Acceptance**: Each of the three `invalid-bundles/*` fixtures produces an error message with all four elements.
 
 ## Sprint 0: CLI and example bundle
@@ -34,7 +34,7 @@
 - [ ] **T027** `[US4] [size: S] [owner: AuroPro]` Implement `iris config validate <path>` CLI command in `tools/iris-cli`. Exit code 0 on success, non-zero on validation failure.
       **Acceptance**: Running against `valid-bundle/` returns 0; running against any `invalid-bundles/*` returns 1.
 
-- [ ] **T028** `[P] [US1] [size: M] [owner: AuroPro]` Create the `commercial-auto-claims/in/` example bundle covering every section of the schema, sized for realism (15 to 20 document types, 25 to 30 extraction fields).
+- [x] **T028** `[P] [US1] [size: M] [owner: AuroPro]` Create the `commercial-auto-claims/in/` example bundle covering every section of the schema, sized for realism (15 to 20 document types, 25 to 30 extraction fields).
       **Acceptance**: The bundle validates clean and is referenced from the README as the starter Product.
 
 ## Sprint 0: Tests

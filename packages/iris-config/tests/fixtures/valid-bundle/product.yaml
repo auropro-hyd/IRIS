@@ -1,0 +1,17 @@
+region: in
+retention_days: 2555
+
+adapters:
+  ocr: paddleocr
+  llm: azure-openai
+
+prompts:
+  classify:
+    path: prompts/classify.j2
+    variables: [taxonomy, ocr_text]
+  extract:
+    path: prompts/extract.j2
+    variables: [fields, ocr_text]
+  summarize:
+    path: prompts/summarize.j2
+    variables: [claim_data]

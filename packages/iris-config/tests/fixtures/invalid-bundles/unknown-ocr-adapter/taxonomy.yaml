@@ -1,0 +1,7 @@
+document_types:
+  - name: police_report
+    label: Police Report
+    description: Official police report filed after the accident.
+
+required_documents:
+  - police_report

@@ -1,0 +1,197 @@
+fields:
+  - name: claim_number
+    label: Claim Number
+    type: text
+    required: true
+    description: Unique identifier assigned to this claim by the insurer.
+    regex: "^CLM-\\d{4}-\\d{6}$"
+
+  - name: date_of_loss
+    label: Date of Loss
+    type: date
+    required: true
+    description: Calendar date on which the incident or accident occurred.
+
+  - name: time_of_loss
+    label: Time of Loss
+    type: text
+    required: false
+    description: Approximate time of the incident in 24-hour format (HH:MM).
+    regex: "^([01]\\d|2[0-3]):[0-5]\\d$"
+
+  - name: place_of_loss
+    label: Place of Loss
+    type: text
+    required: true
+    description: Full address or location description where the accident occurred.
+
+  - name: loss_type
+    label: Type of Loss
+    type: text
+    required: true
+    description: Primary cause or category of the loss event.
+    allowed_values:
+      - Collision
+      - Theft
+      - Fire
+      - Flood
+      - Vandalism
+      - Natural Disaster
+      - Hit and Run
+      - Own Damage
+
+  - name: loss_description
+    label: Loss Description
+    type: textarea
+    required: true
+    description: Detailed narrative of how the incident occurred, as reported by the insured.
+
+  - name: insured_name
+    label: Insured Name
+    type: text
+    required: true
+    description: Full legal name of the policyholder as it appears on the policy schedule.
+
+  - name: insured_mobile
+    label: Insured Mobile Number
+    type: phone
+    required: true
+    description: 10-digit mobile number of the insured for follow-up contact.
+
+  - name: insured_email
+    label: Insured Email Address
+    type: email
+    required: false
+    description: Email address of the insured for digital communication and document exchange.
+
+  - name: policy_number
+    label: Policy Number
+    type: text
+    required: true
+    description: Insurance policy number under which the claim is being filed.
+
+  - name: policy_start_date
+    label: Policy Start Date
+    type: date
+    required: true
+    description: Date from which the current policy period became effective.
+
+  - name: policy_end_date
+    label: Policy End Date
+    type: date
+    required: true
+    description: Date on which the current policy period expires.
+
+  - name: vehicle_make
+    label: Vehicle Make
+    type: text
+    required: true
+    description: >
+      Manufacturer of the insured vehicle
+      (e.g., Tata, Mahindra, Ashok Leyland, Eicher, BharatBenz).
+
+  - name: vehicle_model
+    label: Vehicle Model
+    type: text
+    required: true
+    description: Model name or variant of the insured vehicle (e.g., Tata Ace, Mahindra Bolero Pik-Up).
+
+  - name: vehicle_year
+    label: Year of Manufacture
+    type: number
+    required: true
+    description: Four-digit year in which the vehicle was manufactured.
+    range: [1980.0, 2030.0]
+
+  - name: vehicle_registration_number
+    label: Vehicle Registration Number
+    type: text
+    required: true
+    description: >
+      State and RTO code followed by the registration number
+      (e.g., MH12AB1234 or MH-12-AB-1234).
+
+  - name: vehicle_chassis_number
+    label: Vehicle Chassis Number (VIN)
+    type: text
+    required: false
+    description: 17-character Vehicle Identification Number stamped on the chassis, as per RC Book.
+
+  - name: vehicle_engine_number
+    label: Vehicle Engine Number
+    type: text
+    required: false
+    description: Engine serial number as printed in the RC Book and on the engine block.
+
+  - name: vehicle_type
+    label: Vehicle Category
+    type: text
+    required: true
+    description: Regulatory category of the commercial vehicle under CMVR 1989.
+    allowed_values:
+      - Two Wheeler
+      - Three Wheeler
+      - Light Commercial Vehicle
+      - Medium Commercial Vehicle
+      - Heavy Commercial Vehicle
+      - Passenger Bus
+      - School Bus
+      - Trailer or Semi-Trailer
+
+  - name: idv_amount
+    label: Insured Declared Value (IDV in ₹)
+    type: number
+    required: true
+    description: Agreed market value of the vehicle as declared in the policy schedule.
+    range: [10000.0, 50000000.0]
+
+  - name: estimated_loss_amount
+    label: Estimated Loss Amount (₹)
+    type: number
+    required: false
+    description: Preliminary surveyor or garage estimate of the total repair or replacement cost.
+    range: [0.0, 50000000.0]
+
+  - name: driver_name
+    label: Driver Name at Time of Loss
+    type: text
+    required: true
+    description: Full name of the person who was operating the vehicle at the time of the incident.
+
+  - name: driver_license_number
+    label: Driver's Licence Number
+    type: text
+    required: true
+    description: Driving licence number of the driver at the time of loss, as printed on the licence.
+
+  - name: driver_license_expiry
+    label: Driver's Licence Expiry Date
+    type: date
+    required: true
+    description: Expiry date of the driving licence to confirm it was valid at the time of loss.
+
+  - name: third_party_involved
+    label: Third Party Involved
+    type: checkbox
+    required: false
+    description: Indicates whether any third-party vehicle, property, or person was involved.
+
+  - name: third_party_details
+    label: Third Party Details
+    type: textarea
+    required: false
+    description: >
+      Registration number, owner name, and insurer details of the third-party vehicle;
+      names and injuries of any third-party persons.
+
+  - name: police_complaint_number
+    label: FIR / Police Complaint Number
+    type: text
+    required: false
+    description: FIR number or police complaint reference assigned by the investigating station.
+
+  - name: surveyor_name
+    label: Surveyor / Loss Assessor Name
+    type: text
+    required: false
+    description: Full name of the IRDAI-licensed surveyor or loss assessor appointed by the insurer.
