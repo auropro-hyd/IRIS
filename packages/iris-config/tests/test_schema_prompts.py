@@ -77,6 +77,16 @@ def test_path_not_ending_in_j2_raises_validation_error() -> None:
         PromptTemplateSchema(path="prompts/classify.txt", variables=["taxonomy"])
 
 
+def test_absolute_path_raises_validation_error() -> None:
+    with pytest.raises(ValidationError, match="absolute"):
+        PromptTemplateSchema(path="/etc/passwd.j2", variables=["taxonomy"])
+
+
+def test_path_traversal_raises_validation_error() -> None:
+    with pytest.raises(ValidationError, match="escape"):
+        PromptTemplateSchema(path="../outside/template.j2", variables=["taxonomy"])
+
+
 # ── variables validator ───────────────────────────────────────────────────────
 
 

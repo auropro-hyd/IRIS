@@ -102,7 +102,7 @@ A **Product bundle** is the YAML configuration that drives one line of business 
 
 **Starter example: `commercial-auto-claims/in/`**
 
-[`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning every field type and validator, and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
+[`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning most field types and validators (text, number, date, checkbox, phone, email, textarea) and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
 
 ## Contributing
 
