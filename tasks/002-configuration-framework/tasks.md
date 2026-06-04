@@ -16,7 +16,7 @@
       **Acceptance**: A bundle with `adapters.ocr: paddel-ocr` fails validation with the exact list of valid values in the error message.
 
 - [x] **T023** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/extraction.py` covering FNOL fields with their per-field validators (regex, enum, range).
-      **Acceptance**: A field with an invalid regex pattern fails validation at load time with the file path and field path in the error.
+      **Acceptance**: A field with an invalid regex pattern fails validation with the regex string and the Pydantic field path in the error. (File path is added by the loader/validator in T026.)
 
 - [x] **T024** `[P] [US1] [size: S] [owner: AuroPro]` Author `iris_config/schema/prompts.py` covering template paths plus declared variables.
       **Acceptance**: A template that references a variable not declared in the schema fails validation.

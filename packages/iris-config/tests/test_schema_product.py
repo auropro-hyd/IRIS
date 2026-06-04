@@ -130,17 +130,17 @@ def test_valid_llm_adapters_load() -> None:
 
 def test_invalid_ocr_adapter_raises_validation_error() -> None:
     with pytest.raises(ValidationError):
-        AdaptersSchema(ocr="paddel-ocr", llm="azure-openai")
+        AdaptersSchema.model_validate({"ocr": "paddel-ocr", "llm": "azure-openai"})
 
 
 def test_invalid_ocr_error_message_lists_valid_options() -> None:
     with pytest.raises(ValidationError, match="adi|datalab|paddleocr|local"):
-        AdaptersSchema(ocr="paddel-ocr", llm="azure-openai")
+        AdaptersSchema.model_validate({"ocr": "paddel-ocr", "llm": "azure-openai"})
 
 
 def test_invalid_llm_adapter_raises_validation_error() -> None:
     with pytest.raises(ValidationError):
-        AdaptersSchema(ocr="paddleocr", llm="gpt-4")
+        AdaptersSchema.model_validate({"ocr": "paddleocr", "llm": "gpt-4"})
 
 
 def test_unknown_field_on_adapters_raises_validation_error() -> None:
