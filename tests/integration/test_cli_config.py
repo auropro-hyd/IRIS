@@ -1,7 +1,7 @@
 """Integration tests for `iris config validate` (T027).
 
 Exercises the boundary between iris_cli (Click command) and iris_config
-(loader + validator). Uses Click's CliRunner — no subprocess, no live services.
+(loader + validator). Uses Click's CliRunner; no subprocess, no live services.
 """
 
 from pathlib import Path
