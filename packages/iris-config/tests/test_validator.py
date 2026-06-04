@@ -7,7 +7,7 @@ message containing bundle slug, file path, field path, and invalid value.
 from pathlib import Path
 
 import pytest
-from iris_config.exceptions import ConfigLoadError
+from iris_config.exceptions import ConfigLoadError, ConfigValidationError
 from iris_config.loader import load_bundle
 
 INVALID_BUNDLES = Path(__file__).parent / "fixtures" / "invalid-bundles"
@@ -74,6 +74,25 @@ def test_duplicate_doc_type_error_mentions_duplicate_name() -> None:
     with pytest.raises(ConfigLoadError) as exc_info:
         load_bundle(INVALID_BUNDLES / "duplicate-doc-type", "duplicate-doc-type")
     assert "police_report" in str(exc_info.value)
+
+
+# ── exception type distinction ────────────────────────────────────────────────
+
+
+def test_ocr_adapter_error_is_config_validation_error() -> None:
+    with pytest.raises(ConfigValidationError):
+        load_bundle(INVALID_BUNDLES / "unknown-ocr-adapter", "unknown-ocr-adapter")
+
+
+def test_duplicate_doc_type_error_is_config_validation_error() -> None:
+    with pytest.raises(ConfigValidationError):
+        load_bundle(INVALID_BUNDLES / "duplicate-doc-type", "duplicate-doc-type")
+
+
+def test_missing_taxonomy_error_is_not_config_validation_error() -> None:
+    with pytest.raises(ConfigLoadError) as exc_info:
+        load_bundle(INVALID_BUNDLES / "missing-taxonomy", "missing-taxonomy")
+    assert not isinstance(exc_info.value, ConfigValidationError)
 
 
 # ── missing-taxonomy: file-level error has all required context ───────────────
