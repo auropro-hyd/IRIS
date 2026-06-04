@@ -55,6 +55,12 @@ def _read_yaml(path: Path, slug: str) -> dict[str, Any]:
             file=path,
             message=f"Bundle '{slug}' — {path}: YAML parse error: {exc}",
         ) from exc
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ConfigLoadError(
+            slug=slug,
+            file=path,
+            message=f"Bundle '{slug}' — {path}: cannot read file: {exc}",
+        ) from exc
     if not isinstance(data, dict):
         raise ConfigLoadError(
             slug=slug,
@@ -128,7 +134,15 @@ def load_bundle(bundle_dir: Path, slug: str) -> ProductConfig:
                 message=f"Bundle '{slug}' — {j2_path}: template file not found",
             )
         try:
-            tmpl.validate_against_template(j2_path.read_text())
+            content = j2_path.read_text()
+        except (OSError, UnicodeDecodeError) as exc:
+            raise ConfigLoadError(
+                slug=slug,
+                file=j2_path,
+                message=f"Bundle '{slug}' — {j2_path}: cannot read template: {exc}",
+            ) from exc
+        try:
+            tmpl.validate_against_template(content)
         except ValueError as exc:
             raise ConfigLoadError(
                 slug=slug,
