@@ -4,11 +4,12 @@ Combines the fields from product.yaml (region, retention, adapters) with the
 three sub-schemas loaded from the sibling YAML files by the loader.
 """
 
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
 from iris_config.schema.adapters import AdaptersSchema
 from iris_config.schema.extraction import ExtractionSchema
 from iris_config.schema.prompts import PromptSchema
 from iris_config.schema.taxonomy import TaxonomySchema
-from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class ProductSchema(BaseModel):
