@@ -1,14 +1,19 @@
-"""Acceptance tests for `iris config validate` (T027)."""
+"""Integration tests for `iris config validate` (T027).
+
+Exercises the boundary between iris_cli (Click command) and iris_config
+(loader + validator). Uses Click's CliRunner — no subprocess, no live services.
+"""
 
 from pathlib import Path
 
 from click.testing import CliRunner
 from iris_cli import iris
 
-FIXTURES = Path(__file__).parent.parent.parent.parent / "packages/iris-config/tests/fixtures"
+REPO_ROOT = Path(__file__).parent.parent.parent
+FIXTURES = REPO_ROOT / "packages/iris-config/tests/fixtures"
 VALID_BUNDLE = FIXTURES / "valid-bundle"
 INVALID_BUNDLES = FIXTURES / "invalid-bundles"
-PRODUCTS_ROOT = Path(__file__).parent.parent.parent.parent / "config" / "products"
+PRODUCTS_ROOT = REPO_ROOT / "config" / "products"
 
 
 def _run(*args: str) -> CliRunner:
