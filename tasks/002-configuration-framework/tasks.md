@@ -9,16 +9,16 @@
 - [x] **T020** `[US1] [size: M] [owner: AuroPro]` Lift the PoC's `ClassificationConfig` (in `claims-intake-automation/backend/models/classification_config.py` and the identical copy in `Submission-Workbench-v2`) into `iris_config/schema/taxonomy.py`. Tighten validation: document types must be unique; required-documents list must reference declared types.
       **Acceptance**: Importing the schema raises a clear `pydantic.ValidationError` on each violation.
 
-- [ ] **T021** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/product.py` with `ProductSchema` (region, retention, adapters reference, taxonomy reference, extraction reference, prompts reference).
+- [x] **T021** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/product.py` with `ProductSchema` (region, retention, adapters reference, taxonomy reference, extraction reference, prompts reference).
       **Acceptance**: A round-trip dump and reload of a valid bundle produces a stable representation.
 
-- [ ] **T022** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/adapters.py` with `AdaptersSchema`. The `ocr` and `llm` fields use `Literal` types listing the adapters from workstreams 003 and 004.
+- [x] **T022** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/adapters.py` with `AdaptersSchema`. The `ocr` and `llm` fields use `Literal` types listing the adapters from workstreams 003 and 004.
       **Acceptance**: A bundle with `adapters.ocr: paddel-ocr` fails validation with the exact list of valid values in the error message.
 
-- [ ] **T023** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/extraction.py` covering FNOL fields with their per-field validators (regex, enum, range).
-      **Acceptance**: A field with an invalid regex pattern fails validation at load time with the file path and field path in the error.
+- [x] **T023** `[P] [US1] [size: M] [owner: AuroPro]` Author `iris_config/schema/extraction.py` covering FNOL fields with their per-field validators (regex, enum, range).
+      **Acceptance**: A field with an invalid regex pattern fails validation with the regex string and the Pydantic field path in the error. (File path is added by the loader/validator in T026.)
 
-- [ ] **T024** `[P] [US1] [size: S] [owner: AuroPro]` Author `iris_config/schema/prompts.py` covering template paths plus declared variables.
+- [x] **T024** `[P] [US1] [size: S] [owner: AuroPro]` Author `iris_config/schema/prompts.py` covering template paths plus declared variables.
       **Acceptance**: A template that references a variable not declared in the schema fails validation.
 
 ## Sprint 0: Loader
