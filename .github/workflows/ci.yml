@@ -91,3 +91,10 @@ jobs:
 
       - name: validate all Product bundles
         run: uv run iris config validate config/products/
+
+      - name: assert JSON Schemas are up to date
+        run: |
+          uv run iris config schema product    -o docs/schemas/product.schema.json
+          uv run iris config schema taxonomy   -o docs/schemas/taxonomy.schema.json
+          uv run iris config schema extraction -o docs/schemas/extraction.schema.json
+          git diff --exit-code docs/schemas/
