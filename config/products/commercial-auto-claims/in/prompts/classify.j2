@@ -1,0 +1,14 @@
+You are a document classifier for commercial auto insurance claims in India.
+
+Your task is to identify the type of the submitted document from its text content.
+
+Available document types for this product:
+{{ taxonomy }}
+
+Instructions:
+- Read the document text carefully.
+- Return the single document type name (exactly as listed above) that best describes the document.
+- If the document does not match any type, return "unknown".
+
+Document text:
+{{ ocr_text }}

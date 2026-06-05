@@ -1,0 +1,11 @@
+document_types:
+  - name: police_report
+    label: Police Report
+    description: Official police report filed after the accident.
+  - name: claim_form
+    label: Claim Form
+    description: Standard FNOL claim form filled by the insured.
+
+required_documents:
+  - police_report
+  - claim_form

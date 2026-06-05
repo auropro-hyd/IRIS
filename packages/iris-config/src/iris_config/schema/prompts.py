@@ -6,6 +6,7 @@ that every Jinja2 variable in the template was declared.
 """
 
 import re
+from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -24,6 +25,11 @@ class PromptTemplateSchema(BaseModel):
     def _path_must_be_j2(cls, v: str) -> str:
         if not v.endswith(".j2"):
             raise ValueError(f"template path must end with .j2, got: {v!r}")
+        p = Path(v)
+        if p.is_absolute():
+            raise ValueError(f"template path must be relative, got absolute path: {v!r}")
+        if ".." in p.parts:
+            raise ValueError(f"template path must not escape the bundle directory: {v!r}")
         return v
 
     @field_validator("variables", mode="after")
