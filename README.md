@@ -104,6 +104,33 @@ A **Product bundle** is the YAML configuration that drives one line of business 
 
 [`config/products/commercial-auto-claims/in/`](config/products/commercial-auto-claims/in/) is the reference bundle for commercial auto claims. It covers all schema sections: 18 document types, 28 extraction fields spanning most field types and validators (text, number, date, checkbox, phone, email, textarea) and three prompt templates. Copy this directory when creating a new Product and edit the fields to match the target line of business and jurisdiction.
 
+### Validating a bundle
+
+`iris config validate` loads and validates a bundle against the full schema, including regex compilation, range bounds, required documents, and Jinja2 template variable declarations. Pass a single bundle directory or the products root to validate all bundles at once. Exit code 0 means every bundle is valid; a non-zero exit prints the bundle slug, file, field path, and invalid value.
+
+```bash
+iris config validate config/products/commercial-auto-claims/in/   # single bundle
+iris config validate config/products/                              # all bundles
+```
+
+### Exporting the JSON Schema
+
+`iris config schema` outputs the JSON Schema for a bundle file. Attach the schema to YAML files in your IDE for real-time field validation and autocompletion.
+
+```bash
+iris config schema product    # merged bundle schema (all files combined)
+iris config schema taxonomy   # schema for taxonomy.yaml
+iris config schema extraction # schema for extraction.yaml
+```
+
+Use `--output/-o` to write directly to a file:
+
+```bash
+iris config schema taxonomy -o docs/schemas/taxonomy.schema.json
+```
+
+Pre-generated schemas are published under [`docs/schemas/`](docs/schemas/).
+
 ## Contributing
 
 `main` is protected on this repository. All changes land through reviewed pull requests; direct pushes to `main` are rejected by GitHub.
