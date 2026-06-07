@@ -65,7 +65,7 @@ test: $(INSTALL_STAMP)
 	$(RUN) pytest
 
 test-cov: $(INSTALL_STAMP)
-	$(RUN) pytest --cov=iris_engine --cov-report=html --cov-report=term-missing --cov-fail-under=80
+	$(RUN) pytest --cov=iris_engine --cov=iris_config --cov-report=html --cov-report=term-missing --cov-fail-under=95
 
 # ── OS-specific targets ──────────────────────────────────────────────────────
 
