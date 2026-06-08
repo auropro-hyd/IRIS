@@ -6,7 +6,7 @@
 
 ## Sprint 1: Protocol + selector
 
-- [ ] **T030** `[US2] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/ocr_engine.py` containing the Protocol, result types, and error types from the contract document.
+- [x] **T030** `[US2] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/ocr_engine.py` containing the Protocol, result types, and error types from the contract document.
       **Acceptance**: mypy strict passes; the module imports cleanly with zero adapter dependencies.
 
 - [ ] **T031** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/ocr/selector.py` that reads `ProductConfig.adapters.ocr` and returns the registered `OCREngine` instance. Includes the optional fallback path from `adapters.ocr_fallback`.

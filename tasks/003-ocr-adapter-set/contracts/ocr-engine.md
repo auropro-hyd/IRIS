@@ -10,6 +10,11 @@ from dataclasses import dataclass
 from uuid import UUID
 
 @dataclass(frozen=True)
+class TenantContext:
+    tenant_id: str       # identifies the customer/tenant submitting the document
+    product_slug: str    # e.g. "commercial-auto-claims/in"
+
+@dataclass(frozen=True)
 class BBox:
     """A single bounding box on a page. Coordinates in pixels from the top-left."""
     x: int
