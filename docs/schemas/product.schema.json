@@ -22,6 +22,24 @@
           ],
           "title": "Llm",
           "type": "string"
+        },
+        "ocr_fallback": {
+          "anyOf": [
+            {
+              "enum": [
+                "adi",
+                "datalab",
+                "paddleocr",
+                "local"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ocr Fallback"
         }
       },
       "required": [
