@@ -150,3 +150,51 @@ def test_duplicate_doc_type_error_names_bundle() -> None:
     with pytest.raises(ConfigLoadError) as exc_info:
         load_bundle(INVALID_BUNDLES / "duplicate-doc-type", "duplicate-doc-type")
     assert "duplicate-doc-type" in str(exc_info.value)
+
+
+# ── loader edge-case coverage (T029) ─────────────────────────────────────────
+
+
+def _copy_valid_bundle(dest: Path) -> None:
+    shutil.copytree(VALID_BUNDLE, dest, dirs_exist_ok=True)
+
+
+def test_yaml_file_not_a_mapping_raises_config_load_error(tmp_path: Path) -> None:
+    _copy_valid_bundle(tmp_path)
+    (tmp_path / "taxonomy.yaml").write_text("- item1\n- item2\n", encoding="utf-8")
+    with pytest.raises(ConfigLoadError, match="expected a YAML mapping"):
+        load_bundle(tmp_path, "test")
+
+
+def test_extraction_error_loc_maps_to_extraction_file(tmp_path: Path) -> None:
+    _copy_valid_bundle(tmp_path)
+    (tmp_path / "extraction.yaml").write_text("fields: []\n", encoding="utf-8")
+    with pytest.raises(ConfigLoadError) as exc_info:
+        load_bundle(tmp_path, "test")
+    assert "extraction.yaml" in str(exc_info.value.file)
+
+
+def test_empty_loc_maps_to_product_file(tmp_path: Path) -> None:
+    _copy_valid_bundle(tmp_path)
+    (tmp_path / "taxonomy.yaml").write_text(
+        "document_types: []\nrequired_documents: []\n", encoding="utf-8"
+    )
+    with pytest.raises(ConfigLoadError) as exc_info:
+        load_bundle(tmp_path, "test")
+    assert "product.yaml" in str(exc_info.value.file)
+
+
+def test_missing_template_file_raises_config_load_error(tmp_path: Path) -> None:
+    _copy_valid_bundle(tmp_path)
+    (tmp_path / "prompts" / "classify.j2").unlink()
+    with pytest.raises(ConfigLoadError, match="template file not found"):
+        load_bundle(tmp_path, "test")
+
+
+def test_template_undeclared_variable_raises_config_load_error(tmp_path: Path) -> None:
+    _copy_valid_bundle(tmp_path)
+    (tmp_path / "prompts" / "classify.j2").write_text(
+        "{{ taxonomy }} {{ undeclared_var }}", encoding="utf-8"
+    )
+    with pytest.raises(ConfigLoadError, match="undeclared variables"):
+        load_bundle(tmp_path, "test")
