@@ -39,7 +39,7 @@
 
 ## Sprint 0: Tests
 
-- [ ] **T029** `[P] [size: M] [owner: AuroPro]` Unit tests for every schema module under `packages/iris-config/tests/test_schema_*.py`. Coverage target: 95 percent on `iris_config/schema/`.
+- [x] **T029** `[P] [size: M] [owner: AuroPro]` Unit tests for every schema module under `packages/iris-config/tests/test_schema_*.py`. Coverage target: 95 percent on `iris_config/schema/`.
       **Acceptance**: `make test-cov` shows 95 percent or higher on the schema package.
 
 ## Definition of Done

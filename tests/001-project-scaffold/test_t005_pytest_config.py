@@ -59,10 +59,10 @@ def test_coverage_run_branch_enabled() -> None:
     ), "[tool.coverage.run] branch is not set to true"
 
 
-def test_coverage_report_fail_under_80() -> None:
+def test_coverage_report_fail_under_95() -> None:
     cfg = _load_pyproject()
     fail_under = cfg["tool"]["coverage"]["report"].get("fail_under")
-    assert fail_under == 80, f"[tool.coverage.report] fail_under should be 80, got {fail_under}"
+    assert fail_under == 95, f"[tool.coverage.report] fail_under should be 95, got {fail_under}"
 
 
 def test_coverage_html_directory_is_htmlcov() -> None:

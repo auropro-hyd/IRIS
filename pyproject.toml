@@ -107,11 +107,11 @@ markers = [
 addopts = ["-m", "not slow and not e2e"]
 
 [tool.coverage.run]
-source = ["iris_engine"]
+source = ["iris_engine", "iris_config"]
 branch = true
 
 [tool.coverage.report]
-fail_under = 80
+fail_under = 95
 show_missing = true
 
 [tool.coverage.html]
