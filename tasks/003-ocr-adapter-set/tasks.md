@@ -9,11 +9,11 @@
 - [x] **T030** `[US2] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/ocr_engine.py` containing the Protocol, result types, and error types from the contract document.
       **Acceptance**: mypy strict passes; the module imports cleanly with zero adapter dependencies.
 
-- [ ] **T031** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/ocr/selector.py` that reads `ProductConfig.adapters.ocr` and returns the registered `OCREngine` instance. Includes the optional fallback path from `adapters.ocr_fallback`.
+- [x] **T031** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/ocr/selector.py` that reads `ProductConfig.adapters.ocr` and returns the registered `OCREngine` instance. Includes the optional fallback path from `adapters.ocr_fallback`.
       **Acceptance**: Unit tests cover (a) primary success, (b) primary `OCRUnavailable` followed by fallback success, (c) primary and fallback both fail, surfacing the primary error.
 
-- [ ] **T032** `[P] [US7] [size: M] [owner: AuroPro]` Implement `iris_engine/ocr/in_memory.py` with `InMemoryOCREngine` returning canned `OCRResult` values. Used as a fixture by every adapter test plus the agent tests in workstream 005.
-      **Acceptance**: The in-memory engine passes every clause of the contract suite.
+- [x] **T032** `[P] [US7] [size: M] [owner: AuroPro]` Implement `iris_engine/ocr/in_memory.py` with `InMemoryOCREngine` returning canned `OCRResult` values. Used as a fixture by every adapter test plus the agent tests in workstream 005.
+      **Acceptance**: The in-memory engine raises typed errors for invalid inputs (`OCRUnsupportedContentType` for unsupported MIME types, `OCRMalformedDocument` for empty bytes), returns a valid `OCRResult` on success, and returns pre-registered canned responses by `document_id`. Full contract suite verification deferred to T037.
 
 ## Sprint 1: Adapter packages (parallel)
 

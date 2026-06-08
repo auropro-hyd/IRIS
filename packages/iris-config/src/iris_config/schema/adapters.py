@@ -17,3 +17,4 @@ class AdaptersSchema(BaseModel):
 
     ocr: OcrAdapter
     llm: LlmAdapter
+    ocr_fallback: OcrAdapter | None = None
