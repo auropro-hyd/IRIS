@@ -48,7 +48,12 @@ def select_ocr_engine(
 
 
 class _FallbackOCREngine:
-    """Wraps a primary engine with a fallback for OCRUnavailable failures."""
+    """Wraps a primary engine with a fallback for OCRUnavailable failures.
+
+    Fallback fires only on OCRUnavailable (network/service failure). OCRRateLimited
+    surfaces to the caller for backoff/retry instead - rate limiting on the primary
+    does not mean the fallback can handle the load either.
+    """
 
     def __init__(self, primary: OCREngine, fallback: OCREngine) -> None:
         self.id = primary.id
