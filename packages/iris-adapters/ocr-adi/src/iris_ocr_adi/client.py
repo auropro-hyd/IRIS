@@ -46,12 +46,14 @@ class AdiOCREngine:
         model: str = "prebuilt-layout",
         *,
         poll_interval: float = 1.0,
+        max_poll_seconds: float = 300.0,
         _http_client: httpx.AsyncClient | None = None,
     ) -> None:
         self._endpoint = endpoint.rstrip("/")
         self._api_key = api_key
         self._model = model
         self._poll_interval = poll_interval
+        self._max_poll_seconds = max_poll_seconds
         self._http_client = _http_client
 
     async def extract(
@@ -106,7 +108,12 @@ class AdiOCREngine:
         return _map_result(document_id, self.id, body, elapsed_ms)
 
     async def _poll(self, client: httpx.AsyncClient, operation_url: str) -> dict[str, Any]:
+        deadline = time.monotonic() + self._max_poll_seconds
         while True:
+            if time.monotonic() > deadline:
+                raise OCRUnavailable(
+                    f"ADI analysis did not complete within {self._max_poll_seconds:.0f}s"
+                )
             try:
                 response = await client.get(
                     operation_url,

@@ -177,10 +177,9 @@ def test_c006_unsupported_content_type_raises():
 def test_c006_error_does_not_contain_bytes():
     engine, _ = _make_engine()
     payload = b"sensitive document bytes"
-    try:
+    with pytest.raises(OCRUnsupportedContentType) as exc_info:
         _run(engine.extract(_CTX, _DOC_ID, payload, "text/plain"))
-    except OCRUnsupportedContentType as exc:
-        assert b"sensitive" not in str(exc).encode()
+    assert b"sensitive" not in str(exc_info.value).encode()
 
 
 # C-OCR-007 ----------------------------------------------------------------
@@ -325,3 +324,44 @@ def test_non_json_poll_response_raises_unavailable():
     client.get.return_value = httpx.Response(200, text="<html>Gateway Timeout</html>")
     with pytest.raises(OCRUnavailable):
         _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_poll_deadline_exceeded_raises_unavailable():
+    client: AsyncMock = AsyncMock(spec=httpx.AsyncClient)
+    engine = AdiOCREngine(
+        endpoint="https://test.cognitiveservices.azure.com",
+        api_key="test-key",  # pragma: allowlist secret
+        poll_interval=0.0,
+        max_poll_seconds=0.0,
+        _http_client=client,
+    )
+    client.post.return_value = _post_202()
+    client.get.return_value = httpx.Response(200, json={"status": "running"})
+    with pytest.raises(OCRUnavailable, match="did not complete"):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_poll_timeout_raises_unavailable():
+    engine, client = _make_engine()
+    client.post.return_value = _post_202()
+    client.get.side_effect = httpx.TimeoutException("poll timed out")
+    with pytest.raises(OCRUnavailable):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_http_4xx_catch_all_raises_unavailable():
+    engine, client = _make_engine()
+    client.post.return_value = httpx.Response(404)
+    with pytest.raises(OCRUnavailable):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_poll_running_then_succeeded():
+    engine, client = _make_engine()
+    client.post.return_value = _post_202()
+    client.get.side_effect = [
+        httpx.Response(200, json={"status": "running"}),
+        _poll_ok(_single_page()),
+    ]
+    result = _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+    assert result.total_pages == 1

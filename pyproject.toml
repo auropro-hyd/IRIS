@@ -107,7 +107,7 @@ markers = [
 addopts = ["-m", "not slow and not e2e"]
 
 [tool.coverage.run]
-source = ["iris_engine", "iris_config"]
+source = ["iris_engine", "iris_config", "iris_ocr_adi"]
 branch = true
 omit = ["*/iris_engine/contracts/*"]
 
