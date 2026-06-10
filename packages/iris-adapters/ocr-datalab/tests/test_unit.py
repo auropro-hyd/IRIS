@@ -356,3 +356,37 @@ def test_non_json_poll_response_raises_unavailable():
     client.get.return_value = httpx.Response(200, text="<html>error</html>")
     with pytest.raises(OCRUnavailable):
         _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_poll_timeout_raises_unavailable():
+    engine, client = _make_engine()
+    client.post.return_value = _submit_ok()
+    client.get.side_effect = httpx.TimeoutException("poll timed out")
+    with pytest.raises(OCRUnavailable):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_http_4xx_catch_all_raises_unavailable():
+    engine, client = _make_engine()
+    client.post.return_value = httpx.Response(402)
+    with pytest.raises(OCRUnavailable):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
+def test_page_count_fewer_than_split_trims_pages():
+    engine, client = _make_engine()
+    client.post.return_value = _submit_ok()
+    client.get.return_value = _poll_complete(
+        markdown="page one\n\n---\n\npage two\n\n---\n\npage three",
+        page_count=2,
+    )
+    result = _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+    assert result.total_pages == 2
+
+
+def test_page_count_more_than_split_pads_pages():
+    engine, client = _make_engine()
+    client.post.return_value = _submit_ok()
+    client.get.return_value = _poll_complete(markdown="only one page", page_count=3)
+    result = _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+    assert result.total_pages == 3

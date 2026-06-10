@@ -104,7 +104,8 @@ markers = [
     "integration: two or more components together, in-memory adapters (tests/integration/)",
     "e2e: real services, gated on IRIS_E2E_LIVE=1 (tests/e2e/)",
 ]
-addopts = ["-m", "not slow and not e2e"]
+addopts = ["--import-mode=importlib", "-m", "not slow and not e2e"]
+pythonpath = ["tests/001-project-scaffold"]
 
 [tool.coverage.run]
 source = ["iris_engine", "iris_config", "iris_ocr_adi", "iris_ocr_datalab"]
