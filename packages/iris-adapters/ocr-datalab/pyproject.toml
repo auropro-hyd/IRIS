@@ -2,6 +2,13 @@
 name = "iris-ocr-datalab"
 version = "0.0.0"
 requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "iris-engine",
+]
+
+[tool.uv.sources]
+iris-engine = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

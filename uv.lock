@@ -543,6 +543,16 @@ requires-dist = [
 name = "iris-ocr-datalab"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/ocr-datalab" }
+dependencies = [
+    { name = "httpx" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
 
 [[package]]
 name = "iris-ocr-local"
