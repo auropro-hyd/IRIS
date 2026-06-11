@@ -2,6 +2,24 @@
 name = "iris-ocr-paddleocr"
 version = "0.0.0"
 requires-python = ">=3.12"
+dependencies = [
+    "paddleocr[doc-parser]>=3.6.0",
+    "huggingface_hub>=0.23",
+    "pymupdf>=1.24",
+    "Pillow>=10.0",
+    "numpy>=1.24",
+    "iris-engine",
+]
+
+# Download the model snapshot before first use (offline or online mode):
+#   uv run hf download PaddlePaddle/PaddleOCR-VL-1.6 \
+#       --local-dir PaddleOCR-VL-1.6-snapshot
+# Then set in .env:
+#   IRIS_PADDLEOCR_OFFLINE=1
+#   IRIS_PADDLEOCR_MODEL_PATH=PaddleOCR-VL-1.6-snapshot
+
+[tool.uv.sources]
+iris-engine = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
