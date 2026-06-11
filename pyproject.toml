@@ -108,7 +108,7 @@ addopts = ["--import-mode=importlib", "-m", "not slow and not e2e"]
 pythonpath = ["tests/001-project-scaffold"]
 
 [tool.coverage.run]
-source = ["iris_engine", "iris_config", "iris_ocr_adi", "iris_ocr_datalab"]
+source = ["iris_engine", "iris_config", "iris_ocr_adi", "iris_ocr_datalab", "iris_ocr_paddleocr"]
 branch = true
 omit = ["*/iris_engine/contracts/*"]
 
@@ -122,6 +122,9 @@ directory = "htmlcov"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+exclude = [
+    "PaddleOCR-VL-1.6-snapshot",
+]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "B"]

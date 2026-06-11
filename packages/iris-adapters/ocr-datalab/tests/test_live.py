@@ -17,10 +17,12 @@ import pytest
 from iris_engine.contracts.ocr_engine import TenantContext
 from iris_ocr_datalab import DatalabOCREngine
 
-pytestmark = pytest.mark.skipif(
-    not os.getenv("IRIS_OCR_LIVE_DATALAB"),
-    reason="IRIS_OCR_LIVE_DATALAB not set",
-)
+pytestmark = [
+    pytest.mark.skipif(
+        not os.getenv("IRIS_OCR_LIVE_DATALAB"), reason="IRIS_OCR_LIVE_DATALAB not set"
+    ),
+    pytest.mark.slow,
+]
 
 _CTX = TenantContext(tenant_id="live-test", product_slug="test/live")
 
