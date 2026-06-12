@@ -366,6 +366,20 @@ def test_poll_timeout_raises_unavailable():
         _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
 
 
+def test_poll_deadline_exceeded_raises_unavailable() -> None:
+    client: AsyncMock = AsyncMock(spec=httpx.AsyncClient)
+    engine = DatalabOCREngine(
+        api_key="test-key",  # pragma: allowlist secret
+        poll_interval=0.0,
+        max_poll_seconds=0.0,
+        _http_client=client,
+    )
+    client.post.return_value = _submit_ok()
+    client.get.return_value = httpx.Response(200, json={"status": "pending"})
+    with pytest.raises(OCRUnavailable, match="did not complete within"):
+        _run(engine.extract(_CTX, _DOC_ID, _PDF_BYTES, "application/pdf"))
+
+
 def test_http_4xx_catch_all_raises_unavailable():
     engine, client = _make_engine()
     client.post.return_value = httpx.Response(402)

@@ -60,11 +60,13 @@ class DatalabOCREngine:
         mode: str = "balanced",
         *,
         poll_interval: float = 2.0,
+        max_poll_seconds: float = 300.0,
         _http_client: httpx.AsyncClient | None = None,
     ) -> None:
         self._api_key = api_key
         self._mode = mode
         self._poll_interval = poll_interval
+        self._max_poll_seconds = max_poll_seconds
         self._http_client = _http_client
 
     async def extract(
@@ -128,7 +130,12 @@ class DatalabOCREngine:
         return _map_result(document_id, self.id, result, elapsed_ms)
 
     async def _poll(self, client: httpx.AsyncClient, check_url: str) -> dict[str, Any]:
+        deadline = time.monotonic() + self._max_poll_seconds
         while True:
+            if time.monotonic() > deadline:
+                raise OCRUnavailable(
+                    f"Datalab conversion did not complete within {self._max_poll_seconds:.0f}s"
+                )
             await asyncio.sleep(self._poll_interval)
 
             try:
