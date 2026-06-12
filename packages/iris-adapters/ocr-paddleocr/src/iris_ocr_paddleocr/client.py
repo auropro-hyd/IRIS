@@ -25,6 +25,7 @@ programmatically - they are deployment-level configuration, not adapter state.
 
 from __future__ import annotations
 
+import asyncio
 import io
 import time
 from typing import Any
@@ -87,10 +88,11 @@ class PaddleOCREngine:
             raise OCRMalformedDocument("content is empty")
 
         start = time.monotonic()
-        images = _to_images(content, content_type, self._dpi)
-        ocr_pages = [
-            _run_page(self._pipeline, img, page_number=i + 1) for i, img in enumerate(images)
-        ]
+        images = await asyncio.to_thread(_to_images, content, content_type, self._dpi)
+        pipeline = self._pipeline
+        ocr_pages = await asyncio.to_thread(
+            lambda: [_run_page(pipeline, img, page_number=i + 1) for i, img in enumerate(images)]
+        )
         elapsed_ms = int((time.monotonic() - start) * 1000)
 
         return OCRResult(
