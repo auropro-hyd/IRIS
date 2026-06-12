@@ -35,6 +35,10 @@ help:
 
 install:
 	$(UV) sync --all-packages
+	@$(UV) run python -c "\
+import shutil, sys; \
+t = shutil.which('tesseract'); \
+print('==> tesseract: ' + t) if t else print('\n==> WARNING: tesseract binary not found (required by iris-ocr-local).\n    Ubuntu/Debian : sudo apt install tesseract-ocr tesseract-ocr-eng\n    macOS         : brew install tesseract\n    Windows       : choco install tesseract\n    Then re-run: make install\n')"
 	@$(UV) run python -c "from pathlib import Path; Path('$(INSTALL_STAMP)').touch()"
 
 # Rebuilt automatically whenever pyproject.toml or uv.lock changes.
@@ -125,7 +129,7 @@ distclean: clean
 	       Write-Host '  ($(COMPOSE_FILE) not found; skipping)' \
 	   }"
 	$(UV) cache clean
-	@powershell -NoProfile -Command "Write-Host '==> distclean complete.'"
+	@powershell -NoProfile -Command "Write-Host '==> Note: system packages (tesseract-ocr) are not removed by distclean.'; Write-Host '    Remove manually if needed: choco uninstall tesseract'; Write-Host '==> distclean complete.'"
 
 status:
 	@powershell -NoProfile -ExecutionPolicy Bypass -Command \
@@ -222,6 +226,8 @@ distclean: clean
 	fi
 	@echo "==> Clearing uv cache ..."
 	@$(UV) cache clean
+	@echo "==> Note: system packages (tesseract-ocr) are not removed by distclean."
+	@echo "    Remove manually if needed: sudo apt remove tesseract-ocr"
 	@echo "==> distclean complete."
 
 status:

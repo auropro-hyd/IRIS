@@ -2,6 +2,23 @@
 name = "iris-ocr-local"
 version = "0.0.0"
 requires-python = ">=3.12"
+dependencies = [
+    "pytesseract>=0.3.10",
+    "pymupdf>=1.24",
+    "Pillow>=10.0",
+    "iris-engine",
+]
+
+# System prerequisite (not installable via uv/pip):
+#   Linux:   sudo apt install tesseract-ocr tesseract-ocr-eng
+#   macOS:   brew install tesseract
+#   Windows: choco install tesseract
+#
+# If tesseract is not on PATH, set IRIS_TESSERACT_CMD to the full binary path:
+#   Windows example: IRIS_TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+
+[tool.uv.sources]
+iris-engine = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
