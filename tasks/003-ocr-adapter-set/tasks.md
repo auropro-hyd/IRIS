@@ -17,8 +17,8 @@
 
 ## Sprint 1: Adapter packages (parallel)
 
-- [ ] **T033** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-adi/`: Azure Document Intelligence adapter. HTTP client over `httpx.AsyncClient`. Maps ADI's analysis result to `OCRResult`. Typed errors for 401, 403, 429, 5xx, timeout.
-      **Acceptance**: Unit tests with mocked ADI responses pass every contract clause; live clause runs under `IRIS_OCR_LIVE_ADI=1`.
+- [x] **T033** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-adi/`: Azure Document Intelligence adapter. HTTP client over `httpx.AsyncClient`. Maps ADI's analysis result to `OCRResult`. Typed errors for 401, 403, 429, 5xx, timeout.
+      **Acceptance**: Unit tests with mocked ADI responses pass every contract clause (C-OCR-001 through C-OCR-010 plus HTTP error mapping); live clause `test_live.py` runs under `IRIS_OCR_LIVE_ADI=1`.
 
 - [ ] **T034** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-datalab/`: Datalab adapter. Reuses Datalab client patterns from the PoCs but with the new error taxonomy.
       **Acceptance**: Unit tests pass; live clause runs under `IRIS_OCR_LIVE_DATALAB=1`.

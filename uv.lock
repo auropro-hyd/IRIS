@@ -528,6 +528,16 @@ source = { editable = "packages/iris-observability" }
 name = "iris-ocr-adi"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/ocr-adi" }
+dependencies = [
+    { name = "httpx" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
 
 [[package]]
 name = "iris-ocr-datalab"
