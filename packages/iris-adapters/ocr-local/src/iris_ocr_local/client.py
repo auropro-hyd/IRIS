@@ -19,6 +19,7 @@ before inference. Useful on Windows where the binary is not on PATH.
 
 from __future__ import annotations
 
+import asyncio
 import io
 import os
 import time
@@ -74,10 +75,11 @@ class TesseractEngine:
             raise OCRMalformedDocument("content is empty")
 
         start = time.monotonic()
-        images = _to_images(content, content_type, self._dpi)
-        ocr_pages = [
-            _run_page(self._pytesseract, img, page_number=i + 1) for i, img in enumerate(images)
-        ]
+        images = await asyncio.to_thread(_to_images, content, content_type, self._dpi)
+        pytesseract = self._pytesseract
+        ocr_pages = await asyncio.to_thread(
+            lambda: [_run_page(pytesseract, img, page_number=i + 1) for i, img in enumerate(images)]
+        )
         elapsed_ms = int((time.monotonic() - start) * 1000)
 
         return OCRResult(
