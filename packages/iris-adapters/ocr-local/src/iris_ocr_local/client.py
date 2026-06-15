@@ -15,6 +15,12 @@ Pages with no detected words return confidence=0.0.
 
 Binary path: if IRIS_TESSERACT_CMD is set, it overrides pytesseract.tesseract_cmd
 before inference. Useful on Windows where the binary is not on PATH.
+
+Note: pytesseract.tesseract_cmd is a process-wide global. Multiple TesseractEngine
+instances with different tesseract_cmd values are not safe to run concurrently from
+the same process - the last cmd applied before subprocess spawn wins.
+
+C-OCR-011 (OTEL span with tenant_id) is deferred to T038.
 """
 
 from __future__ import annotations
@@ -37,7 +43,7 @@ from iris_engine.contracts.ocr_engine import (
     OCRUnsupportedContentType,
     TenantContext,
 )
-from PIL import Image
+from PIL import Image, ImageSequence
 
 _DEFAULT_DPI = 150
 
@@ -54,11 +60,12 @@ class TesseractEngine:
         _pytesseract: Any | None = None,
     ) -> None:
         self._dpi = dpi
+        self._tesseract_cmd: str | None = None
         if _pytesseract is not None:
             # Injection seam: bypasses binary detection entirely for unit tests.
             self._pytesseract = _pytesseract
             return
-        self._pytesseract = _load_pytesseract(tesseract_cmd)
+        self._pytesseract, self._tesseract_cmd = _load_pytesseract(tesseract_cmd)
 
     async def extract(
         self,
@@ -77,8 +84,11 @@ class TesseractEngine:
         start = time.monotonic()
         images = await asyncio.to_thread(_to_images, content, content_type, self._dpi)
         pytesseract = self._pytesseract
+        tesseract_cmd = self._tesseract_cmd
         ocr_pages = await asyncio.to_thread(
-            lambda: [_run_page(pytesseract, img, page_number=i + 1) for i, img in enumerate(images)]
+            lambda: [
+                _run_page(pytesseract, img, i + 1, tesseract_cmd) for i, img in enumerate(images)
+            ]
         )
         elapsed_ms = int((time.monotonic() - start) * 1000)
 
@@ -91,7 +101,7 @@ class TesseractEngine:
         )
 
 
-def _load_pytesseract(tesseract_cmd: str | None) -> Any:
+def _load_pytesseract(tesseract_cmd: str | None) -> tuple[Any, str | None]:
     try:
         import pytesseract  # type: ignore[import-untyped]
     except ImportError as exc:
@@ -109,7 +119,7 @@ def _load_pytesseract(tesseract_cmd: str | None) -> Any:
             "IRIS_TESSERACT_CMD if it is not on PATH"
         ) from exc
 
-    return pytesseract
+    return pytesseract, cmd
 
 
 def _to_images(content: bytes, content_type: str, dpi: int) -> list[Image.Image]:
@@ -124,8 +134,11 @@ def _to_images(content: bytes, content_type: str, dpi: int) -> list[Image.Image]
             mat = pymupdf.Matrix(dpi / 72.0, dpi / 72.0)  # type: ignore[no-untyped-call]
             images: list[Image.Image] = []
             for page in doc:  # type: ignore[attr-defined]
-                pix = page.get_pixmap(matrix=mat)
-                images.append(Image.frombytes("RGB", (pix.width, pix.height), pix.samples))
+                try:
+                    pix = page.get_pixmap(matrix=mat)
+                    images.append(Image.frombytes("RGB", (pix.width, pix.height), pix.samples))
+                except Exception as exc:
+                    raise OCRMalformedDocument(f"Cannot rasterise page: {exc}") from exc
         return images
 
     try:
@@ -133,24 +146,30 @@ def _to_images(content: bytes, content_type: str, dpi: int) -> list[Image.Image]
     except Exception as exc:
         raise OCRMalformedDocument(f"Cannot open image: {exc}") from exc
 
-    frames: list[Image.Image] = []
     try:
-        while True:
-            frames.append(pil_img.copy().convert("RGB"))
-            pil_img.seek(pil_img.tell() + 1)
-    except (EOFError, AttributeError):
-        pass
-    return frames if frames else [pil_img.convert("RGB")]
+        frames = [frame.copy().convert("RGB") for frame in ImageSequence.Iterator(pil_img)]
+    except Exception as exc:
+        raise OCRMalformedDocument(f"Cannot decode image frame: {exc}") from exc
+    return frames
 
 
-def _run_page(pytesseract: Any, image: Image.Image, page_number: int) -> OCRPageResult:
+def _run_page(
+    pytesseract: Any,
+    image: Image.Image,
+    page_number: int,
+    tesseract_cmd: str | None = None,
+) -> OCRPageResult:
+    if tesseract_cmd:
+        pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
     try:
         data: dict[str, list[Any]] = pytesseract.image_to_data(
             image, output_type=pytesseract.Output.DICT
         )
+        return _map_result(data, page_number)
+    except (OCRUnavailable, OCRMalformedDocument):
+        raise
     except Exception as exc:
         raise OCRUnavailable(f"Tesseract inference failed: {exc}") from exc
-    return _map_result(data, page_number)
 
 
 def _map_result(data: dict[str, list[Any]], page_number: int) -> OCRPageResult:
@@ -158,7 +177,7 @@ def _map_result(data: dict[str, list[Any]], page_number: int) -> OCRPageResult:
 
     Rows with conf == -1 are layout rows (block/line headers), not words - skipped.
     Words with empty text after strip are also skipped.
-    Words are grouped by block_num; blocks are joined with double newline.
+    Words are grouped by block_num and joined in numeric block order with double newline.
     """
     n = len(data.get("text", []))
     if n == 0:
@@ -185,7 +204,7 @@ def _map_result(data: dict[str, list[Any]], page_number: int) -> OCRPageResult:
         )
         confidences.append(conf / 100.0)
 
-    markdown = "\n\n".join(" ".join(words) for words in blocks.values())
+    markdown = "\n\n".join(" ".join(words) for _, words in sorted(blocks.items()))
     confidence = sum(confidences) / len(confidences) if confidences else 0.0
 
     return OCRPageResult(

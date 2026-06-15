@@ -69,7 +69,7 @@ test: $(INSTALL_STAMP)
 	$(RUN) pytest
 
 test-cov: $(INSTALL_STAMP)
-	$(RUN) pytest --cov=iris_engine --cov=iris_config --cov-report=html --cov-report=term-missing --cov-fail-under=95
+	$(RUN) pytest --cov=iris_engine --cov=iris_config --cov=iris_ocr_adi --cov=iris_ocr_datalab --cov=iris_ocr_paddleocr --cov=iris_ocr_local --cov-report=html --cov-report=term-missing --cov-fail-under=95
 
 # ── OS-specific targets ──────────────────────────────────────────────────────
 

@@ -120,7 +120,8 @@ def test_c001_version_is_semver() -> None:
 def test_c002_pdf_extracts_markdown() -> None:
     engine, _ = _make_engine()
     result = _run(engine.extract(_CTX, _DOC_ID, _make_pdf(), "application/pdf"))
-    assert "iris" in result.pages[0].markdown.lower()
+    assert result.total_pages == 1
+    assert "iris insurance reference intelligence stack" in result.pages[0].markdown.lower()
 
 
 # C-OCR-003 ----------------------------------------------------------------
@@ -131,6 +132,9 @@ def test_c003_multipage_ordering() -> None:
     pt.image_to_data.side_effect = [_mock_data([f"page{i + 1}"]) for i in range(3)]
     result = _run(engine.extract(_CTX, _DOC_ID, _make_pdf(num_pages=3), "application/pdf"))
     assert [p.page_number for p in result.pages] == [1, 2, 3]
+    assert result.pages[0].markdown == "page1"
+    assert result.pages[1].markdown == "page2"
+    assert result.pages[2].markdown == "page3"
 
 
 def test_c003_page_numbers_start_at_one() -> None:
@@ -246,6 +250,15 @@ def test_import_error_raises_unavailable() -> None:
 
     with patch.dict(sys.modules, {"pytesseract": None}):  # type: ignore[dict-item]
         with pytest.raises(OCRUnavailable, match="pytesseract is not installed"):
+            _load_pytesseract(None)
+
+
+def test_binary_not_found_raises_unavailable() -> None:
+    import pytesseract as pt_mod  # noqa: PLC0415
+    from iris_ocr_local.client import _load_pytesseract  # noqa: PLC0415
+
+    with patch.object(pt_mod, "get_tesseract_version", side_effect=Exception("not found")):
+        with pytest.raises(OCRUnavailable, match="tesseract binary not found"):
             _load_pytesseract(None)
 
 
