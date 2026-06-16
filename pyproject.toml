@@ -25,6 +25,7 @@ members = [
 dev = [
     "httpx>=0.27",
     "import-linter>=2.5",
+    "opentelemetry-sdk>=1.20",
     "pyyaml>=6",
     "mypy>=1.13",
     "pytest>=8.3",
@@ -156,6 +157,10 @@ module = [
     "iris_llm_local.*",
 ]
 strict = true
+
+[[tool.mypy.overrides]]
+module = ["opentelemetry", "opentelemetry.*"]
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = ["tests.*"]

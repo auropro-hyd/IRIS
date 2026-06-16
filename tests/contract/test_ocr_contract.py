@@ -462,9 +462,17 @@ def test_c_ocr_local_001_no_outbound_network(
     assert result.adapter_id in {"local", "paddleocr"}
 
 
-# ── C-OCR-011: OTEL span - deferred to T038 ──────────────────────────────────
+# ── C-OCR-011: OTEL span carries tenant_id and adapter_id ────────────────────
 
 
-@pytest.mark.skip(reason="C-OCR-011 (OTEL span with tenant_id) deferred to T038")
-def test_c011_otel_span_carries_tenant_id() -> None:
-    pass
+@pytest.mark.parametrize("adapter_id", _ALL)
+def test_c011_otel_span_carries_tenant_id(adapter_id: str, span_exporter: Any) -> None:
+    _run(_engine(adapter_id).extract(_CTX, _DOC_ID, _make_pdf(), "application/pdf"))
+    spans = span_exporter.get_finished_spans()
+    assert len(spans) == 1, f"expected 1 span, got {len(spans)}"
+    span = spans[0]
+    assert span.name == "ocr.extract"
+    assert span.attributes["ocr.tenant_id"] == _CTX.tenant_id
+    assert span.attributes["ocr.adapter_id"] == _EXPECTED_IDS[adapter_id]
+    assert span.attributes["ocr.document_id"] == str(_DOC_ID)
+    assert span.attributes["ocr.success"] is True

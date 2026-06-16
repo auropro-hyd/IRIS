@@ -63,17 +63,29 @@ class AdiOCREngine:
         content: bytes,
         content_type: str,
     ) -> OCRResult:
-        if content_type not in VALID_CONTENT_TYPES:
-            raise OCRUnsupportedContentType(
-                f"ADI adapter does not support content type {content_type!r}"
-            )
-        if not content:
-            raise OCRMalformedDocument("content is empty")
+        from iris_engine.ocr.tracing import instrument_extract, log_extract_success
 
-        if self._http_client is not None:
-            return await self._do_extract(self._http_client, document_id, content, content_type)
-        async with httpx.AsyncClient(timeout=60.0) as client:
-            return await self._do_extract(client, document_id, content, content_type)
+        async with instrument_extract(self.id, ctx, document_id, content_type) as span:
+            if content_type not in VALID_CONTENT_TYPES:
+                raise OCRUnsupportedContentType(
+                    f"ADI adapter does not support content type {content_type!r}"
+                )
+            if not content:
+                raise OCRMalformedDocument("content is empty")
+
+            if self._http_client is not None:
+                result = await self._do_extract(
+                    self._http_client, document_id, content, content_type
+                )
+            else:
+                async with httpx.AsyncClient(timeout=60.0) as client:
+                    result = await self._do_extract(client, document_id, content, content_type)
+
+            span.set_attribute("ocr.total_pages", result.total_pages)
+            span.set_attribute("ocr.total_latency_ms", result.total_latency_ms)
+            span.set_attribute("ocr.success", True)
+            log_extract_success(self.id, ctx, result)
+            return result
 
     async def _do_extract(
         self,
