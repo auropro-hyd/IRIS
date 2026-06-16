@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import asyncio
 import io
+import socket
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock
 from uuid import UUID
@@ -120,7 +121,7 @@ def _adi_engine(*, pages: int = 1, text: str = _IRIS_TEXT) -> Any:
 
     return AdiOCREngine(
         endpoint="https://mock.cognitiveservices.azure.com",
-        api_key="test-key",  # pragma: allowlist secret  # pragma: allowlist secret
+        api_key="test-key",  # pragma: allowlist secret
         poll_interval=0.0,
         _http_client=mock_client,
     )
@@ -255,7 +256,7 @@ def _adi_engine_malformed() -> Any:
 
     return AdiOCREngine(
         endpoint="https://mock.cognitiveservices.azure.com",
-        api_key="test-key",  # pragma: allowlist secret  # pragma: allowlist secret
+        api_key="test-key",  # pragma: allowlist secret
         poll_interval=0.0,
         _http_client=mock_client,
     )
@@ -449,9 +450,14 @@ def test_c010_png_input_accepted(adapter_id: str) -> None:
 
 
 @pytest.mark.parametrize("adapter_id", _LOCAL)
-def test_c_ocr_local_001_no_outbound_network(adapter_id: str) -> None:
-    eng = _engine(adapter_id)
-    result = _run(eng.extract(_CTX, _DOC_ID, _make_pdf(), "application/pdf"))
+def test_c_ocr_local_001_no_outbound_network(
+    adapter_id: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    def _deny(*a: object, **k: object) -> None:
+        raise AssertionError(f"{adapter_id} adapter attempted a network connection")
+
+    monkeypatch.setattr(socket.socket, "connect", _deny)
+    result = _run(_engine(adapter_id).extract(_CTX, _DOC_ID, _make_pdf(), "application/pdf"))
     assert result.total_pages >= 1
     assert result.adapter_id in {"local", "paddleocr"}
 
