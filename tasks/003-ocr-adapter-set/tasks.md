@@ -20,8 +20,8 @@
 - [x] **T033** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-adi/`: Azure Document Intelligence adapter. HTTP client over `httpx.AsyncClient`. Maps ADI's analysis result to `OCRResult`. Typed errors for 401, 403, 429, 5xx, timeout.
       **Acceptance**: Unit tests with mocked ADI responses pass every contract clause (C-OCR-001 through C-OCR-010 plus HTTP error mapping); live clause `test_live.py` runs under `IRIS_OCR_LIVE_ADI=1`.
 
-- [ ] **T034** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-datalab/`: Datalab adapter. Reuses Datalab client patterns from the PoCs but with the new error taxonomy.
-      **Acceptance**: Unit tests pass; live clause runs under `IRIS_OCR_LIVE_DATALAB=1`.
+- [x] **T034** `[P] [US1] [US3] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-datalab/`: Datalab adapter. Reuses Datalab client patterns from the PoCs but with the new error taxonomy.
+      **Acceptance**: Unit tests pass covering C-OCR-001 through C-OCR-010 and HTTP error mapping (400, 401, 403, 413, 429, 5xx, 529); live clause runs under `IRIS_OCR_LIVE_DATALAB=1`. Note: bboxes are empty per page - Datalab convert endpoint returns markdown only, no per-word coordinates.
 
 - [ ] **T035** `[P] [US1] [US4] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-paddleocr/`: PaddleOCR adapter. Loads the model from Hugging Face on startup (or from a pre-baked path in the image). Handles PDF page rasterisation via PyMuPDF, runs OCR per page, assembles markdown.
       **Acceptance**: Unit tests pass against bundled fixtures; the airgapped clause C-OCR-LOCAL-001 also passes when `IRIS_PADDLEOCR_OFFLINE=1`.
