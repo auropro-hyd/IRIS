@@ -17,6 +17,7 @@ from iris_engine.contracts.ocr_engine import (
     OCRUnsupportedContentType,
     TenantContext,
 )
+from iris_engine.ocr.tracing import instrument_extract, log_extract_success
 
 
 class InMemoryOCREngine:
@@ -39,8 +40,6 @@ class InMemoryOCREngine:
         content: bytes,
         content_type: str,
     ) -> OCRResult:
-        from iris_engine.ocr.tracing import instrument_extract, log_extract_success
-
         async with instrument_extract(self.id, ctx, document_id, content_type) as span:
             if content_type not in VALID_CONTENT_TYPES:
                 raise OCRUnsupportedContentType(f"content type {content_type!r} is not supported")

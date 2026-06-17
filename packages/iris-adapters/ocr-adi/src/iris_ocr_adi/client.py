@@ -29,6 +29,7 @@ from iris_engine.contracts.ocr_engine import (
     OCRUnsupportedContentType,
     TenantContext,
 )
+from iris_engine.ocr.tracing import instrument_extract, log_extract_success
 
 _ADI_API_VERSION = "2024-11-30"
 _ADI_INVALID_CONTENT_CODES = frozenset({"InvalidContent"})
@@ -63,8 +64,6 @@ class AdiOCREngine:
         content: bytes,
         content_type: str,
     ) -> OCRResult:
-        from iris_engine.ocr.tracing import instrument_extract, log_extract_success
-
         async with instrument_extract(self.id, ctx, document_id, content_type) as span:
             if content_type not in VALID_CONTENT_TYPES:
                 raise OCRUnsupportedContentType(
