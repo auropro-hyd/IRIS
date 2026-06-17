@@ -43,6 +43,7 @@ from iris_engine.contracts.ocr_engine import (
     OCRUnsupportedContentType,
     TenantContext,
 )
+from iris_engine.ocr.tracing import instrument_extract, log_extract_success
 from PIL import Image, ImageSequence
 
 _DEFAULT_DPI = 150
@@ -74,31 +75,38 @@ class TesseractEngine:
         content: bytes,
         content_type: str,
     ) -> OCRResult:
-        if content_type not in VALID_CONTENT_TYPES:
-            raise OCRUnsupportedContentType(
-                f"Tesseract adapter does not support content type {content_type!r}"
+        async with instrument_extract(self.id, ctx, document_id, content_type) as span:
+            if content_type not in VALID_CONTENT_TYPES:
+                raise OCRUnsupportedContentType(
+                    f"Tesseract adapter does not support content type {content_type!r}"
+                )
+            if not content:
+                raise OCRMalformedDocument("content is empty")
+
+            start = time.monotonic()
+            images = await asyncio.to_thread(_to_images, content, content_type, self._dpi)
+            pytesseract = self._pytesseract
+            tesseract_cmd = self._tesseract_cmd
+            ocr_pages = await asyncio.to_thread(
+                lambda: [
+                    _run_page(pytesseract, img, i + 1, tesseract_cmd)
+                    for i, img in enumerate(images)
+                ]
             )
-        if not content:
-            raise OCRMalformedDocument("content is empty")
+            elapsed_ms = int((time.monotonic() - start) * 1000)
 
-        start = time.monotonic()
-        images = await asyncio.to_thread(_to_images, content, content_type, self._dpi)
-        pytesseract = self._pytesseract
-        tesseract_cmd = self._tesseract_cmd
-        ocr_pages = await asyncio.to_thread(
-            lambda: [
-                _run_page(pytesseract, img, i + 1, tesseract_cmd) for i, img in enumerate(images)
-            ]
-        )
-        elapsed_ms = int((time.monotonic() - start) * 1000)
-
-        return OCRResult(
-            document_id=document_id,
-            adapter_id=self.id,
-            pages=ocr_pages,
-            total_pages=len(ocr_pages),
-            total_latency_ms=elapsed_ms,
-        )
+            result = OCRResult(
+                document_id=document_id,
+                adapter_id=self.id,
+                pages=ocr_pages,
+                total_pages=len(ocr_pages),
+                total_latency_ms=elapsed_ms,
+            )
+            span.set_attribute("ocr.total_pages", result.total_pages)
+            span.set_attribute("ocr.total_latency_ms", result.total_latency_ms)
+            span.set_attribute("ocr.success", True)
+            log_extract_success(self.id, ctx, result)
+            return result
 
 
 def _load_pytesseract(tesseract_cmd: str | None) -> tuple[Any, str | None]:

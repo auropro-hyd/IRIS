@@ -36,13 +36,13 @@
 
 ## Sprint 1: Observability
 
-- [ ] **T038** `[P] [US6] [size: S] [owner: AuroPro]` Wrap every adapter's `extract` in an OTEL span recording the attributes listed in spec User Story 6. Emit a structured log line on success and on each typed error.
-      **Acceptance**: Running a fixture document through any adapter produces a span with the expected attributes; integration test verifies the span shape.
+- [x] **T038** `[P] [US6] [size: S] [owner: AuroPro]` Wrap every adapter's `extract` in an OTEL span recording the attributes listed in spec User Story 6. Emit a structured log line on success and on each typed error.
+      **Acceptance**: Running a fixture document through any adapter produces a span with the expected attributes; integration test verifies the span shape. Span attributes: ocr.adapter_id, ocr.tenant_id, ocr.product_slug, ocr.document_id, ocr.content_type, ocr.total_pages, ocr.total_latency_ms, ocr.success, ocr.error_category. C-OCR-011 passes for all 5 adapters (including in-memory). Shared CM in iris_engine.ocr.tracing; opentelemetry-api added to iris-engine deps; opentelemetry-sdk added to root dev deps.
 
 ## Sprint 1: Documentation
 
-- [ ] **T039** `[P] [size: S] [owner: AuroPro]` Document each adapter's setup, credentials, and limitations in `packages/iris-adapters/ocr-<name>/README.md`. Include the env vars each adapter reads.
-      **Acceptance**: A team member can install and exercise any adapter using only the package README.
+- [x] **T039** `[P] [size: S] [owner: AuroPro]` Document each adapter's setup, credentials, and limitations in `packages/iris-adapters/ocr-<name>/README.md`. Include the env vars each adapter reads.
+      **Acceptance**: A team member can install and exercise any adapter using only the package README. Note: ocr-paddleocr README includes full airgapped deployment section covering PP-DocLayoutV3 and doc-preprocessor sub-model pre-seeding via PADDLEX_HOME.
 
 ## Definition of Done
 
