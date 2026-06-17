@@ -18,10 +18,10 @@ import pytest
 from iris_engine.contracts.ocr_engine import TenantContext
 from iris_ocr_adi import AdiOCREngine
 
-pytestmark = pytest.mark.skipif(
-    not os.getenv("IRIS_OCR_LIVE_ADI"),
-    reason="IRIS_OCR_LIVE_ADI not set",
-)
+pytestmark = [
+    pytest.mark.skipif(not os.getenv("IRIS_OCR_LIVE_ADI"), reason="IRIS_OCR_LIVE_ADI not set"),
+    pytest.mark.slow,
+]
 
 _CTX = TenantContext(tenant_id="live-test", product_slug="test/live")
 

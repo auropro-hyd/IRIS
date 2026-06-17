@@ -17,6 +17,9 @@ discussion-*.md
 roleplay-*.md
 notes-*.md
 
+# Downloaded model snapshots (large, local-only)
+PaddleOCR-VL-1.6-snapshot/
+
 # Python / uv
 .venv/
 __pycache__/
