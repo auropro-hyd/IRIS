@@ -1,7 +1,10 @@
 """AdaptersSchema: adapter selection for a Product bundle.
 
 The Literal types enumerate every adapter shipped by workstreams 003 and 004.
-Adding a fifth adapter requires updating the Literal here.
+Adding a fifth adapter requires updating the Literal here AND regenerating the
+JSON schema used for IDE validation:
+
+    iris config schema product -o docs/schemas/product.schema.json
 """
 
 from typing import Literal
