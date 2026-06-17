@@ -26,7 +26,7 @@
 - [x] **T035** `[P] [US1] [US4] [size: L] [owner: AuroPro]` `packages/iris-adapters/ocr-paddleocr/`: PaddleOCR adapter. Loads the model from Hugging Face on startup (or from a pre-baked path in the image). Handles PDF page rasterisation via PyMuPDF, runs OCR per page, assembles markdown.
       **Acceptance**: Unit tests pass against bundled fixtures; the airgapped clause C-OCR-LOCAL-001 also passes when `IRIS_PADDLEOCR_OFFLINE=1`. Note: offline mode (`vl_rec_model_dir`) covers the VL recognition sub-model only; layout-detection (PP-DocLayoutV3) and doc-preprocessor sub-models are fetched from PaddlePaddle's CDN on first use unless their model dirs are also supplied or `~/.paddlex/official_models/` is pre-seeded. Full airgap requires pre-seeding; document in T039.
 
-- [ ] **T036** `[P] [US1] [US4] [size: M] [owner: AuroPro]` `packages/iris-adapters/ocr-local/`: Tesseract adapter. Wraps `pytesseract`. Handles PDF via PyMuPDF page rasterisation, then Tesseract per page.
+- [x] **T036** `[P] [US1] [US4] [size: M] [owner: AuroPro]` `packages/iris-adapters/ocr-local/`: Tesseract adapter. Wraps `pytesseract`. Handles PDF via PyMuPDF page rasterisation, then Tesseract per page.
       **Acceptance**: Unit tests pass with bundled fixtures; the airgapped clause passes.
 
 ## Sprint 1: Contract suite
