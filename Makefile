@@ -14,7 +14,7 @@ ADAPTER_SRCS := $(wildcard packages/iris-adapters/*/src)
 INSTALL_STAMP := .venv/.install-stamp
 
 .DEFAULT_GOAL := help
-.PHONY: help install dev up down lint typecheck test test-cov clean distclean status pre-commit-install
+.PHONY: help install dev up down lint typecheck test test-cov generate-schemas clean distclean status pre-commit-install
 
 # ── shared targets (bash + Windows) ─────────────────────────────────────────
 
@@ -28,6 +28,7 @@ help:
 	@echo "  typecheck            mypy --strict on iris-engine and all adapters"
 	@echo "  test                 pytest (contract and integration markers included; e2e excluded)"
 	@echo "  test-cov             pytest with branch coverage; HTML report in htmlcov/"
+	@echo "  generate-schemas     regenerate docs/schemas/*.schema.json from Pydantic models"
 	@echo "  clean                remove __pycache__, .pytest_cache, htmlcov, .coverage, etc."
 	@echo "  distclean            clean + remove .venv, Docker volumes, and uv cache"
 	@echo "  status               show git state, venv, Docker service health, and port usage"
@@ -70,6 +71,11 @@ test: $(INSTALL_STAMP)
 
 test-cov: $(INSTALL_STAMP)
 	$(RUN) pytest --cov --cov-report=html --cov-report=term-missing --cov-fail-under=95
+
+generate-schemas: $(INSTALL_STAMP)
+	$(RUN) iris config schema product    -o docs/schemas/product.schema.json
+	$(RUN) iris config schema taxonomy   -o docs/schemas/taxonomy.schema.json
+	$(RUN) iris config schema extraction -o docs/schemas/extraction.schema.json
 
 # ── OS-specific targets ──────────────────────────────────────────────────────
 

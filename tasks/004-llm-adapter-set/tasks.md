@@ -9,10 +9,10 @@
 - [x] **T040** `[US2] [US8] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/llm_provider.py` with the Protocol, `LLMRequest`, `LLMResponse`, `LLMUsage`, and the error types from the contract document.
       **Acceptance**: mypy strict passes; the module imports with zero adapter dependencies.
 
-- [ ] **T041** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/llm/selector.py`. Reads `ProductConfig.adapters.llm`, returns the configured `LLMProvider`. Optional fallback path.
+- [x] **T041** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/llm/selector.py`. Reads `ProductConfig.adapters.llm`, returns the configured `LLMProvider`. Optional fallback path.
       **Acceptance**: Unit tests cover primary success, primary-`LLMUnavailable`-falls-back-to-secondary, and both-fail-surfaces-primary-error.
 
-- [ ] **T042** `[P] [US9] [size: M] [owner: AuroPro]` Implement `iris_engine/llm/in_memory.py` with `StubLLMProvider` returning canned responses including a populated `structured` field when a schema is supplied. Used by every agent test in workstream 005.
+- [x] **T042** `[P] [US9] [size: M] [owner: AuroPro]` Implement `iris_engine/llm/in_memory.py` with `StubLLMProvider` returning canned responses including a populated `structured` field when a schema is supplied. Used by every agent test in workstream 005.
       **Acceptance**: The stub passes every contract clause where it makes sense (skips live-only clauses).
 
 ## Sprint 1: Shared base

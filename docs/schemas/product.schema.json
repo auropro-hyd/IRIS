@@ -40,6 +40,24 @@
           ],
           "default": null,
           "title": "Ocr Fallback"
+        },
+        "llm_fallback": {
+          "anyOf": [
+            {
+              "enum": [
+                "azure-openai",
+                "openai",
+                "anthropic",
+                "local"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Llm Fallback"
         }
       },
       "required": [

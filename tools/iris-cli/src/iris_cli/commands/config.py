@@ -74,10 +74,13 @@ def schema(model: str, output: Path | None) -> None:
       iris config schema taxonomy -o docs/schemas/taxonomy.schema.json
       iris config schema extraction -o docs/schemas/extraction.schema.json
     """
-    json_schema = json.dumps(_SCHEMA_MODELS[model].model_json_schema(), indent=2)
+    json_schema = json.dumps(_SCHEMA_MODELS[model].model_json_schema(), indent=2) + "\n"
     if output is None:
-        click.echo(json_schema)
+        click.echo(json_schema, nl=False)
     else:
         output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(json_schema + "\n", encoding="utf-8")
-        click.echo(f"Written to {output}")
+        if not output.exists() or output.read_text(encoding="utf-8") != json_schema:
+            output.write_text(json_schema, encoding="utf-8")
+            click.echo(f"[{model}] written   -> {output}")
+        else:
+            click.echo(f"[{model}] up-to-date   {output}")
