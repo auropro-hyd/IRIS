@@ -6,7 +6,7 @@
 
 ## Sprint 1: Protocol + selector
 
-- [ ] **T040** `[US2] [US8] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/llm_provider.py` with the Protocol, `LLMRequest`, `LLMResponse`, `LLMUsage`, and the error types from the contract document.
+- [x] **T040** `[US2] [US8] [size: S] [owner: AuroPro]` Add `iris_engine/contracts/llm_provider.py` with the Protocol, `LLMRequest`, `LLMResponse`, `LLMUsage`, and the error types from the contract document.
       **Acceptance**: mypy strict passes; the module imports with zero adapter dependencies.
 
 - [ ] **T041** `[P] [US1] [size: M] [owner: AuroPro]` Implement `iris_engine/llm/selector.py`. Reads `ProductConfig.adapters.llm`, returns the configured `LLMProvider`. Optional fallback path.
