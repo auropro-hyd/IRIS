@@ -18,6 +18,7 @@ from iris_engine.contracts.llm_provider import (
     LLMUsage,
     TenantContext,
 )
+from iris_engine.llm.tracing import instrument_complete, log_complete_success
 
 _DEFAULT_USAGE = LLMUsage(input_tokens=10, output_tokens=5, total_tokens=15)
 
@@ -48,8 +49,6 @@ class StubLLMProvider:
         ctx: TenantContext,
         request: LLMRequest,
     ) -> LLMResponse:
-        from iris_engine.llm.tracing import instrument_complete, log_complete_success
-
         async with instrument_complete(self.id, ctx, request) as span:
             if self._raise_on_complete is not None:
                 raise self._raise_on_complete

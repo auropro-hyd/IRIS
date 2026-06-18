@@ -46,6 +46,7 @@ root_packages = [
     "iris_llm_azure_openai",
     "iris_llm_local",
     "iris_llm_openai",
+    "iris_adapter_llm_shared",
     "iris_observability",
     "iris_ocr_adi",
     "iris_ocr_datalab",
