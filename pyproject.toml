@@ -99,6 +99,23 @@ forbidden_modules = [
     "iris_llm_local",
 ]
 
+[[tool.importlinter.contracts]]
+name = "Shared LLM base must not import concrete adapters"
+type = "forbidden"
+source_modules = [
+    "iris_adapter_llm_shared",
+]
+forbidden_modules = [
+    "iris_ocr_adi",
+    "iris_ocr_datalab",
+    "iris_ocr_paddleocr",
+    "iris_ocr_local",
+    "iris_adapter_llm_azure_openai",
+    "iris_llm_openai",
+    "iris_llm_anthropic",
+    "iris_llm_local",
+]
+
 [tool.pytest.ini_options]
 markers = [
     "slow: subprocess or network heavy checks (excluded from default test runs)",
@@ -110,7 +127,7 @@ addopts = ["--import-mode=importlib", "-m", "not slow and not e2e"]
 pythonpath = ["tests/001-project-scaffold"]
 
 [tool.coverage.run]
-source = ["iris_engine", "iris_config", "iris_ocr_adi", "iris_ocr_datalab", "iris_ocr_paddleocr", "iris_ocr_local", "iris_adapter_llm_shared"]
+source = ["iris_engine", "iris_config", "iris_ocr_adi", "iris_ocr_datalab", "iris_ocr_paddleocr", "iris_ocr_local", "iris_adapter_llm_shared", "iris_adapter_llm_azure_openai"]
 branch = true
 omit = ["*/iris_engine/contracts/*"]
 

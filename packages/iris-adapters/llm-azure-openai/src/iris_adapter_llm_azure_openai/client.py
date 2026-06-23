@@ -51,7 +51,6 @@ class AzureOpenAIProvider(OpenAICompatProvider):
         self._deployment_chat = deployment_chat
         self._deployment_extract = deployment_extract
         self._api_version = api_version
-        _active_deployment.set(deployment_chat)
 
     @classmethod
     def from_env(cls, retry_config: RetryConfig | None = None) -> AzureOpenAIProvider:

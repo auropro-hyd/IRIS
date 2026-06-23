@@ -66,7 +66,11 @@ def _make_provider(response: httpx.Response | None = None) -> AzureOpenAIProvide
 
 
 def _run(coro: Any) -> Any:
-    return asyncio.new_event_loop().run_until_complete(coro)
+    loop = asyncio.new_event_loop()
+    try:
+        return loop.run_until_complete(coro)
+    finally:
+        loop.close()
 
 
 # ── C-LLM-001 Stable identifier ───────────────────────────────────────────────
