@@ -31,7 +31,7 @@ EXPECTED_LAYERS: tuple[str, ...] = (
     "iris_agents | iris_data | iris_config | iris_observability",
     (
         "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | "
-        "iris_llm_azure_openai | iris_llm_openai | iris_llm_anthropic | iris_llm_local"
+        "iris_adapter_llm_azure_openai | iris_llm_openai | iris_llm_anthropic | iris_llm_local"
     ),
     "iris_engine",
 )
@@ -39,7 +39,9 @@ EXPECTED_LAYERS: tuple[str, ...] = (
 EXPECTED_ADAPTER_MODULES = frozenset(
     name
     for name in EXPECTED_ROOT_PACKAGES
-    if name.startswith("iris_ocr_") or name.startswith("iris_llm_")
+    if name.startswith("iris_ocr_")
+    or name.startswith("iris_llm_")
+    or (name.startswith("iris_adapter_llm_") and name != "iris_adapter_llm_shared")
 )
 
 
