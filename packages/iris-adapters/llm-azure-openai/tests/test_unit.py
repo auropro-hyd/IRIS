@@ -246,8 +246,12 @@ def test_rate_limit_is_retried() -> None:
 
 def test_length_finish_reason_raises_context_window() -> None:
     provider = _make_provider(_make_response(finish_reason="length"))
-    with pytest.raises(LLMContextWindowExceeded):
+    with pytest.raises(LLMContextWindowExceeded, match="azure-openai") as exc_info:
         _run(provider._do_complete(_CTX, _REQ))
+    assert (
+        "truncated" in str(exc_info.value).lower()
+        or "context window" in str(exc_info.value).lower()
+    )
 
 
 # ── C-LLM-010 Adapter id in response ─────────────────────────────────────────
