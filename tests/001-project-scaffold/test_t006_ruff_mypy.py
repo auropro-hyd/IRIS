@@ -23,7 +23,7 @@ STRICT_MODULES = [
     "iris_ocr_paddleocr",
     "iris_ocr_local",
     "iris_adapter_llm_azure_openai",
-    "iris_llm_openai",
+    "iris_adapter_llm_openai",
     "iris_llm_anthropic",
     "iris_llm_local",
 ]
