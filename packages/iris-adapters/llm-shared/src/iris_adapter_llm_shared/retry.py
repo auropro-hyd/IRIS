@@ -22,8 +22,13 @@ class RetryConfig:
         return cls(max_retries=max_retries, backoff_ms=retry_backoff_ms)
 
 
-async def with_retry[T](coro_fn: Callable[[], Coroutine[Any, Any, T]], config: RetryConfig) -> T:
+async def with_retry[T](
+    coro_fn: Callable[[], Coroutine[Any, Any, T]], config: RetryConfig
+) -> tuple[T, int]:
     """Call coro_fn(), retrying on LLMRateLimited or LLMUnavailable.
+
+    Returns (result, retry_count) where retry_count is the number of retries
+    performed (0 means succeeded on the first attempt).
 
     Waits config.backoff_ms * 2^attempt milliseconds between retries.
     Re-raises the last error after config.max_retries attempts.
@@ -31,7 +36,8 @@ async def with_retry[T](coro_fn: Callable[[], Coroutine[Any, Any, T]], config: R
     last_exc: Exception | None = None
     for attempt in range(config.max_retries + 1):
         try:
-            return await coro_fn()
+            result = await coro_fn()
+            return result, attempt
         except _RETRYABLE as exc:
             last_exc = exc
             if attempt == config.max_retries:

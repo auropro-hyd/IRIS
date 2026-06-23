@@ -99,9 +99,10 @@ def test_with_retry_succeeds_on_first_attempt() -> None:
         calls += 1
         return "ok"
 
-    result = _run(with_retry(fn, RetryConfig(max_retries=3, backoff_ms=0)))
+    result, retry_count = _run(with_retry(fn, RetryConfig(max_retries=3, backoff_ms=0)))
     assert result == "ok"
     assert calls == 1
+    assert retry_count == 0
 
 
 def test_with_retry_retries_on_rate_limited() -> None:
@@ -114,9 +115,10 @@ def test_with_retry_retries_on_rate_limited() -> None:
             raise LLMRateLimited("429")
         return "ok"
 
-    result = _run(with_retry(fn, RetryConfig(max_retries=3, backoff_ms=0)))
+    result, retry_count = _run(with_retry(fn, RetryConfig(max_retries=3, backoff_ms=0)))
     assert result == "ok"
     assert calls == 3
+    assert retry_count == 2
 
 
 def test_with_retry_retries_on_unavailable() -> None:
@@ -129,9 +131,10 @@ def test_with_retry_retries_on_unavailable() -> None:
             raise LLMUnavailable("503")
         return "ok"
 
-    result = _run(with_retry(fn, RetryConfig(max_retries=2, backoff_ms=0)))
+    result, retry_count = _run(with_retry(fn, RetryConfig(max_retries=2, backoff_ms=0)))
     assert result == "ok"
     assert calls == 2
+    assert retry_count == 1
 
 
 def test_with_retry_raises_after_max_retries() -> None:
@@ -291,3 +294,39 @@ def test_complete_no_schema_structured_is_none() -> None:
     provider = _make_provider(_make_response(text="plain text"))
     result = _run(provider._do_complete(_CTX, _REQ))
     assert result.structured is None
+
+
+# ── span attributes ───────────────────────────────────────────────────────────
+
+
+def test_retry_count_zero_on_span_when_no_retries(span_exporter: Any) -> None:
+    provider = _make_provider(_make_response(text="OK"))
+    _run(provider.complete(_CTX, _REQ))
+    spans = span_exporter.get_finished_spans()
+    assert spans, "no spans captured"
+    attrs = spans[-1].attributes or {}
+    assert attrs.get("llm.retry_count") == 0
+
+
+def test_retry_count_one_on_span_after_one_retry(span_exporter: Any) -> None:
+    calls = 0
+    responses = [httpx.Response(429), _make_response(text="OK")]
+
+    async def _post(*args: Any, **kwargs: Any) -> httpx.Response:
+        nonlocal calls
+        resp = responses[calls]
+        calls += 1
+        return resp
+
+    mock_client = MagicMock(spec=httpx.AsyncClient)
+    mock_client.post = _post
+    provider = _StubProvider(
+        retry_config=RetryConfig(max_retries=1, backoff_ms=0),
+        _http_client=mock_client,
+    )
+    result = _run(provider.complete(_CTX, _REQ))
+    assert "OK" in result.text
+    spans = span_exporter.get_finished_spans()
+    assert spans, "no spans captured"
+    attrs = spans[-1].attributes or {}
+    assert attrs.get("llm.retry_count") == 1

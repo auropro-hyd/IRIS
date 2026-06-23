@@ -11,7 +11,7 @@ Anthropic uses a different API shape and does not inherit from this class.
 from __future__ import annotations
 
 import time
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any, cast
 
 import httpx
@@ -34,7 +34,7 @@ from pydantic import BaseModel, ValidationError
 from iris_adapter_llm_shared.retry import RetryConfig, with_retry
 
 
-class OpenAICompatProvider:
+class OpenAICompatProvider(ABC):
     """Base class for OpenAI-compatible LLM adapters.
 
     Subclasses must implement _base_url() and _auth_headers(). They may also
@@ -75,7 +75,7 @@ class OpenAICompatProvider:
         request: LLMRequest,
     ) -> LLMResponse:
         async with instrument_complete(self.id, ctx, request) as span:
-            result = await with_retry(
+            result, retry_count = await with_retry(
                 lambda: self._do_complete(ctx, request),
                 self._retry_config,
             )
@@ -84,6 +84,7 @@ class OpenAICompatProvider:
             span.set_attribute("llm.output_tokens", result.usage.output_tokens)
             span.set_attribute("llm.latency_ms", result.latency_ms)
             span.set_attribute("llm.structured_output_used", result.structured is not None)
+            span.set_attribute("llm.retry_count", retry_count)
             log_complete_success(self.id, ctx, result)
             return result
 
