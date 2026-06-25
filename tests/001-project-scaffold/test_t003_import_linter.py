@@ -56,7 +56,7 @@ def test_root_packages_match_workspace_import_names() -> None:
     config = _load_importlinter_config()
     configured = frozenset(config["root_packages"])
     assert configured == EXPECTED_ROOT_PACKAGES
-    assert len(configured) == 16
+    assert len(configured) == 17
 
 
 def test_import_linter_contracts_configured() -> None:

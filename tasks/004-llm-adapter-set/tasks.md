@@ -17,7 +17,7 @@
 
 ## Sprint 1: Shared base
 
-- [ ] **T043** `[US2] [size: M] [owner: AuroPro]` Create `packages/iris-adapters/llm-shared/` with the OpenAI-compatible HTTP base class and a retry helper. Not a published package; consumed only by `llm-azure-openai`, `llm-openai`, and `llm-local`.
+- [x] **T043** `[US2] [size: M] [owner: AuroPro]` Create `packages/iris-adapters/llm-shared/` with the OpenAI-compatible HTTP base class and a retry helper. Not a published package; consumed only by `llm-azure-openai`, `llm-openai`, and `llm-local`.
       **Acceptance**: A subclass that points at a mock server passes the OpenAI-compatible contract clauses with zero per-subclass code.
 
 ## Sprint 1: Adapter packages (parallel)
