@@ -66,7 +66,7 @@ MEMBER_SRC_PACKAGES: dict[str, str] = {
     "packages/iris-adapters/llm-shared": "iris_adapter_llm_shared",
     "packages/iris-adapters/llm-azure-openai": "iris_adapter_llm_azure_openai",
     "packages/iris-adapters/llm-openai": "iris_adapter_llm_openai",
-    "packages/iris-adapters/llm-anthropic": "iris_llm_anthropic",
+    "packages/iris-adapters/llm-anthropic": "iris_adapter_llm_anthropic",
     "packages/iris-adapters/llm-local": "iris_llm_local",
     "tools/iris-cli": "iris_cli",
 }

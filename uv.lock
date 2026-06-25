@@ -1118,6 +1118,16 @@ requires-dist = [{ name = "opentelemetry-api", specifier = ">=1.20" }]
 name = "iris-llm-anthropic"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/llm-anthropic" }
+dependencies = [
+    { name = "iris-engine" },
+    { name = "iris-llm-shared" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-engine", editable = "packages/iris-engine" },
+    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+]
 
 [[package]]
 name = "iris-llm-azure-openai"
