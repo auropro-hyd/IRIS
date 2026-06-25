@@ -58,6 +58,12 @@
           ],
           "default": null,
           "title": "Llm Fallback"
+        },
+        "ocr_params": {
+          "$ref": "#/$defs/OcrParams"
+        },
+        "llm_params": {
+          "$ref": "#/$defs/LlmParams"
         }
       },
       "required": [
@@ -292,6 +298,56 @@
         "description"
       ],
       "title": "FieldSchema",
+      "type": "object"
+    },
+    "LlmParams": {
+      "additionalProperties": false,
+      "properties": {
+        "model_chat": {
+          "default": "gpt-4o-mini",
+          "title": "Model Chat",
+          "type": "string"
+        },
+        "model_extract": {
+          "default": "gpt-4o-mini",
+          "title": "Model Extract",
+          "type": "string"
+        },
+        "max_retries": {
+          "default": 3,
+          "minimum": 0,
+          "title": "Max Retries",
+          "type": "integer"
+        },
+        "retry_backoff_ms": {
+          "default": 500,
+          "minimum": 0,
+          "title": "Retry Backoff Ms",
+          "type": "integer"
+        }
+      },
+      "title": "LlmParams",
+      "type": "object"
+    },
+    "OcrParams": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence_threshold": {
+          "default": 0.6,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Confidence Threshold",
+          "type": "number"
+        },
+        "languages": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Languages",
+          "type": "array"
+        }
+      },
+      "title": "OcrParams",
       "type": "object"
     },
     "PromptSchema": {

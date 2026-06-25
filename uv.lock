@@ -31,6 +31,7 @@ members = [
     "iris-llm-azure-openai",
     "iris-llm-local",
     "iris-llm-openai",
+    "iris-llm-shared",
     "iris-observability",
     "iris-ocr-adi",
     "iris-ocr-datalab",
@@ -1132,6 +1133,21 @@ source = { editable = "packages/iris-adapters/llm-local" }
 name = "iris-llm-openai"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/llm-openai" }
+
+[[package]]
+name = "iris-llm-shared"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-shared" }
+dependencies = [
+    { name = "httpx" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
 
 [[package]]
 name = "iris-observability"
