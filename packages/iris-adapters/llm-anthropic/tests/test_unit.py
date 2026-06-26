@@ -348,6 +348,58 @@ def test_bad_request_raises_invalid_request() -> None:
         _run(provider._do_complete(_CTX, _REQ))
 
 
+# ── 500 / catch-all 4xx ──────────────────────────────────────────────────────
+
+
+def test_server_error_raises_unavailable() -> None:
+    provider = _make_provider(httpx.Response(500))
+    with pytest.raises(LLMUnavailable, match="service error"):
+        _run(provider._do_complete(_CTX, _REQ))
+
+
+def test_unexpected_4xx_raises_unavailable() -> None:
+    provider = _make_provider(httpx.Response(422))
+    with pytest.raises(LLMUnavailable, match="unexpected client error"):
+        _run(provider._do_complete(_CTX, _REQ))
+
+
+# ── non-JSON body ─────────────────────────────────────────────────────────────
+
+
+def test_non_json_body_raises_unavailable() -> None:
+    provider = _make_provider(httpx.Response(200, content=b"not json at all"))
+    with pytest.raises(LLMUnavailable, match="non-JSON"):
+        _run(provider._do_complete(_CTX, _REQ))
+
+
+# ── malformed response shape ──────────────────────────────────────────────────
+
+
+def test_missing_content_key_raises_unavailable() -> None:
+    body = {
+        "model": "claude-haiku-4-5-20251001",
+        "stop_reason": "end_turn",
+        "usage": {"input_tokens": 5, "output_tokens": 2},
+    }
+    provider = _make_provider(httpx.Response(200, json=body))
+    with pytest.raises(LLMUnavailable, match="unexpected response shape"):
+        _run(provider._do_complete(_CTX, _REQ))
+
+
+# ── stop_sequences wiring ─────────────────────────────────────────────────────
+
+
+def test_stop_sequences_sent_when_stop_set() -> None:
+    mock_client = MagicMock(spec=httpx.AsyncClient)
+    mock_client.post = AsyncMock(return_value=_make_response())
+    provider = AnthropicProvider(api_key=_API_KEY, _http_client=mock_client)
+    req = LLMRequest(prompt="hi", stop=["STOP", "END"])
+    _run(provider._do_complete(_CTX, req))
+    _, kwargs = mock_client.post.call_args
+    body = kwargs.get("json", {})
+    assert body.get("stop_sequences") == ["STOP", "END"]
+
+
 # ── network errors ────────────────────────────────────────────────────────────
 
 

@@ -14,6 +14,7 @@ import time
 from typing import Any, cast
 
 import httpx
+from iris_adapter_llm_shared.env import require_env
 from iris_adapter_llm_shared.retry import RetryConfig, with_retry
 from iris_engine.contracts.llm_provider import (
     LLMAuthenticationFailed,
@@ -73,7 +74,7 @@ class AnthropicProvider:
             IRIS_LLM_ANTHROPIC_MODEL_EXTRACT  Model for extraction calls
         """
         return cls(
-            api_key=_require_env("IRIS_LLM_ANTHROPIC_API_KEY"),
+            api_key=require_env("IRIS_LLM_ANTHROPIC_API_KEY"),
             model_chat=os.environ.get("IRIS_LLM_ANTHROPIC_MODEL_CHAT", _DEFAULT_MODEL),
             model_extract=os.environ.get("IRIS_LLM_ANTHROPIC_MODEL_EXTRACT", _DEFAULT_MODEL),
             retry_config=retry_config,
@@ -287,10 +288,3 @@ def _raise_for_status(response: httpx.Response, adapter_id: str) -> None:
         raise LLMUnavailable(f"[{adapter_id}] service error: HTTP {status}")
     if status >= 400:
         raise LLMUnavailable(f"[{adapter_id}] unexpected client error: HTTP {status}")
-
-
-def _require_env(name: str) -> str:
-    value = os.environ.get(name)
-    if not value:
-        raise RuntimeError(f"Required environment variable {name!r} is not set")
-    return value
