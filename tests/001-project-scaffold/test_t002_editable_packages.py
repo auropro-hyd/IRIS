@@ -30,6 +30,7 @@ MEMBER_DISTRIBUTION_NAMES: dict[str, str] = {
     "packages/iris-adapters/ocr-datalab": "iris-ocr-datalab",
     "packages/iris-adapters/ocr-paddleocr": "iris-ocr-paddleocr",
     "packages/iris-adapters/ocr-local": "iris-ocr-local",
+    "packages/iris-adapters/llm-shared": "iris-llm-shared",
     "packages/iris-adapters/llm-azure-openai": "iris-llm-azure-openai",
     "packages/iris-adapters/llm-openai": "iris-llm-openai",
     "packages/iris-adapters/llm-anthropic": "iris-llm-anthropic",
