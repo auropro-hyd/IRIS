@@ -44,7 +44,7 @@ root_packages = [
     "iris_engine",
     "iris_adapter_llm_anthropic",
     "iris_adapter_llm_azure_openai",
-    "iris_llm_local",
+    "iris_adapter_llm_local",
     "iris_adapter_llm_openai",
     "iris_adapter_llm_shared",
     "iris_observability",
@@ -61,7 +61,7 @@ type = "layers"
 layers = [
     "iris_api | iris_worker | iris_cli",
     "iris_agents | iris_data | iris_config | iris_observability",
-    "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | iris_adapter_llm_azure_openai | iris_adapter_llm_openai | iris_adapter_llm_anthropic | iris_llm_local",
+    "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | iris_adapter_llm_azure_openai | iris_adapter_llm_openai | iris_adapter_llm_anthropic | iris_adapter_llm_local",
     "iris_engine",
 ]
 
@@ -76,7 +76,7 @@ modules = [
     "iris_adapter_llm_azure_openai",
     "iris_adapter_llm_openai",
     "iris_adapter_llm_anthropic",
-    "iris_llm_local",
+    "iris_adapter_llm_local",
 ]
 
 [[tool.importlinter.contracts]]
@@ -96,7 +96,7 @@ forbidden_modules = [
     "iris_adapter_llm_azure_openai",
     "iris_adapter_llm_openai",
     "iris_adapter_llm_anthropic",
-    "iris_llm_local",
+    "iris_adapter_llm_local",
 ]
 
 [[tool.importlinter.contracts]]
@@ -113,7 +113,7 @@ forbidden_modules = [
     "iris_adapter_llm_azure_openai",
     "iris_adapter_llm_openai",
     "iris_adapter_llm_anthropic",
-    "iris_llm_local",
+    "iris_adapter_llm_local",
 ]
 
 [tool.pytest.ini_options]
@@ -171,8 +171,8 @@ module = [
     "iris_adapter_llm_openai.*",
     "iris_adapter_llm_anthropic",
     "iris_adapter_llm_anthropic.*",
-    "iris_llm_local",
-    "iris_llm_local.*",
+    "iris_adapter_llm_local",
+    "iris_adapter_llm_local.*",
 ]
 strict = true
 

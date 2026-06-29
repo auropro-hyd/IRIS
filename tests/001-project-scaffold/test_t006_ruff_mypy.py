@@ -25,7 +25,7 @@ STRICT_MODULES = [
     "iris_adapter_llm_azure_openai",
     "iris_adapter_llm_openai",
     "iris_adapter_llm_anthropic",
-    "iris_llm_local",
+    "iris_adapter_llm_local",
 ]
 
 
