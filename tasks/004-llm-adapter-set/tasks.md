@@ -39,7 +39,7 @@
 - [x] **T048** `[US9] [size: M] [owner: AuroPro]` `tests/contract/test_llm_contract.py`: parametrised contract suite over every registered adapter.
       **Acceptance**: All clauses C-LLM-001 through C-LLM-011 pass for every registered adapter under `make test`.
 
-- [ ] **T049** `[P] [US11] [size: S] [owner: AuroPro]` Add an OTEL span wrapper to every adapter's `complete`. Records the attributes listed in clause C-LLM-011.
+- [x] **T049** `[P] [US11] [size: S] [owner: AuroPro]` Add an OTEL span wrapper to every adapter's `complete`. Records the attributes listed in clause C-LLM-011.
       **Acceptance**: Integration test verifies the span attributes on each adapter.
 
 ## Sprint 1: Documentation
