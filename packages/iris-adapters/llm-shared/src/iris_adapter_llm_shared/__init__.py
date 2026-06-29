@@ -1,7 +1,7 @@
-"""iris-llm-shared: internal base classes shared by OpenAI-compatible LLM adapters.
+"""iris-adapter-llm-shared: internal base classes shared by OpenAI-compatible LLM adapters.
 
-Not published. Consumed only by iris-llm-azure-openai, iris-llm-openai,
-and iris-llm-local. iris-llm-anthropic has a standalone implementation.
+Not published. Consumed only by iris-adapter-llm-azure-openai, iris-adapter-llm-openai,
+and iris-adapter-llm-local. iris-adapter-llm-anthropic has a standalone implementation.
 """
 
 from iris_adapter_llm_shared.env import require_env

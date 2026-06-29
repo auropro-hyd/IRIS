@@ -21,17 +21,17 @@ resolution-markers = [
 
 [manifest]
 members = [
+    "iris-adapter-llm-anthropic",
+    "iris-adapter-llm-azure-openai",
+    "iris-adapter-llm-local",
+    "iris-adapter-llm-openai",
+    "iris-adapter-llm-shared",
     "iris-agents",
     "iris-api",
     "iris-cli",
     "iris-config",
     "iris-data",
     "iris-engine",
-    "iris-llm-anthropic",
-    "iris-llm-azure-openai",
-    "iris-llm-local",
-    "iris-llm-openai",
-    "iris-llm-shared",
     "iris-observability",
     "iris-ocr-adi",
     "iris-ocr-datalab",
@@ -1049,6 +1049,81 @@ wheels = [
 ]
 
 [[package]]
+name = "iris-adapter-llm-anthropic"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-anthropic" }
+dependencies = [
+    { name = "iris-adapter-llm-shared" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-adapter-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
+
+[[package]]
+name = "iris-adapter-llm-azure-openai"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-azure-openai" }
+dependencies = [
+    { name = "iris-adapter-llm-shared" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-adapter-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
+
+[[package]]
+name = "iris-adapter-llm-local"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-local" }
+dependencies = [
+    { name = "iris-adapter-llm-shared" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-adapter-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
+
+[[package]]
+name = "iris-adapter-llm-openai"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-openai" }
+dependencies = [
+    { name = "iris-adapter-llm-shared" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-adapter-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
+
+[[package]]
+name = "iris-adapter-llm-shared"
+version = "0.0.0"
+source = { editable = "packages/iris-adapters/llm-shared" }
+dependencies = [
+    { name = "httpx" },
+    { name = "iris-engine" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
+    { name = "iris-engine", editable = "packages/iris-engine" },
+]
+
+[[package]]
 name = "iris-agents"
 version = "0.0.0"
 source = { editable = "packages/iris-agents" }
@@ -1113,81 +1188,6 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "opentelemetry-api", specifier = ">=1.20" }]
-
-[[package]]
-name = "iris-llm-anthropic"
-version = "0.0.0"
-source = { editable = "packages/iris-adapters/llm-anthropic" }
-dependencies = [
-    { name = "iris-engine" },
-    { name = "iris-llm-shared" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "iris-engine", editable = "packages/iris-engine" },
-    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
-]
-
-[[package]]
-name = "iris-llm-azure-openai"
-version = "0.0.0"
-source = { editable = "packages/iris-adapters/llm-azure-openai" }
-dependencies = [
-    { name = "iris-engine" },
-    { name = "iris-llm-shared" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "iris-engine", editable = "packages/iris-engine" },
-    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
-]
-
-[[package]]
-name = "iris-llm-local"
-version = "0.0.0"
-source = { editable = "packages/iris-adapters/llm-local" }
-dependencies = [
-    { name = "iris-engine" },
-    { name = "iris-llm-shared" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "iris-engine", editable = "packages/iris-engine" },
-    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
-]
-
-[[package]]
-name = "iris-llm-openai"
-version = "0.0.0"
-source = { editable = "packages/iris-adapters/llm-openai" }
-dependencies = [
-    { name = "iris-engine" },
-    { name = "iris-llm-shared" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "iris-engine", editable = "packages/iris-engine" },
-    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
-]
-
-[[package]]
-name = "iris-llm-shared"
-version = "0.0.0"
-source = { editable = "packages/iris-adapters/llm-shared" }
-dependencies = [
-    { name = "httpx" },
-    { name = "iris-engine" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "httpx", specifier = ">=0.27" },
-    { name = "iris-engine", editable = "packages/iris-engine" },
-]
 
 [[package]]
 name = "iris-observability"

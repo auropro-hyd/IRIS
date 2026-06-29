@@ -1,5 +1,5 @@
 [project]
-name = "iris-llm-shared"
+name = "iris-adapter-llm-shared"
 version = "0.0.0"
 requires-python = ">=3.12"
 dependencies = [
@@ -8,7 +8,7 @@ dependencies = [
 ]
 
 # Internal workspace package. Not published to PyPI.
-# Consumed only by iris-llm-azure-openai, iris-llm-openai, and iris-llm-local.
+# Consumed only by iris-adapter-llm-azure-openai, iris-adapter-llm-openai, and iris-adapter-llm-local.
 
 [tool.uv.sources]
 iris-engine = { workspace = true }

@@ -44,7 +44,7 @@
 
 ## Sprint 1: Documentation
 
-- [ ] **T050** `[P] [size: S] [owner: AuroPro]` Per-adapter README under `packages/iris-adapters/llm-<name>/README.md` covering env vars, model identifiers, retry tuning, and known limitations.
+- [x] **T050** `[P] [size: S] [owner: AuroPro]` Per-adapter README under `packages/iris-adapters/llm-<name>/README.md` covering env vars, model identifiers, retry tuning, and known limitations.
       **Acceptance**: A team member can install and exercise any adapter from the README alone.
 
 ## Definition of Done
