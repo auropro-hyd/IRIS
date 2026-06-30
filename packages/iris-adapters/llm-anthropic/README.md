@@ -19,7 +19,7 @@ uv add iris-adapter-llm-anthropic
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `IRIS_LLM_ANTHROPIC_API_KEY` | Yes | - | Anthropic API key (`sk-ant-...`) |
+| `IRIS_LLM_ANTHROPIC_API_KEY` | Yes | - | Anthropic API key (`sk-ant-...`); sent as `x-api-key` header alongside `anthropic-version: 2023-06-01` |
 | `IRIS_LLM_ANTHROPIC_MODEL_CHAT` | No | `claude-haiku-4-5-20251001` | Model for chat and general completion |
 | `IRIS_LLM_ANTHROPIC_MODEL_EXTRACT` | No | `claude-haiku-4-5-20251001` | Model for structured extraction requests |
 
