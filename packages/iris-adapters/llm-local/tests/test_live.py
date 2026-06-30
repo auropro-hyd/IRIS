@@ -41,14 +41,14 @@ def _provider() -> LocalProvider:
 
 def test_live_text_round_trip() -> None:
     req = LLMRequest(prompt="Reply with the single word OK")
-    result = _run(_provider()._do_complete(_CTX, req))
+    result = _run(_provider().complete(_CTX, req))
     assert result.text
     assert result.adapter_id == "local"
 
 
 def test_live_token_counts_nonzero() -> None:
     req = LLMRequest(prompt="Say hello")
-    result = _run(_provider()._do_complete(_CTX, req))
+    result = _run(_provider().complete(_CTX, req))
     assert result.usage.input_tokens > 0
     assert result.usage.output_tokens > 0
     assert result.usage.total_tokens == result.usage.input_tokens + result.usage.output_tokens
