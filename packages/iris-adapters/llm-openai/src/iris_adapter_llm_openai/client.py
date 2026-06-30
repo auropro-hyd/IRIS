@@ -13,7 +13,7 @@ from __future__ import annotations
 import os
 
 import httpx
-from iris_adapter_llm_shared import OpenAICompatProvider, RetryConfig
+from iris_adapter_llm_shared import OpenAICompatProvider, RetryConfig, require_env
 
 _DEFAULT_MODEL = "gpt-4o-mini"
 _BASE_URL = "https://api.openai.com/v1/chat/completions"
@@ -54,7 +54,7 @@ class OpenAIProvider(OpenAICompatProvider):
             IRIS_LLM_OPENAI_MODEL_EXTRACT  Model for extraction calls (default: gpt-4o-mini)
         """
         return cls(
-            api_key=_require_env("IRIS_LLM_OPENAI_API_KEY"),
+            api_key=require_env("IRIS_LLM_OPENAI_API_KEY"),
             model_chat=os.environ.get("IRIS_LLM_OPENAI_MODEL_CHAT", _DEFAULT_MODEL),
             model_extract=os.environ.get("IRIS_LLM_OPENAI_MODEL_EXTRACT", _DEFAULT_MODEL),
             retry_config=retry_config,
@@ -70,10 +70,3 @@ class OpenAIProvider(OpenAICompatProvider):
         if hint == "extraction":
             return self._model_extract
         return self._model_chat
-
-
-def _require_env(name: str) -> str:
-    value = os.environ.get(name)
-    if not value:
-        raise RuntimeError(f"Required environment variable {name!r} is not set")
-    return value

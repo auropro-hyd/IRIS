@@ -17,7 +17,7 @@ import os
 from contextvars import ContextVar
 
 import httpx
-from iris_adapter_llm_shared import OpenAICompatProvider, RetryConfig
+from iris_adapter_llm_shared import OpenAICompatProvider, RetryConfig, require_env
 
 _DEFAULT_API_VERSION = "2024-02-01"
 
@@ -66,10 +66,10 @@ class AzureOpenAIProvider(OpenAICompatProvider):
             IRIS_LLM_AZURE_API_VERSION         Defaults to 2024-02-01
         """
         return cls(
-            resource=_require_env("IRIS_LLM_AZURE_RESOURCE"),
-            api_key=_require_env("IRIS_LLM_AZURE_API_KEY"),
-            deployment_chat=_require_env("IRIS_LLM_AZURE_DEPLOYMENT_CHAT"),
-            deployment_extract=_require_env("IRIS_LLM_AZURE_DEPLOYMENT_EXTRACT"),
+            resource=require_env("IRIS_LLM_AZURE_RESOURCE"),
+            api_key=require_env("IRIS_LLM_AZURE_API_KEY"),
+            deployment_chat=require_env("IRIS_LLM_AZURE_DEPLOYMENT_CHAT"),
+            deployment_extract=require_env("IRIS_LLM_AZURE_DEPLOYMENT_EXTRACT"),
             api_version=os.environ.get("IRIS_LLM_AZURE_API_VERSION", _DEFAULT_API_VERSION),
             retry_config=retry_config,
         )
@@ -89,10 +89,3 @@ class AzureOpenAIProvider(OpenAICompatProvider):
         deployment = self._deployment_extract if hint == "extraction" else self._deployment_chat
         _active_deployment.set(deployment)
         return deployment
-
-
-def _require_env(name: str) -> str:
-    value = os.environ.get(name)
-    if not value:
-        raise RuntimeError(f"Required environment variable {name!r} is not set")
-    return value
