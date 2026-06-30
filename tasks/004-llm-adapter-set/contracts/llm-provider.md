@@ -55,7 +55,7 @@ class LLMUnavailable(LLMError): ...                  # 5xx, network failure, tim
 class LLMRateLimited(LLMError): ...                  # 429, quota exhausted
 class LLMAuthenticationFailed(LLMError): ...         # 401, 403, invalid key
 class LLMSchemaViolation(LLMError): ...              # structured output did not match the schema
-class LLMContextWindowExceeded(LLMError): ...        # prompt + max_output_tokens > model limit
+class LLMContextWindowExceeded(LLMError): ...        # provider signals output was truncated (finish_reason=length / stop_reason=max_tokens)
 class LLMContentFiltered(LLMError): ...              # provider content policy blocked the call
 class LLMInvalidRequest(LLMError): ...               # 400 from the provider
 ```
@@ -94,9 +94,9 @@ An adapter configured with an obviously invalid API key (`sk-invalid`) raises `L
 
 A mock provider returning `429` once and then `200` returns a valid `LLMResponse` after one retry. The retry count is observable via the OTEL span.
 
-### C-LLM-009 Context window exceeded is typed
+### C-LLM-009 Output truncation is typed
 
-A request whose `prompt` plus `max_output_tokens` exceeds the model's window raises `LLMContextWindowExceeded`. The error message includes the requested total and the model's limit.
+When the provider signals that the response was cut short (`finish_reason: length` for OpenAI-compatible adapters, `stop_reason: max_tokens` for Anthropic), the adapter raises `LLMContextWindowExceeded`. Pre-flight input-size rejection (HTTP 400 from an oversized prompt) surfaces as `LLMInvalidRequest` and is not in scope for this clause.
 
 ### C-LLM-010 Adapter identifier appears in response
 
