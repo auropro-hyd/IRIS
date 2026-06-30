@@ -20,8 +20,9 @@ from iris_adapter_llm_azure_openai import AzureOpenAIProvider
 from iris_adapter_llm_local import LocalProvider
 from iris_adapter_llm_openai import OpenAIProvider
 from iris_adapter_llm_shared.retry import RetryConfig
-from iris_engine.contracts.llm_provider import LLMRequest, TenantContext
+from iris_engine.contracts.llm_provider import LLMAuthenticationFailed, LLMRequest, TenantContext
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
+from opentelemetry.trace import StatusCode
 
 pytestmark = pytest.mark.integration
 
@@ -127,3 +128,22 @@ def test_local_span_attributes(span_exporter: Any) -> None:
     )
     _run(provider.complete(_CTX, _REQ))
     _assert_span(span_exporter, "local")
+
+
+def test_error_path_span_status_and_category(span_exporter: Any) -> None:
+    """A typed LLM error sets StatusCode.ERROR, llm.success=False, and llm.error_category."""
+    provider = OpenAIProvider(
+        api_key="sk-test",  # pragma: allowlist secret
+        _http_client=_mock_client(httpx.Response(401)),
+        retry_config=_NO_RETRY,
+    )
+    with pytest.raises(LLMAuthenticationFailed):
+        _run(provider.complete(_CTX, _REQ))
+
+    spans = span_exporter.get_finished_spans()
+    assert spans, "no spans emitted"
+    span = spans[-1]
+    assert span.status.status_code == StatusCode.ERROR
+    attrs = span.attributes or {}
+    assert attrs.get("llm.success") is False
+    assert attrs.get("llm.error_category") == "LLMAuthenticationFailed"

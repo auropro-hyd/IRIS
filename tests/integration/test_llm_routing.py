@@ -28,7 +28,11 @@ from iris_adapter_llm_local import LocalProvider
 from iris_adapter_llm_openai import OpenAIProvider
 from iris_adapter_llm_shared.retry import RetryConfig
 from iris_config.schema.adapters import AdaptersSchema
-from iris_engine.contracts.llm_provider import LLMRequest, TenantContext
+from iris_engine.contracts.llm_provider import (
+    LLMRateLimited,
+    LLMRequest,
+    TenantContext,
+)
 from iris_engine.llm.selector import select_llm_provider
 from pydantic import BaseModel
 
@@ -159,6 +163,51 @@ def test_structured_output_round_trip_openai_compat(llm_adapter: str) -> None:
     assert isinstance(result.structured, _Invoice)
     assert result.structured.vendor == "Acme Corp"
     assert result.structured.total == pytest.approx(99.95)
+
+
+# ── Fallback behaviour ────────────────────────────────────────────────────────
+
+
+def _failing_client(exc: Exception) -> MagicMock:
+    client = MagicMock(spec=httpx.AsyncClient)
+    client.post = AsyncMock(side_effect=exc)
+    return client
+
+
+def test_fallback_fires_on_unavailable() -> None:
+    """LLMUnavailable on the primary triggers the fallback provider."""
+    primary = OpenAIProvider(
+        api_key="sk-test",  # pragma: allowlist secret
+        _http_client=_failing_client(httpx.ConnectError("down")),
+        retry_config=_NO_RETRY,
+    )
+    fallback = OpenAIProvider(
+        api_key="sk-test",  # pragma: allowlist secret
+        _http_client=_mock_client(_openai_resp()),
+        retry_config=_NO_RETRY,
+    )
+    registry = {"openai": primary, "openai-fallback": fallback}
+    provider = select_llm_provider(registry, "openai", fallback_id="openai-fallback")
+    result = _run(provider.complete(_CTX, _REQ))
+    assert "OK" in result.text
+
+
+def test_fallback_does_not_fire_on_rate_limited() -> None:
+    """LLMRateLimited surfaces to the caller; fallback must not absorb it."""
+    primary = OpenAIProvider(
+        api_key="sk-test",  # pragma: allowlist secret
+        _http_client=_mock_client(httpx.Response(429)),
+        retry_config=_NO_RETRY,
+    )
+    fallback = OpenAIProvider(
+        api_key="sk-test",  # pragma: allowlist secret
+        _http_client=_mock_client(_openai_resp()),
+        retry_config=_NO_RETRY,
+    )
+    registry = {"openai": primary, "openai-fallback": fallback}
+    provider = select_llm_provider(registry, "openai", fallback_id="openai-fallback")
+    with pytest.raises(LLMRateLimited):
+        _run(provider.complete(_CTX, _REQ))
 
 
 def test_structured_output_round_trip_anthropic() -> None:
