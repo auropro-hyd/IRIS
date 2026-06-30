@@ -31,7 +31,8 @@ EXPECTED_LAYERS: tuple[str, ...] = (
     "iris_agents | iris_data | iris_config | iris_observability",
     (
         "iris_ocr_adi | iris_ocr_datalab | iris_ocr_paddleocr | iris_ocr_local | "
-        "iris_adapter_llm_azure_openai | iris_llm_openai | iris_llm_anthropic | iris_llm_local"
+        "iris_adapter_llm_azure_openai | iris_adapter_llm_openai | "
+        "iris_llm_anthropic | iris_llm_local"
     ),
     "iris_engine",
 )
