@@ -117,11 +117,26 @@ def test_classification_round_trip() -> None:
 
 def test_classification_unknown_path() -> None:
     obj = Classification.model_validate(
-        {"document_type": None, "confidence": 0.0, "reason": "No taxonomy match found."}
+        {"document_type": "unknown", "confidence": 0.0, "reason": "No taxonomy match found."}
     )
-    assert obj.document_type is None
+    assert obj.document_type == "unknown"
     assert obj.label is None
     assert obj.reason == "No taxonomy match found."
+
+
+def test_classification_unknown_default_document_type() -> None:
+    obj = Classification.model_validate({"confidence": 0.0, "reason": "No match."})
+    assert obj.document_type == "unknown"
+
+
+def test_classification_unknown_without_reason_raises() -> None:
+    with pytest.raises(ValidationError, match="reason"):
+        Classification.model_validate({"document_type": "unknown", "confidence": 0.0})
+
+
+def test_classification_unknown_empty_reason_raises() -> None:
+    with pytest.raises(ValidationError, match="reason"):
+        Classification.model_validate({"document_type": "unknown", "confidence": 0.0, "reason": ""})
 
 
 def test_classification_confidence_bounds() -> None:
@@ -131,9 +146,9 @@ def test_classification_confidence_bounds() -> None:
         Classification.model_validate({"confidence": -0.1})
 
 
-def test_classification_defaults() -> None:
-    obj = Classification.model_validate({"confidence": 0.8})
-    assert obj.document_type is None
+def test_classification_known_type_defaults() -> None:
+    obj = Classification.model_validate({"document_type": "fnol_form", "confidence": 0.8})
+    assert obj.document_type == "fnol_form"
     assert obj.label is None
     assert obj.reason is None
     assert obj.citations == []

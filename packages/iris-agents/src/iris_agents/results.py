@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class Citation(BaseModel):
@@ -42,19 +42,26 @@ class MissingDocuments(BaseModel):
 class Classification(BaseModel):
     """Per-document result from DocumentClassifier.
 
-    document_type is None when no taxonomy entry matches (the unknown path).
-    reason is required non-empty for the unknown outcome (US2). citations
-    carry the page(s) and bounding boxes the classifier used (US1).
-    missing_documents lists required docs that this single document does not
-    itself satisfy within the submission context.
+    document_type is the matched taxonomy id (e.g. "fnol_form"), or the literal
+    string "unknown" when no taxonomy entry matches (US2). citations carry the
+    page(s) and bounding boxes the classifier used (US1). reason is required
+    non-empty when document_type is "unknown" so the reviewer always sees an
+    explanation. missing_documents lists required docs this single document does
+    not satisfy within the submission context.
     """
 
-    document_type: str | None = None
+    document_type: str = "unknown"
     label: str | None = None
     confidence: float = Field(ge=0.0, le=1.0)
     reason: str | None = None
     citations: list[Citation] = Field(default_factory=list)
     missing_documents: MissingDocuments = Field(default_factory=MissingDocuments)
+
+    @model_validator(mode="after")
+    def _reason_required_for_unknown(self) -> Classification:
+        if self.document_type == "unknown" and not self.reason:
+            raise ValueError("reason must be non-empty when document_type is 'unknown' (US2)")
+        return self
 
 
 class FieldValidationError(BaseModel):
