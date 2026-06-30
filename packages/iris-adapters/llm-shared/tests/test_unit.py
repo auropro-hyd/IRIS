@@ -9,6 +9,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import httpx
 import pytest
+from iris_adapter_llm_shared.env import require_env
 from iris_adapter_llm_shared.openai_compat import OpenAICompatProvider, _raise_for_status
 from iris_adapter_llm_shared.retry import RetryConfig, with_retry
 from iris_engine.contracts.llm_provider import (
@@ -75,6 +76,26 @@ def _run(coro: Any) -> Any:
         return loop.run_until_complete(coro)
     finally:
         loop.close()
+
+
+# ── require_env ───────────────────────────────────────────────────────────────
+
+
+def test_require_env_raises_when_unset(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("IRIS_TEST_UNSET_VAR", raising=False)
+    with pytest.raises(RuntimeError, match="IRIS_TEST_UNSET_VAR"):
+        require_env("IRIS_TEST_UNSET_VAR")
+
+
+def test_require_env_raises_when_empty(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("IRIS_TEST_EMPTY_VAR", "")
+    with pytest.raises(RuntimeError, match="IRIS_TEST_EMPTY_VAR"):
+        require_env("IRIS_TEST_EMPTY_VAR")
+
+
+def test_require_env_returns_value_when_set(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("IRIS_TEST_SET_VAR", "some-value")
+    assert require_env("IRIS_TEST_SET_VAR") == "some-value"
 
 
 # ── RetryConfig ───────────────────────────────────────────────────────────────
