@@ -2,7 +2,7 @@
 
 Targets any OpenAI-compatible local inference server (vLLM, Ollama, llama.cpp).
 Authentication: optional Bearer token (for servers that require one).
-Endpoint: IRIS_LLM_LOCAL_URL (default http://localhost:8080/v1/chat/completions).
+Endpoint: IRIS_LLM_LOCAL_URL (default http://localhost:8080/v1).
 
 A single model is used for all hints; no chat/extract routing.
 """
