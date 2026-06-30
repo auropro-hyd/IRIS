@@ -1123,6 +1123,16 @@ source = { editable = "packages/iris-adapters/llm-anthropic" }
 name = "iris-llm-azure-openai"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/llm-azure-openai" }
+dependencies = [
+    { name = "iris-engine" },
+    { name = "iris-llm-shared" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-engine", editable = "packages/iris-engine" },
+    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+]
 
 [[package]]
 name = "iris-llm-local"

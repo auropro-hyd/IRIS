@@ -22,7 +22,7 @@
 
 ## Sprint 1: Adapter packages (parallel)
 
-- [ ] **T044** `[P] [US1] [US3] [US5] [US6] [size: L] [owner: AuroPro]` `packages/iris-adapters/llm-azure-openai/`. Inherits from the OpenAI-compatible base. Adds Azure-specific endpoint URL construction (`{resource}.openai.azure.com/openai/deployments/{deployment}/chat/completions`), API-version query param, and `api-key` header.
+- [x] **T044** `[P] [US1] [US3] [US5] [US6] [size: L] [owner: AuroPro]` `packages/iris-adapters/llm-azure-openai/`. Inherits from the OpenAI-compatible base. Adds Azure-specific endpoint URL construction (`{resource}.openai.azure.com/openai/deployments/{deployment}/chat/completions`), API-version query param, and `api-key` header.
       **Acceptance**: Unit tests with mocked Azure responses pass every contract clause; live clause runs under `IRIS_LLM_LIVE_AZURE=1`.
 
 - [ ] **T045** `[P] [US1] [US3] [US5] [US6] [size: M] [owner: AuroPro]` `packages/iris-adapters/llm-openai/`. Inherits from the OpenAI-compatible base. Standard `api.openai.com/v1` endpoint and `Authorization: Bearer` header.
