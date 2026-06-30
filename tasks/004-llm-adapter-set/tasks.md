@@ -31,7 +31,7 @@
 - [x] **T046** `[P] [US1] [US3] [US5] [US6] [size: L] [owner: AuroPro]` `packages/iris-adapters/llm-anthropic/`. Standalone implementation against the Anthropic messages API. Structured output via tool use. Token counting from the response headers / fields.
       **Acceptance**: Unit tests pass; live clause runs under `IRIS_LLM_LIVE_ANTHROPIC=1`; tool-use structured output clause C-LLM-005 passes.
 
-- [ ] **T047** `[P] [US1] [US4] [size: M] [owner: AuroPro]` `packages/iris-adapters/llm-local/`. Inherits from the OpenAI-compatible base. Targets a local vLLM or Ollama endpoint declared via `IRIS_LLM_LOCAL_URL` (default `http://localhost:8080/v1`).
+- [x] **T047** `[P] [US1] [US4] [size: M] [owner: AuroPro]` `packages/iris-adapters/llm-local/`. Inherits from the OpenAI-compatible base. Targets a local vLLM or Ollama endpoint declared via `IRIS_LLM_LOCAL_URL` (default `http://localhost:8080/v1`).
       **Acceptance**: Unit tests pass; the airgapped clause C-LLM-LOCAL-001 passes; integration test against a real Ollama running in CI optional.
 
 ## Sprint 1: Contract suite + telemetry

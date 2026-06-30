@@ -1148,6 +1148,16 @@ requires-dist = [
 name = "iris-llm-local"
 version = "0.0.0"
 source = { editable = "packages/iris-adapters/llm-local" }
+dependencies = [
+    { name = "iris-engine" },
+    { name = "iris-llm-shared" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-engine", editable = "packages/iris-engine" },
+    { name = "iris-llm-shared", editable = "packages/iris-adapters/llm-shared" },
+]
 
 [[package]]
 name = "iris-llm-openai"
