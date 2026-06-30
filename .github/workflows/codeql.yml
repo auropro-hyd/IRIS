@@ -15,6 +15,7 @@ on:
   schedule:
     # Monday 09:00 IST (03:30 UTC). Weekly baseline scan.
     - cron: "30 3 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
