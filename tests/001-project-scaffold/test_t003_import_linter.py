@@ -41,7 +41,6 @@ EXPECTED_ADAPTER_MODULES = frozenset(
     name
     for name in EXPECTED_ROOT_PACKAGES
     if name.startswith("iris_ocr_")
-    or name.startswith("iris_llm_")
     or (name.startswith("iris_adapter_llm_") and name != "iris_adapter_llm_shared")
 )
 
