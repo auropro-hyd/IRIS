@@ -56,7 +56,12 @@ class TemplateLoader:
                 raise ValueError(
                     f"template path {spec.path!r} must be relative and within the bundle"
                 )
-            content = (bundle_dir / spec.path).read_text(encoding="utf-8")
+            try:
+                content = (bundle_dir / spec.path).read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError) as exc:
+                raise ValueError(
+                    f"failed to read template {name!r} at {spec.path!r}: {exc}"
+                ) from exc
             spec.validate_against_template(content)
             self._templates[name] = env.from_string(content)
 

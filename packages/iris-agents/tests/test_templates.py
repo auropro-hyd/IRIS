@@ -23,7 +23,7 @@ def _make_bundle(tmp_path: Path, templates: dict[str, tuple[str, list[str]]]) ->
     raw: dict[str, dict[str, object]] = {}
     for name, (content, variables) in templates.items():
         path = f"prompts/{name}.j2"
-        (tmp_path / path).write_text(content)
+        (tmp_path / path).write_text(content, encoding="utf-8")
         raw[name] = {"path": path, "variables": variables}
     return PromptSchema.model_validate(raw)
 
@@ -51,6 +51,17 @@ def test_valid_template_loads_without_error(tmp_path: Path) -> None:
     )
     loader = TemplateLoader(tmp_path, prompts)
     assert loader is not None
+
+
+def test_missing_template_file_raises_value_error(tmp_path: Path) -> None:
+    prompts = _minimal_bundle(
+        tmp_path,
+        classify="Classify {{ ocr_text }}",
+        classify_vars=["ocr_text"],
+    )
+    (tmp_path / "prompts/classify.j2").unlink()  # remove after schema creation
+    with pytest.raises(ValueError, match="classify"):
+        TemplateLoader(tmp_path, prompts)
 
 
 def test_undeclared_variable_raises_at_load_time(tmp_path: Path) -> None:
@@ -145,7 +156,7 @@ def test_real_commercial_auto_bundle_loads() -> None:
         pytest.skip("real bundle not present")
     import yaml
 
-    with open(bundle_dir / "product.yaml") as f:
+    with open(bundle_dir / "product.yaml", encoding="utf-8") as f:
         raw = yaml.safe_load(f)
     prompts = PromptSchema.model_validate(raw["prompts"])
     loader = TemplateLoader(bundle_dir, prompts)
