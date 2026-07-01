@@ -9,10 +9,10 @@
 - [x] **T051** `[size: S] [owner: AuroPro]` Define `iris_agents/results.py` with `Classification`, `Extraction`, `FieldValidationError`, and `MissingDocument`. Map directly to the PoC's `ClassificationResponse` shape, tightened with Pydantic v2.
       **Acceptance**: Round-trip with `model_validate` works for the bundled fixtures.
 
-- [ ] **T052** `[P] [US6] [size: M] [owner: AuroPro]` Implement `iris_agents/templates.py` that loads a Jinja2 environment scoped to a Product bundle's `prompts/` directory.
+- [x] **T052** `[P] [US6] [size: M] [owner: AuroPro]` Implement `iris_agents/templates.py` that loads a Jinja2 environment scoped to a Product bundle's `prompts/` directory.
       **Acceptance**: Loading a template with an undeclared variable raises a clear error at load time, not at render time.
 
-- [ ] **T053** `[P] [size: S] [owner: AuroPro]` Define `iris_agents/errors.py` with `AgentError`, `AgentLLMError` (wraps `LLMError`), and `AgentValidationError`.
+- [x] **T053** `[P] [size: S] [owner: AuroPro]` Define `iris_agents/errors.py` with `AgentError`, `AgentLLMError` (wraps `LLMError`), and `AgentValidationError`.
       **Acceptance**: `make typecheck` is clean.
 
 ## Sprint 2: DocumentClassifier
