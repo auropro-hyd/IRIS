@@ -82,8 +82,9 @@ class Classification(BaseModel):
 class FieldValidationError(BaseModel):
     """A field that was extracted but failed a declared validator.
 
-    The rest of the Extraction is still returned; errors do not abort
-    the extraction.
+    This is a data container stored in Extraction.validation_errors, not a
+    throwable exception. The rest of the Extraction is still returned; errors
+    do not abort the extraction.
     """
 
     model_config = ConfigDict(extra="forbid")
