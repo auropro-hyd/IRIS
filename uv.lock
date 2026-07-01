@@ -1127,6 +1127,16 @@ requires-dist = [
 name = "iris-agents"
 version = "0.0.0"
 source = { editable = "packages/iris-agents" }
+dependencies = [
+    { name = "iris-engine" },
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "iris-engine", editable = "packages/iris-engine" },
+    { name = "pydantic", specifier = ">=2" },
+]
 
 [[package]]
 name = "iris-api"
