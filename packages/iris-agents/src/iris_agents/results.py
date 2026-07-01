@@ -12,19 +12,30 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class Citation(BaseModel):
     """A page region used to support a classification or extraction decision."""
 
+    model_config = ConfigDict(extra="forbid")
+
     page: int
-    bounding_box: list[float] = Field(default_factory=list)  # [x, y, width, height]
+    bounding_box: list[float] = Field(default_factory=list)
     text: str | None = None
+
+    @field_validator("bounding_box")
+    @classmethod
+    def _bounding_box_shape(cls, v: list[float]) -> list[float]:
+        if v and len(v) != 4:
+            raise ValueError("bounding_box must be empty or exactly [x, y, width, height]")
+        return v
 
 
 class MissingDocument(BaseModel):
     """A required document not satisfied by the current classification."""
+
+    model_config = ConfigDict(extra="forbid")
 
     document_type: str
     label: str
@@ -34,6 +45,8 @@ class MissingDocument(BaseModel):
 
 class MissingDocuments(BaseModel):
     """Missing documents split by requirement category."""
+
+    model_config = ConfigDict(extra="forbid")
 
     product_mandatory: list[MissingDocument] = Field(default_factory=list)
     coverage_mandatory: list[MissingDocument] = Field(default_factory=list)
@@ -50,9 +63,11 @@ class Classification(BaseModel):
     not satisfy within the submission context.
     """
 
+    model_config = ConfigDict(extra="forbid")
+
     document_type: str = "unknown"
     label: str | None = None
-    confidence: float = Field(ge=0.0, le=1.0)
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     reason: str | None = None
     citations: list[Citation] = Field(default_factory=list)
     missing_documents: MissingDocuments = Field(default_factory=MissingDocuments)
@@ -71,6 +86,8 @@ class FieldValidationError(BaseModel):
     the extraction.
     """
 
+    model_config = ConfigDict(extra="forbid")
+
     field: str
     value: Any
     rule: str
@@ -80,8 +97,10 @@ class FieldValidationError(BaseModel):
 class ExtractedField(BaseModel):
     """A single extracted field with its value, confidence, and citation."""
 
+    model_config = ConfigDict(extra="forbid")
+
     value: Any = None
-    confidence: float = Field(ge=0.0, le=1.0)
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
     cited: str | None = None
 
 
@@ -92,6 +111,8 @@ class Extraction(BaseModel):
     results. validation_errors lists fields that failed declared validators;
     those fields still appear in fields with their raw extracted value.
     """
+
+    model_config = ConfigDict(extra="forbid")
 
     config_name: str
     config_version: str

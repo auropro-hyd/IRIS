@@ -32,6 +32,11 @@ def test_citation_optional_fields_default() -> None:
     assert obj.text is None
 
 
+def test_citation_bounding_box_wrong_length_raises() -> None:
+    with pytest.raises(ValidationError, match="bounding_box"):
+        Citation.model_validate({"page": 1, "bounding_box": [10.0, 20.0]})
+
+
 # ── MissingDocument ───────────────────────────────────────────────────────────
 
 
@@ -146,6 +151,18 @@ def test_classification_confidence_bounds() -> None:
         Classification.model_validate({"confidence": -0.1})
 
 
+def test_classification_rejects_extra_fields() -> None:
+    with pytest.raises(ValidationError):
+        Classification.model_validate(
+            {"document_type": "fnol_form", "confidence": 0.9, "score": 0.7}
+        )
+
+
+def test_classification_confidence_defaults_to_zero() -> None:
+    obj = Classification.model_validate({"document_type": "fnol_form"})
+    assert obj.confidence == 0.0
+
+
 def test_classification_known_type_defaults() -> None:
     obj = Classification.model_validate({"document_type": "fnol_form", "confidence": 0.8})
     assert obj.document_type == "fnol_form"
@@ -231,6 +248,11 @@ def test_extracted_field_round_trip() -> None:
     assert obj.value == "AH-99200-FT-2026"
     assert obj.cited == "Header section"
     assert ExtractedField.model_validate(obj.model_dump()) == obj
+
+
+def test_extracted_field_confidence_defaults_to_zero() -> None:
+    obj = ExtractedField.model_validate({})
+    assert obj.confidence == 0.0
 
 
 def test_extracted_field_null_value_and_citation() -> None:
